@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Preload critical custom fonts -->
+    <link rel="preload" href="/fonts/zentry-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/general.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/robert-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/circularweb-book.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" fetchpriority="high" as="image" href="/img/intro.webp" type="image/webp">
+
+    <!-- Inline critical CSS (above-the-fold placeholder) -->
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+      }
+      header {
+        background: #fff;
+        padding: 0rem;
+      }
+    </style>
+
+    <title>KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Vite automatically manages preloads, bundles, and deferral for this script -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
