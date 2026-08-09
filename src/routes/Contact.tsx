@@ -1,8 +1,6 @@
 import React, { useState } from 'react'; 
 import type { ChangeEvent, FormEvent } from 'react'; 
 import emailjs from '@emailjs/browser'; 
-import phoneImage from '/img/phone-image.jpeg'; 
-import contactImage from '/img/contact.webp'; 
 import SEO from '../components/SEO'; 
 
 interface FormData { 
@@ -64,7 +62,7 @@ export default function Contact(): React.JSX.Element {
  canonical="https://tantrasadhana.org" 
  breadcrumbs={[ 
  { name: 'Home', url: 'https://tantrasadhana.org' }, 
- { name: 'Services', url: 'https://tantrasadhana.org/services' }, 
+ { name: 'Services', url: 'https://tantrasadhana.org' }, 
  { name: 'Contact', url: 'https://tantrasadhana.org' }
  ]} 
  /> 
