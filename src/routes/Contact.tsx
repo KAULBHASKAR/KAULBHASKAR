@@ -96,9 +96,9 @@ export default function Contact(): React.JSX.Element {
           <iframe 
             title="Google Maps Location" 
             width="100%" 
-            height="100%" 
-            src="https://google.com" 
-          ></iframe> 
+            height="600" 
+            src="https://maps.google.com/maps?width=100%25&amp;height=500&amp;hl=en&amp;q=C-40%20Birla%20Colony,%20Phulwarisharif+(TANTRA%20SADHANA)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+          ></iframe>
         </div> 
       </div> 
 
