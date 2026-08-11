@@ -1,0 +1,7 @@
+# KAULBHASKAR a Legend KAUL
+
+> A Vite and React web application optimized for AI agent browsing.
+
+## Navigation
+
+* [Home](https://kaulbhaskar.vercel.app/) - The main landing page.
