@@ -28,7 +28,7 @@ const navLinks = [
 export default function Footer() {
   return (
     // FIX 2: Set minimum height (mobile vs desktop) to prevent layout collapse during load
-    <footer className="w-full bg-[#5542ff] py-10 text-white min-h-[300px] md:min-h-[120px] flex items-center">
+    <footer className="w-full bg-[#5542ff] py-8 md:py-10 text-white flex items-center">
       <div className="container mx-auto flex flex-col items-center justify-between gap-8 px-6 md:flex-row">
         
         {/* Copyright */}
