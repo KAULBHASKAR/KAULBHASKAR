@@ -66,15 +66,36 @@
 
 /* 5. COMPONENTS & ACCESSIBILITY OVERRIDES */
 @layer utilities {
-  .text-orange-600 { color: #ea580c !important; } /* High contrast orange */
+  /* Fix text-orange-600 to pass WCAG AA on light background #dfdff0 */
+  .text-orange-600 { color: #b45309 !important; } 
+
+  /* React Big Calendar Global High Contrast Overrides */
   .rbc-calendar { @apply min-w-full overflow-x-auto; }
-  .rbc-off-range-bg { background-color: #f3f4f6 !important; }
-  .rbc-off-range .rbc-button-link { color: #374151 !important; } /* Darkened for readability */
-  .rbc-button-link { color: #1f2937 !important; font-weight: 600; }
-  .rbc-toolbar button { color: #1f2937 !important; border-color: #9ca3af !important; }
-  .rbc-toolbar-label { color: #111827 !important; font-weight: 700 !important; }
-  span[role="columnheader"] { color: #374151 !important; font-weight: 750 !important; }
-  .nav-hover-btn { @apply relative ms-5 md:ms-10 font-general text-xs uppercase text-blue-900 font-semibold cursor-pointer; }
+  .rbc-off-range-bg { background-color: #cbd5e1 !important; }
+  .rbc-off-range .rbc-button-link { color: #475569 !important; }
+  
+  /* Ensure all toolbar buttons, headers, labels, and day cells are dark and readable */
+  .rbc-button-link,
+  .rbc-toolbar-label,
+  .rbc-toolbar button,
+  span[role="columnheader"] { 
+    color: #111827 !important; 
+    font-weight: 700 !important; 
+  }
+  
+  /* Make calendar borders distinct and visible */
+  .rbc-toolbar button {
+    border: 1px solid #4b5563 !important;
+    background-color: #ffffff !important;
+  }
+  
+  .rbc-toolbar button:hover,
+  .rbc-toolbar button:focus {
+    background-color: #f3f4f6 !important;
+  }
+
+  /* Original layout utilities preserved below */
+  .nav-hover-btn { @apply relative ms-5 md:ms-10 font-general text-xs uppercase text-blue-900 cursor-pointer; }
   .floating-nav { @apply bg-black rounded-lg border; }
   .mask-clip-path { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
   .hero-heading { @apply uppercase font-zentry font-black text-5xl sm:text-7xl md:text-9xl lg:text-[12rem] wrap-break-word; }
