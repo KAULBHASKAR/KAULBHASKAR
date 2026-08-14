@@ -30,7 +30,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!assets/|fonts/|img/|favicon\\.svg|favicon\\.ico).*)",
+      "source": "/((?!assets/).*)",
       "destination": "/index.html"
     }
   ]
