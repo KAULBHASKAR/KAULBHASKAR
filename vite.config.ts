@@ -21,21 +21,22 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: true,
-    chunkSizeWarningLimit: 800, // Raised slightly for React 19 + GSAP
+    cssCodeSplit: false, // Set to false to merge CSS into a single predictable bundle
+    chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
+        // Enforce clean, predictable output filenames for caching and static linking
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name].[ext]',
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Group framework core files
             if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router/')) {
               return 'vendor-framework';
             }
-            // Group markdown parsing packages
             if (id.includes('gray-matter') || id.includes('buffer') || id.includes('react-markdown') || id.includes('remark-gfm')) {
               return 'vendor-content';
             }
-            // Group heavy UI features
             if (id.includes('react-big-calendar')) {
               return 'vendor-calendar';
             }
@@ -45,7 +46,6 @@ export default defineConfig({
             if (id.includes('react-slick') || id.includes('slick-carousel')) {
               return 'vendor-carousel';
             }
-            // Catch-all for remaining npm packages
             return 'vendor-libs';
           }
         },
