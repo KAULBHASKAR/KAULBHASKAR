@@ -21,14 +21,14 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: false, // Set to false to merge CSS into a single predictable bundle
+    cssCodeSplit: false, // Merges CSS into a single file to prevent request chains
     chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
-        // Enforce clean, predictable output filenames for caching and static linking
-        entryFileNames: 'assets/[name].js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: 'assets/[name].[ext]',
+        // Safe hashing ensures users fetch fresh files on every new deployment
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
         manualChunks(id) {
           if (id.includes('node_modules')) {
             if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router/')) {
