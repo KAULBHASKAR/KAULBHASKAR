@@ -64,7 +64,7 @@
 @utility flex-center { @apply flex justify-center items-center; }
 @utility absolute-center { @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2; }
 
-/* /* 5. COMPONENTS & ACCESSIBILITY OVERRIDES */
+/* 5. COMPONENTS & ACCESSIBILITY OVERRIDES */
 @layer utilities {
   .text-orange-600 { color: #ea580c !important; } /* High contrast orange */
   .rbc-calendar { @apply min-w-full overflow-x-auto; }
