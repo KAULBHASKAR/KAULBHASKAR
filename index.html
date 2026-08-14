@@ -12,7 +12,7 @@
     <link rel="preload" href="/fonts/circularweb-book.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" fetchpriority="high" as="image" href="/img/intro.webp" type="image/webp">
 
-    <!-- Inline critical base CSS & Loader Styles -->
+    <!-- High-contrast inline loader styles -->
     <style>
       body {
         margin: 0;
@@ -30,16 +30,16 @@
       .spinner {
         width: 48px;
         height: 48px;
-        border: 4px solid rgba(255, 255, 255, 0.1);
-        border-left-color: #f59e0b;
+        border: 4px solid rgba(255, 255, 255, 0.2);
+        border-left-color: #fbbf24; /* High contrast amber/gold */
         border-radius: 50%;
         animation: spin 1s linear infinite;
         margin-bottom: 16px;
       }
       .loader-title {
-        color: #f3f4f6;
+        color: #ffffff; /* 100% white for maximum contrast ratio */
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 0.05em;
         text-transform: uppercase;
       }
