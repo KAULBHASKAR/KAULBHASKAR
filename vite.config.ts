@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 import viteCompression from 'vite-plugin-compression'
 
 export default defineConfig({
+  base: '/', // Add this line
   plugins: [
     react(),
     tailwindcss(),
