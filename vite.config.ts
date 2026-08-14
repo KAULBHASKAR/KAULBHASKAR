@@ -21,7 +21,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: true, // Set to false to merge CSS into a single predictable bundle
+    cssCodeSplit: false, // Set to false to merge CSS into a single predictable bundle
     chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
