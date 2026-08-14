@@ -5,62 +5,49 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Preload critical custom fonts -->
+      <!-- 2. Preload critical assets -->
     <link rel="preload" href="/fonts/zentry-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/general.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/robert-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/circularweb-book.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" fetchpriority="high" as="image" href="/img/intro.webp" type="image/webp">
 
-    <!-- Inline critical base CSS & Loader Styles -->
+    <!-- 3. Preload + load CSS without blocking -->
+    <link rel="preload" href="/assets/index-CZMhnSqO.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/vendor-DITC1bZO.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/index-DmwUxbYT.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/assets/react-big-calendar-BiPGZdAr.css" media="print" onload="this.media='all'">
+
+    <!-- Inline critical CSS (above-the-fold only) -->
     <style>
       body {
         margin: 0;
-        font-family: system-ui, -apple-system, sans-serif;
-        background-color: #0d0d0d;
+        font-family: system-ui, sans-serif;
       }
-      #app-loader {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        width: 100vw;
-      }
-      .spinner {
-        width: 48px;
-        height: 48px;
-        border: 4px solid rgba(255, 255, 255, 0.1);
-        border-left-color: #f59e0b;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin-bottom: 16px;
-      }
-      .loader-title {
-        color: #f3f4f6;
-        font-size: 1.1rem;
-        font-weight: 600;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      }
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+      header {
+        background: #fff;
+        padding: 0rem;
       }
     </style>
+
+    <!-- Fallback for users with JavaScript disabled -->
+    <noscript>
+      <link rel="stylesheet" href="/assets/index-CZMhnSqO.css">
+      <link rel="stylesheet" href="/assets/vendor-DITC1bZO.css">
+    </noscript>
 
     <title>KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance</title>
   </head>
   <body>
-    <div id="root">
-      <!-- Fallback loader with brand title text -->
-      <div id="app-loader">
-        <div class="spinner"></div>
-        <div class="loader-title">KAULBHASKAR</div>
-      </div>
-    </div>
+    <div id="root"></div>
 
-    <!-- Vite module entry -->
-    <script type="module" src="/src/main.tsx"></script>
+    <!-- Preload main JS bundle -->
+    <link rel="preload" href="/src/main.tsx" as="script" />
+
+    <!-- Defer JS execution -->
+    <script type="module" src="/src/main.tsx" defer></script>
+
+    <!-- Example: defer non-critical scripts -->
+    <!-- <script src="/assets/analytics.js" defer></script> -->
   </body>
 </html>
