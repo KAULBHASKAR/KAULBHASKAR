@@ -6,6 +6,7 @@ import Hero from "../components/Hero";
 
 // 2. Lazy load lower, below-the-fold component blocks
 const Intro = lazy(() => import("../components/Intro")); 
+const Cohort = lazy(() => import("../components/Cohort")); 
 const StatsComponent = lazy(() => import("../components/StatsComponent"));
 const Feature = lazy(() => import("../components/Feature"));
 const Camp = lazy(() => import("../components/Camp"));
