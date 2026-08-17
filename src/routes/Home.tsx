@@ -58,6 +58,7 @@ const Home: React.FC = () => {
           </div>
         }
       >
+        <Cohort />
         <Intro />
         <Feature />
         <Camp />
