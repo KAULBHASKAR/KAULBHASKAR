@@ -2,8 +2,7 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router'; // 1. Added ScrollRestoration
 import Navbar from './Navbar'; 
-
-const Footer = lazy(() => import('./Footer'));
+import Footer from './Footer';
 
 export default function Layout() {
   return (
