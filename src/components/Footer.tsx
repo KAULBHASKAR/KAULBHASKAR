@@ -32,9 +32,12 @@ export default function Footer() {
       <div className="container mx-auto flex flex-col items-center justify-between gap-8 px-6 md:flex-row">
         
         {/* Copyright */}
-        <p className="text-center text-sm font-light md:text-left">
-          © KAUL BHASKAR 2026. All rights reserved
-        </p>
+        <div className="w-full md:w-auto h-6 flex items-center justify-center md:justify-start">
+          <p className="text-sm font-light text-white block tracking-normal">
+             © KAUL BHASKAR 2026. All rights reserved
+          </p>
+         </div>
+
 
         {/* Navigation Links */}
         <nav className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:flex-1 md:justify-center md:flex-nowrap" aria-label="Footer Navigation">
