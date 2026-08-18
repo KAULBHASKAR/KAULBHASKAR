@@ -67,7 +67,7 @@ export default function Blog() {
         ]}
       />
 
-      <h1 className="special-font hero-subheading text-center my-10">BLOG</h1>
+      <h1 className="special-font hero-subheading text-center absolute top-24">BLOG</h1>
       
       <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {currentPosts.map((post) => (
