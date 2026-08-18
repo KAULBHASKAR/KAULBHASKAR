@@ -29,7 +29,7 @@ export default function Footer() {
   return (
     // FIX 2: Set minimum height (mobile vs desktop) to prevent layout collapse during load
     <footer className="w-full bg-[#5542ff] py-8 md:py-10 text-white flex items-center">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto flex flex-col items-center justify-between gap-8 px-6 md:flex-row">
         
         {/* Copyright */}
         <p className="text-center text-sm font-light md:text-left">
