@@ -1,6 +1,6 @@
 // src/components/Footer.tsx
 import react from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 // Optimization: Import specific icons to enable better tree-shaking
 import { 
   FaFacebookF, 
