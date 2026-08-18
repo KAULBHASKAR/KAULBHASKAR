@@ -1,5 +1,5 @@
 // src/components/Layout.tsx
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router'; // 1. Added ScrollRestoration
 import Navbar from './Navbar'; 
 import Footer from './Footer';
