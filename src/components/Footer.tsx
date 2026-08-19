@@ -28,7 +28,7 @@ const navLinks = [
 export default function Footer() {
   return (
     // FIXED CLS: Changed py-8/10 to explicit heights/paddings that ensure container structural stability
-    <footer className="w-full bg-[#5542ff] py-8 text-white min-h-[320px] md:min-h-[88px] flex items-center content-center select-none">
+    <footer className="w-full bg-[#5542ff] py-8 text-white min-h-[320px] md:min-h-[120px] flex items-center content-center select-none">
       {/* FIXED CLS: Switched from Flexbox to Grid. This prevents columns from shifting dynamically during JS hydration */}
       <div className="container mx-auto grid grid-cols-1 gap-6 px-6 text-center md:grid-cols-4 md:items-center md:text-left">
         
