@@ -1,18 +1,11 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import Layout from './components/Layout';
+import ScrollToTop from './components/ScrollToTop'; // Import statically
 
-// 1. Lazy load all page components
 const Home = lazy(() => import('./routes/Home'));
-const About = lazy(() => import('./routes/About'));
-const Services = lazy(() => import('./routes/Services'));
-const Blog = lazy(() => import('./routes/Blog'));
-const BlogPost = lazy(() => import('./routes/BlogPost'));
-const Contact = lazy(() => import('./routes/Contact'));
-const Profile = lazy(() => import('./routes/Profile'));
-const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
+// ... Keep your other lazy page imports the same
 
-// 2. Helper to wrap elements in Suspense for cleaner code
 const withSuspense = (Component: React.ReactNode) => (
   <Suspense fallback={<div className="loading-spinner" />}>
     {Component}
@@ -24,7 +17,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <>
-        {withSuspense(<ScrollToTop />)}
+        <ScrollToTop /> {/* Rendered instantly without an extra code chunk */}
         <Layout />
       </>
     ),
@@ -35,7 +28,6 @@ const router = createBrowserRouter([
       { path: "blog", element: withSuspense(<Blog />) },
       { path: "contact", element: withSuspense(<Contact />) },
       { path: "profile", element: withSuspense(<Profile />) },
-      // Moved the greedy dynamic slug to the absolute bottom
       { path: ":slug", element: withSuspense(<BlogPost />) },
     ],
   },
