@@ -45,12 +45,17 @@
 
 /* 3. BASE STYLES */
 @layer base {
-  html { @apply overflow-x-hidden scroll-smooth; }
-  body {
+  html { 
+    @apply overflow-x-hidden scroll-smooth h-full; 
+  }
+  body, #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     width: 100%; 
     overflow-x: hidden;
     background-color: #dfdff0;
-    font-family: "General Sans", sans-serif;
+    font-family: "general", sans-serif; /* Adjusted to match your internal theme definition */
     color: #1a1a1a;
     margin: 0;
     padding: 0;
