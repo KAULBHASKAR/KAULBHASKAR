@@ -42,7 +42,7 @@ const About: React.FC = () => {
 
       <div className="flexCenter max-container relative w-full min-h-screen">
         <img
-          src="/img/ABOUT-BG.webp"
+          src="/img/ABOUT_BG.webp"
           alt="yoga background"
           width={1440}
           height={580}
