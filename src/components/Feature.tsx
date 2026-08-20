@@ -87,7 +87,7 @@ const Feature: FC = () => {
           </p>
 
           <p className="max-w-md font-circular-web text-lg text-yellow-500 ">
-            Immerse yourself in a rich tantric tradition where you will
+            Immerse yourself in a rich metaphysical/tantric tradition where you will
             experience endless bliss, and your self will merge with the supreme
             consciousness.
           </p>
