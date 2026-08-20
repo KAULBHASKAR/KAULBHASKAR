@@ -51,11 +51,11 @@ const About: React.FC = () => {
           className="w-screen h-screen object-cover object-center 2xl:rounded-s-xl"
         />
 
-        <h1 className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-4xl text-white font-bold pageHeader">
+        <h1 className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-4xl text-black font-bold pageHeader">
           About Us
         </h1>
 
-        <h2 className="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-xl text-white font-semibold p-6 text-center max-w-3xl pageHeader">
+        <h2 className="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-xl text-black font-semibold p-6 text-center max-w-3xl pageHeader">
           I guide the world's most powerful minds to master the cosmic laws that govern destiny, internal peace, and legacy.
         </h2>
       </div>
