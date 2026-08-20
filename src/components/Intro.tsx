@@ -37,14 +37,14 @@ const Intro: React.FC = () => {
         </h2>
         
         <AnimatedTitle
-          title="Disc<b>o</b>ver the world's <br /> <b>genuine</b> <b>tantra<br /><b>adventure<br />"
+          title="Disc<b>o</b>ver the world's <br /> <b>genuine</b> <b>metaphysical<br /><b>adventure<br />"
           containerClass="mt-5 !text-black text-center"
         />
 
         <div className="about-subtext">
           <p>
             We want to be on each of your journeys seeking the satisfaction of 
-            meeting with hidden masters of Tantra & Astrology.
+            meeting with hidden master of Universe.
           </p>
         </div>
       </div>
