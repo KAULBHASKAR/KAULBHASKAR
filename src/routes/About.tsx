@@ -56,7 +56,7 @@ const About: React.FC = () => {
         </h1>
 
         <h2 className="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-xl text-white font-semibold p-6 text-center max-w-3xl pageHeader">
-          We offer spiritual guidance and education to those seeking to deepen their understanding of Tantric teachings.
+          I guide the world's most powerful minds to master the cosmic laws that govern destiny, internal peace, and legacy.
         </h2>
       </div>
 
@@ -78,7 +78,7 @@ const About: React.FC = () => {
             KAULBHASKAR GURU Ji
           </h2>
           <p className="text-lg text-simple text-justify">
-            <strong>KAULBHASKAR Guru Ji</strong> is popularly known as KAULBHASKAR, the name given to him by his Guru. His KAULAVADHUTA GURU bestow him the MAHA PURN KRAM DIKSHA of all the Amnayas. Guru Ji, popularly known as <strong>KAULBHASKAR</strong>, is from
+            From the High Courts of Material Law to the High Realms of Cosmic Order, <strong>KAULBHASKAR Guru Ji</strong> spent years mastering the laws made by man to fight earthly battles. His KAULAVADHUTA GURU bestow him the MAHA PURN KRAM DIKSHA of all the Amnayas. Guru Ji, popularly known as <strong>KAULBHASKAR</strong>, is from
             the lineage of Sri <strong>Matsyendra Nath</strong> (also known as Machendra Nath) ji, a legend of Naths and one of{" "} <strong>84 Maha Siddhas</strong>. A direct disciple of esteemed KAUL
             of Prayag, Sri <strong>KULBHUSHANANAND NATH</strong>, Guru Ji is basically an Urdhvamanayee Upasaka of MAHATRIPURSUNDARI. Sri Kaulbhaskar Ji, an expert of <strong>KAUL MARGA</strong>, has spent
             more than 30 years painstakingly perfecting his practice of SRI VIDYA UPASANA of highly mysterious{" "} <strong>DAKSHINAMURTI SAMPRADAYA</strong>.
