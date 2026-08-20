@@ -111,7 +111,7 @@ const Feature: FC = () => {
               src="videos/feature-2.mp4"
               title={
                 <>
-                  tantra-<b>teaching ,</b>
+                  metaphysics-<b>teaching ,</b>
                   <b> initiation &</b> <b>ordination</b>
                 </>
               }
@@ -124,7 +124,7 @@ const Feature: FC = () => {
               src="videos/YANTRA.mp4"
               title={
                 <>
-                  <b>astrology</b> <b>services</b>
+                  <b>know</b> the <b>destiny</b>
                 </>
               }
               description={`Horoscope and Palm reading, Kerala Jyotish,
