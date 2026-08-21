@@ -1,46 +1,47 @@
+// src/App.tsx
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import Layout from './components/Layout';
-import Home from './routes/Home'; 
 
+
+// 1. Lazy load all page components
+const Home = lazy(() => import('./routes/Home'));
 const About = lazy(() => import('./routes/About'));
 const Services = lazy(() => import('./routes/Services'));
 const Blog = lazy(() => import('./routes/Blog'));
+const BlogPost = lazy(() => import('./routes/BlogPost'));
 const Contact = lazy(() => import('./routes/Contact'));
 const Profile = lazy(() => import('./routes/Profile'));
-const BlogPost = lazy(() => import('./routes/BlogPost')); 
+const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
 
-const withSuspense = (Component: React.ComponentType) => {
-return (props: any) => ( 
-
+// 2. Helper to wrap elements in Suspense for cleaner code
+const withSuspense = (Component: React.ReactNode) => (
+  <Suspense fallback={<div className="loading-spinner" />}>
+    {Component}
+  </Suspense>
 );
-}; 
-
-const SuspendedAbout = withSuspense(About);
-const SuspendedServices = withSuspense(Services);
-const SuspendedBlog = withSuspense(Blog);
-const SuspendedContact = withSuspense(Contact);
-const SuspendedProfile = withSuspense(Profile);
-const SuspendedBlogPost = withSuspense(BlogPost); 
 
 const router = createBrowserRouter([
-{
-path: "/",
-element: 
-
-,
-children: [
-{ index: true, element:  },
-{ path: "about-us", element:  },
-{ path: "services", element:  },
-{ path: "blog", element:  },
-{ path: "contact", element:  },
-{ path: "profile", element:  },
-{ path: ":slug", element:  },
-],
-},
-]); 
+  {
+    path: "/",
+    element: <Layout />, // Layout stays static so it doesn't unmount/flicker
+    children: [
+      { index: true, element: withSuspense(<Home />) },
+      { path: "about-us", element: withSuspense(<About />) },
+      { path: "services", element: withSuspense(<Services />) },
+      { path: "blog", element: withSuspense(<Blog />) },
+      { path: "contact", element: withSuspense(<Contact />) },
+      { path: ":slug", element: withSuspense(<BlogPost />) },
+      { path: "profile", element: withSuspense(<Profile />) },
+    ],
+  },
+]);
 
 export default function App() {
-return ;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ScrollToTop />
+    </>
+  );
 }
