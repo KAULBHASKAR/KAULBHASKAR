@@ -1,24 +1,35 @@
 import React, { lazy, Suspense } from "react";
 import SEO from "../components/SEO"; 
 
-// 1. Keep Hero static to prevent a blank white screen during initial page paint
-import Hero from "../components/Hero";
+{/* Hero renders instantly without waiting */}
+<Hero />
 
-// 2. Lazy load lower, below-the-fold component blocks
-const Intro = lazy(() => import("../components/Intro")); 
-const Cohort = lazy(() => import("../components/Cohort")); 
-const StatsComponent = lazy(() => import("../components/StatsComponent"));
-const Feature = lazy(() => import("../components/Feature"));
-const Camp = lazy(() => import("../components/Camp"));
-const CalendarComponent = lazy(() => import("../components/CalendarComponent"));
-const Gallery = lazy(() => import("../components/Gallery"));
-const Mudra = lazy(() => import("../components/Mudra"));
-const FAQ = lazy(() => import("../components/FAQ"));
-const Story = lazy(() => import("../components/Story"));
-const Testimonial = lazy(() => import("../components/Testimonial"));
-const Mentor = lazy(() => import("../components/Team"));
-const Meet = lazy(() => import("../components/Meet"));
-const LatestPost = lazy(() => import("../components/LatestPost"));
+{/* Block 1: Above-the-fold or immediate below-the-fold content */}
+<Suspense fallback={<div className="h-[20vh] skeleton-loader" />}>
+  <Cohort />
+  <Intro />
+  <Feature />
+</Suspense>
+
+{/* Block 2: Middle-page content and your Calendar */}
+<Suspense fallback={<div className="h-[30vh] skeleton-loader" />}>
+  <Camp />
+  <CalendarComponent />
+  <Gallery />
+  <Mudra />
+</Suspense>
+
+{/* Block 3: Heavy lower page elements (completely deferred) */}
+<Suspense fallback={<div className="h-[40vh] skeleton-loader" />}>
+  <FAQ />
+  <StatsComponent />
+  <Story />
+  <Testimonial />
+  <Mentor />
+  <LatestPost />
+  <Meet />
+</Suspense>
+
 
 const Home: React.FC = () => {
   return (
