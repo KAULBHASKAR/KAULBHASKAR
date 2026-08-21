@@ -2,9 +2,8 @@ import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import Layout from './components/Layout';
 import ScrollToTop from './components/ScrollToTop'; // Static import to prevent network waterfall
-
+import Home from './routes/Home';
 // 1. Lazy load all page components properly
-const Home = lazy(() => import('./routes/Home'));
 const About = lazy(() => import('./routes/About'));
 const Services = lazy(() => import('./routes/Services'));
 const Blog = lazy(() => import('./routes/Blog'));
