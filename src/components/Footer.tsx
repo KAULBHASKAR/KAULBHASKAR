@@ -1,5 +1,6 @@
 // src/components/Footer.tsx
 import { Link } from "react-router";
+// Optimization: Import specific icons to enable better tree-shaking
 import { 
   FaFacebookF, 
   FaTwitter, 
@@ -26,48 +27,55 @@ const navLinks = [
 
 export default function Footer() {
   return (
-    // FIXED CLS: Changed variable layout flow to a fixed block height structure with rigid dimensions
-    <footer className="w-full bg-[#5542ff] h-[320px] md:h-[120px] text-white select-none box-border block clear-both">
-      <div className="container mx-auto h-full grid grid-cols-1 px-6 text-center md:grid-cols-4 items-center justify-items-stretch content-center gap-y-4 md:gap-y-0">
+    // FIX 2: Set minimum height (mobile vs desktop) to prevent layout collapse during load
+    <footer className="w-full bg-[#5542ff] py-10 text-white min-h-[300px] md:min-h-[120px] flex items-center">
+      <div className="container mx-auto flex flex-col items-center justify-between gap-8 px-6 md:flex-row">
         
-        {/* Copyright - FIXED CLS: Rigid box height prevents line jumping during custom font swapping */}
-        <div className="h-6 flex items-center justify-center md:justify-start overflow-hidden">
-          <p className="text-sm font-light text-white tracking-normal whitespace-nowrap leading-6">
-            © KAUL BHASKAR 2026. All rights reserved
-          </p>
-        </div>
+        {/* Copyright */}
+        <p className="text-center text-sm font-light md:text-left">
+          © KAUL BHASKAR 2026. All rights reserved
+        </p>
 
-        {/* Navigation Links - FIXED CLS: Fixed layout grid track constraints to stop layout wobble */}
-        <nav className="h-12 md:h-6 flex flex-wrap justify-center items-center gap-x-4 gap-y-1 md:col-span-2 overflow-hidden" aria-label="Footer Navigation">
+        {/* Navigation Links */}
+        <nav className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:flex-1 md:justify-center md:flex-nowrap" aria-label="Footer Navigation">
           {navLinks.map((link) => (
             <Link 
               key={link.href} 
               to={link.href} 
-              className="text-sm text-white hover:text-purple-200 transition-colors whitespace-nowrap h-6 inline-flex items-center"
+              className="text-white text-sm font-medium hover:underline transition-all focus:outline-none focus:ring-2 focus:ring-white rounded-sm"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        {/* Social Links - FIXED CLS: Isolated heights with predefined icon slots */}
-        <div className="h-9 flex justify-center items-center gap-4 md:justify-end">
-          {socialLinks.map((social) => (
+        {/* Social Links */}
+        <div className="flex gap-4 md:flex-1 md:justify-end">
+          {socialLinks.map((social, index) => (
+            // FIX 1: Fixed dimensions (w-8 h-8) on wrapper to reserve space for icons
             <a
-              key={social.href}
+              key={index}
               href={social.href}
-              aria-label={social.label}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white"
+              className="w-8 h-8 flex items-center justify-center text-white hover:scale-110 transition-transform text-xl focus:outline-none focus:ring-2 focus:ring-white rounded-full p-1"
+              aria-label={social.label}
             >
-              <span className="w-5 h-5 flex items-center justify-center min-w-[20px] min-h-[20px] [&>svg]:w-5 [&>svg]:h-5 [&>svg]:block">
+              {/* Internal fixed-size span ensures SVG doesn't cause a jump on load */}
+              <span className="w-5 h-5 flex items-center justify-center" aria-hidden="true">
                 {social.icon}
               </span>
             </a>
           ))}
         </div>
 
+        {/* Privacy Policy */}
+        <Link
+          to="/privacy"
+          className="text-center text-sm font-light hover:underline md:text-right md:ml-4 focus:outline-none focus:ring-2 focus:ring-white rounded-sm"
+        >
+          Privacy Policy
+        </Link>
       </div>
     </footer>
   );
