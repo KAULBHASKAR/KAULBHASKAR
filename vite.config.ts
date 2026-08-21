@@ -9,13 +9,13 @@ export default defineConfig({
     react(),
     tailwindcss(),
     viteCompression({
-      algorithm: 'gzip',
-      threshold: 1024,
-      ext: '.gz',
-      deleteOriginFile: false,
+      algorithm: 'gzip',       // enable gzip
+      threshold: 1024,         // only compress files > 1KB
+      ext: '.gz',              // output extension
+      deleteOriginFile: false, // keep original files
     }),
     viteCompression({
-      algorithm: 'brotliCompress',
+      algorithm: 'brotliCompress', // optional: enable Brotli too
       threshold: 1024,
       ext: '.br',
       deleteOriginFile: false,
@@ -23,39 +23,25 @@ export default defineConfig({
   ],
   build: {
     cssCodeSplit: true,
-    chunkSizeWarningLimit: 800, // Adjusted slightly for heavy third-party bundles
-    sourcemap: false,           // Set to false in production to reduce build resource footprint
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // Ignore virtual internal modules used by Vite/Rollup
-          if (id.startsWith('\0')) {
-            return;
-          }
-
           if (id.includes('node_modules')) {
-            // 1. Core structural framework files group
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+
+            if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router/')) {
               return 'vendor-framework';
             }
-            // 2. Heavy visualization assets (Isolate to prevent blocking LCP)
-            if (id.includes('react-big-calendar')) {
-              return 'vendor-calendar';
+            if (id.includes('gray-matter') || id.includes('buffer')) {
+              return 'vendor-blog-logic';
             }
-            if (id.includes('gsap')) {
-              return 'vendor-gsap';
-            }
-            // 3. Carousel animations
-            if (id.includes('react-slick') || id.includes('slick-carousel')) {
-              return 'vendor-carousel';
-            }
-            // 4. Heavy Markdown parse engines
-            if (id.includes('react-markdown') || id.includes('remark-gfm') || id.includes('gray-matter') || id.includes('buffer')) {
-              return 'vendor-content';
-            }
+            if (id.includes('react-big-calendar')) return 'vendor-calendar';
+            if (id.includes('gsap')) return 'vendor-gsap';
+            if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
+            if (id.includes('react-markdown') || id.includes('remark-gfm')) return 'vendor-content';
 
-            // 5. Catch-all for lightweight minor packages (Prevents loose chunk fragmentation)
-            return 'vendor-utils';
+            return 'vendor-libs';
           }
         },
       },
