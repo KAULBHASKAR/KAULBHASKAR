@@ -1,53 +1,52 @@
+// src/App.tsx
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import Layout from './components/Layout';
-import ScrollToTop from './components/ScrollToTop'; // Static import to prevent network waterfall
-import Home from './routes/Home';
-// 1. Lazy load all page components properly
+import Layout from './components/Layout'; 
+
+// 1. Static Import of Home page to eliminate the massive 0.346 CLS on load
+import Home from './routes/Home'; 
+
+// 2. Lazy load inner routes to keep initial bundle size light
 const About = lazy(() => import('./routes/About'));
 const Services = lazy(() => import('./routes/Services'));
 const Blog = lazy(() => import('./routes/Blog'));
-const BlogPost = lazy(() => import('./routes/BlogPost'));
 const Contact = lazy(() => import('./routes/Contact'));
 const Profile = lazy(() => import('./routes/Profile'));
+const BlogPost = lazy(() => import('./routes/BlogPost')); 
 
-// 2. Helper to wrap elements in Suspense for cleaner code
+// 3. Spacing fallback container to lock page structure while inner routes resolve
 const withSuspense = (Component: React.ComponentType) => {
-  return (props: any) => (
-    
-  );
-};
+return (props: any) => ( 
 
-// 3. Wrap components using the corrected helper function
-const SuspendedHome = withSuspense(Home);
+);
+}; 
+
 const SuspendedAbout = withSuspense(About);
 const SuspendedServices = withSuspense(Services);
 const SuspendedBlog = withSuspense(Blog);
 const SuspendedContact = withSuspense(Contact);
 const SuspendedProfile = withSuspense(Profile);
-const SuspendedBlogPost = withSuspense(BlogPost);
+const SuspendedBlogPost = withSuspense(BlogPost); 
 
+// 4. Stable router structure matched to your production layout tree
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <>
-        <ScrollToTop /> {/* Instantly loads alongside layout */}
-        <Layout />
-      </>
-    ),
-    children: [
-      { index: true, element: <SuspendedHome /> },
-      { path: "about-us", element: <SuspendedAbout /> },
-      { path: "services", element: <SuspendedServices /> },
-      { path: "blog", element: <SuspendedBlog /> },
-      { path: "contact", element: <SuspendedContact /> },
-      { path: "profile", element: <SuspendedProfile /> },
-      { path: ":slug", element: <SuspendedBlogPost /> },
-    ],
-  },
-]);
+{
+path: "/",
+element: 
+
+,
+children: [
+{ index: true, element:  },
+{ path: "about-us", element:  },
+{ path: "services", element:  },
+{ path: "blog", element:  },
+{ path: "contact", element:  },
+{ path: "profile", element:  },
+{ path: ":slug", element:  },
+],
+},
+]); 
 
 export default function App() {
-  return <RouterProvider router={router} />;
+return ;
 }
