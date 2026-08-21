@@ -14,9 +14,7 @@ const Profile = lazy(() => import('./routes/Profile'));
 // 2. Helper to wrap elements in Suspense for cleaner code
 const withSuspense = (Component: React.ComponentType) => {
   return (props: any) => (
-    <Suspense fallback={<div className="loading-spinner" />}>
-      <Component {...props} />
-    </Suspense>
+    
   );
 };
 
