@@ -104,7 +104,7 @@ export default function Contact(): React.JSX.Element {
 
       <div className="flex flex-col md:flex-row w-full bg-gray-100 p-10 lg:p-20 gap-16"> 
         <div className="md:w-1/2"> 
-          <h2 className="text-3xl font-bold mb-6">We'd love to hear from you!</h2> 
+          <h2 className="text-3xl font-bold mb-6">Our Team would love to hear from you!</h2> 
           <p className="text-xl mb-8">Please use the contact form regarding any questions, comments, or feedback.</p> 
           <img src={contactImage} alt="contact" className="w-full h-auto rounded-2xl shadow-xl" /> 
         </div> 
