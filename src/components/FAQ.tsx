@@ -37,7 +37,6 @@ const FAQ: FC = () => {
       <p className="my-10 text-lg text-blue-50">
         Who is KAUL BHASKAR ? <br />
         What services we provide ? <br />
-        Are our services chargable ? <br />
         How can I get in touch for services ? <br />
         - Answer to the such questions are here.
       </p>
