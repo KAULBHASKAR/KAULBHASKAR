@@ -44,7 +44,7 @@ const Meet: FC = () => {
         {/* Content */}
         <div className="flex flex-col items-center text-center">
           <AnimatedTitle
-            title="let's <b>wr</b>it<b>e</b> If <br /> any <b>q</b>u<b>e</b>ries <br /> or <b>sugg</b>esti<b>on</b>s ?"
+            title="let's <b>wr</b>it<b>e</b> to <br /> our <b>T</b>e<b>am "
             containerClass="special-font font-zentry font-black 
             leading-snug sm:leading-tight md:leading-[.9] 
             text-3xl sm:text-4xl md:text-6xl lg:text-[6.2rem] 
