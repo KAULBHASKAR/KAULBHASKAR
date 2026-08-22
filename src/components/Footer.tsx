@@ -1,6 +1,5 @@
 // src/components/Footer.tsx
 import { Link } from "react-router";
-// Optimization: Import specific icons to enable better tree-shaking
 import { 
   FaFacebookF, 
   FaTwitter, 
@@ -27,9 +26,7 @@ const navLinks = [
 
 export default function Footer() {
   return (
-    // FIX 2: Set minimum height (mobile vs desktop) to prevent layout collapse during load
-    <footer className="w-full bg-[#5542ff] py-10 text-white min-h-[300px] md:min-h-[120px] flex items-center [content-visibility:auto] [contain-intrinsic-size:300px]">
-
+    <footer className="w-full bg-[#5542ff] py-10 text-white flex items-center">
       <div className="container mx-auto flex flex-col items-center justify-between gap-8 px-6 md:flex-row">
         
         {/* Copyright */}
@@ -43,7 +40,7 @@ export default function Footer() {
             <Link 
               key={link.href} 
               to={link.href} 
-              className="text-white text-sm font-medium hover:underline transition-all focus:outline-none focus:ring-2 focus:ring-white rounded-sm"
+              className="text-white text-sm font-medium hover:underline transition-all focus:outline-none"
             >
               {link.label}
             </Link>
@@ -51,32 +48,21 @@ export default function Footer() {
         </nav>
 
         {/* Social Links */}
-        <div className="flex gap-4 md:flex-1 md:justify-end">
-          {socialLinks.map((social, index) => (
-            // FIX 1: Fixed dimensions (w-8 h-8) on wrapper to reserve space for icons
+        <div className="flex items-center gap-4">
+          {socialLinks.map((social) => (
             <a
-              key={index}
+              key={social.href}
               href={social.href}
+              aria-label={social.label}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 flex items-center justify-center text-white hover:scale-110 transition-transform text-xl focus:outline-none focus:ring-2 focus:ring-white rounded-full p-1"
-              aria-label={social.label}
+              className="text-white hover:text-gray-200 transition-colors text-lg"
             >
-              {/* Internal fixed-size span ensures SVG doesn't cause a jump on load */}
-              <span className="w-5 h-5 flex items-center justify-center" aria-hidden="true">
-                {social.icon}
-              </span>
+              {social.icon}
             </a>
           ))}
         </div>
 
-        {/* Privacy Policy */}
-        <Link
-          to="/privacy"
-          className="text-center text-sm font-light hover:underline md:text-right md:ml-4 focus:outline-none focus:ring-2 focus:ring-white rounded-sm"
-        >
-          Privacy Policy
-        </Link>
       </div>
     </footer>
   );
