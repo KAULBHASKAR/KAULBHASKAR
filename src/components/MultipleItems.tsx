@@ -145,12 +145,10 @@ const MultipleItems: FC = () => {
         <div className="relative z-10 flex flex-col items-center justify-center w-full px-6 text-white text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">Services</h1>
           <h2 className="text-2xl md:text-3xl font-semibold mb-4">
-            Strategic Tantra advice and tailored solutions
+              Metaphysical Strategy for High-Performers
           </h2>
           <p className="text-lg md:text-xl font-medium max-w-4xl leading-relaxed">
-            Through blog posts, videos and other resources, we provide an
-            accessible platform for individuals to learn about Tantra and its
-            various practices as well as for performing Tantric Rituals.
+             For Mastering Modern Power Structures we provide Authentic Spiritual Systems for Elite Leaders
           </p>
         </div>
       </div>
