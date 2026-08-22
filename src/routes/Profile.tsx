@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // Upgraded copy variables for premium, international branding
 const profileData = {
