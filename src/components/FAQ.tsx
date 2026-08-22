@@ -9,11 +9,11 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     question: "Who is KAUL BHASKAR ?",
-    answer: "Kaul Bhaskar is a Sri Vidya Upaska and a dedicated follower of Kaul Marg. He provides guidance in authentic Tantra, spiritual initiation, and astrological consultations."
+    answer: " Metaphysical Advisor to Elite Leaders."
   },
   {
     question: "What are the primary services offered ?",
-    answer: "• TANTRA: Free teaching, initiation, and ordination for deserving seekers, • Specialized ceremonies like Maha-Viprita Pratyangira, Baglamukhi, and Maha Vidya Homa \n• ASTROLOGY: Teaching , • Horoscope reading, Palmistry, Kerala Jyotish, and remedial solutions for various life challenges.\n• Gems, Talisman, Rosary of Rudraksh/Sphatik/Pearl\n• Worship yantra- Meru & Kurma type etc."
+    answer: " We provides high-performers with data-driven spiritual systems to safely navigate modern power structures."
   },
   {
     question: "What is the charges, if any ?",
