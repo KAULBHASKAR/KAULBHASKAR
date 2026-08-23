@@ -7,7 +7,6 @@ const [fullName, setFullName] = useState('');
 const [service, setService] = useState('Sadhana Learning');
 const [customMessage, setCustomMessage] = useState(''); 
 
-// Replace with Guru Ji's actual phone number (include country code, no "+" or spaces)
 const WHATSAPP_NUMBER = "919934418459"; 
 
 const handleSendMessage = (e: React.FormEvent) => {
@@ -17,21 +16,17 @@ alert("Please enter your name to connect.");
 return;
 } 
 
-// Fixed: Combined into a unified string assignment. No floating semicolons remaining.
-const structuredText = "Jai Gurudev.\n" +
-"I would like to request a consultation.\n\n" +
-"*Name:* " + fullName.trim() + "\n" +
-"*Purpose:* " + service + "\n" +
-"*Query:* " + (customMessage.trim() ? customMessage.trim() : 'Seeking guidance.');
+const line1 = "Jai Gurudev.\nI would like to request a consultation.\n\n";
+const line2 = "*Name:* " + fullName.trim() + "\n";
+const line3 = "*Purpose:* " + service + "\n";
+const line4 = "*Query:* " + (customMessage.trim() ? customMessage.trim() : "Seeking guidance.");
 
-// Encode text to safe URL format
+const structuredText = line1 + line2 + line3 + line4;
 const encodedText = encodeURIComponent(structuredText);
 const whatsappUrl = "[https://wa.me/](https://wa.me/)" + WHATSAPP_NUMBER + "?text=" + encodedText;
 
-// Open WhatsApp in a secure new tab
 window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
-// Reset state & close
 setFullName('');
 setCustomMessage('');
 setIsOpen(false);
