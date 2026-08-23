@@ -17,7 +17,7 @@ alert("Please enter your name to connect.");
 return;
 } 
 
-// Bulletproof string construction using standard quotes to completely satisfy tsc
+// Fixed: Combined into a unified string assignment. No floating semicolons remaining.
 const structuredText = "Jai Gurudev.\n" +
 "I would like to request a consultation.\n\n" +
 "*Name:* " + fullName.trim() + "\n" +
