@@ -43,8 +43,13 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Explicit read check to completely satisfy strict TypeScript compiler checks
+    const targetPhone = phoneNumber.trim();
+    if (!targetPhone) return;
+
     const finalMsg = inputText.trim() || message;
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(finalMsg)}`, '_blank', 'noopener,noreferrer');
+    window.open(`https://wa.me{targetPhone}?text=${encodeURIComponent(finalMsg)}`, '_blank', 'noopener,noreferrer');
   };
 
   const keyframes = `
@@ -57,36 +62,46 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
   return (
     <>
       <style>{keyframes}</style>
-      <div style={{ position: 'fixed', bottom: '30px', [position]: '30px', zIndex: 99999, fontFamily: 'sans-serif' }}>
+      <div style={{ position: 'fixed', bottom: '30px', [position]: '30px', zIndex: 99999, fontFamily: 'sans-serif', width: '60px', height: '60px' }}>
         
-        {isOpen && (
-          <div style={{ width: '320px', backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0 8px 30px rgba(0,0,0,0.15)', marginBottom: '15px', overflow: 'hidden', display: 'flex', flexDirection: 'column', animation: 'slideIn 0.3s ease-out' }}>
-            <div style={{ backgroundColor: brandColor, padding: '15px', color: '#fff', display: 'flex', alignItems: 'center', position: 'relative' }}>
-              <div>
-                <h2 style={{ margin: 0, fontSize: '15px' }}>{companyName}</h2>
-                <div style={{ fontSize: '11px', opacity: 0.9, marginTop: '2px' }}>● {companyStatus}</div>
-              </div>
-              <button type="button" onClick={() => setIsOpen(false)} style={{ position: 'absolute', right: '15px', background: 'none', border: 'none', color: '#fff', fontSize: '16px', cursor: 'pointer' }}>✕</button>
+        <div style={{ 
+          position: 'absolute',
+          bottom: '75px', 
+          [position]: '0',
+          width: '320px', 
+          backgroundColor: '#fff', 
+          borderRadius: '12px', 
+          boxShadow: '0 8px 30px rgba(0,0,0,0.15)', 
+          overflow: 'hidden', 
+          display: isOpen ? 'flex' : 'none', 
+          flexDirection: 'column', 
+          animation: 'slideIn 0.3s ease-out' 
+        }}>
+          <div style={{ backgroundColor: brandColor, padding: '15px', color: '#fff', display: 'flex', alignItems: 'center', position: 'relative' }}>
+            <div>
+              <h3 style={{ margin: 0, fontSize: '15px' }}>{companyName}</h3>
+              <div style={{ fontSize: '11px', opacity: 0.9, marginTop: '2px' }}>● {companyStatus}</div>
             </div>
-
-            <div style={{ flex: 1, padding: '15px', backgroundColor: '#e5ddd5', maxHeight: '200px', overflowY: 'auto', minHeight: '120px' }}>
-              {isTyping ? (
-                <div style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '0 8px 8px 8px', width: '40px', textAlign: 'center' }}>
-                  <span style={{ animation: 'blink 1.4s infinite alternate' }}>...</span>
-                </div>
-              ) : (
-                <div style={{ backgroundColor: '#fff', padding: '10px 12px', borderRadius: '0 8px 8px 8px', maxWidth: '85%', boxShadow: '0 1px 1px rgba(0,0,0,0.1)' }}>
-                  <p style={{ margin: 0, fontSize: '13px', color: '#333' }}>{welcomeMessage}</p>
-                </div>
-              )}
-            </div>
-
-            <form onSubmit={handleSendMessage} style={{ padding: '10px', backgroundColor: '#f0f0f0', display: 'flex', gap: '6px' }}>
-              <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="Type a message..." style={{ flex: 1, padding: '8px 12px', borderRadius: '20px', border: '1px solid #ddd', fontSize: '13px', outline: 'none' }} />
-              <button type="submit" style={{ backgroundColor: brandColor, border: 'none', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>➔</button>
-            </form>
+            <button type="button" onClick={() => setIsOpen(false)} style={{ position: 'absolute', right: '15px', background: 'none', border: 'none', color: '#fff', fontSize: '16px', cursor: 'pointer' }}>✕</button>
           </div>
-        )}
+
+          <div style={{ flex: 1, padding: '15px', backgroundColor: '#e5ddd5', maxHeight: '200px', overflowY: 'auto', minHeight: '120px' }}>
+            {isTyping ? (
+              <div style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '0 8px 8px 8px', width: '40px', textAlign: 'center' }}>
+                <span style={{ animation: 'blink 1.4s infinite alternate' }}>...</span>
+              </div>
+            ) : (
+              <div style={{ backgroundColor: '#fff', padding: '10px 12px', borderRadius: '0 8px 8px 8px', maxWidth: '85%', boxShadow: '0 1px 1px rgba(0,0,0,0.1)' }}>
+                <p style={{ margin: 0, fontSize: '13px', color: '#333' }}>{welcomeMessage}</p>
+              </div>
+            )}
+          </div>
+
+          <form onSubmit={handleSendMessage} style={{ padding: '10px', backgroundColor: '#f0f0f0', display: 'flex', gap: '6px' }}>
+            <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="Type a message..." style={{ flex: 1, padding: '8px 12px', borderRadius: '20px', border: '1px solid #ddd', fontSize: '13px', outline: 'none' }} />
+            <button type="submit" style={{ backgroundColor: brandColor, border: 'none', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>➔</button>
+          </form>
+        </div>
 
         <button 
           type="button" 
