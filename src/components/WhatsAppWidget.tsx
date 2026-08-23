@@ -24,7 +24,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = (props) => {
   // Fixed visual layout styles
   const positionStyle: React.CSSProperties = {
     position: 'fixed',
-    bottom: '24px',
+    bottom: '80px',
     [targetPosition]: '24px',
     zIndex: 9999,
     cursor: 'pointer',
