@@ -1,34 +1,40 @@
 import React, { useState } from 'react';
-import { MessageSquare, X, Send, User, ChevronDown, AlignLeft } from 'lucide-react';
+import { MessageSquare, X, Send, User, ChevronDown, AlignLeft } from 'lucide-react'; 
 
 export default function WhatsAppWidget() {
 const [isOpen, setIsOpen] = useState(false);
 const [fullName, setFullName] = useState('');
 const [service, setService] = useState('Sadhana Learning');
-const [customMessage, setCustomMessage] = useState('');
+const [customMessage, setCustomMessage] = useState(''); 
 
 // Replace with Guru Ji's actual phone number (include country code, no "+" or spaces)
-const WHATSAPP_NUMBER = "919934418459"; 
+const WHATSAPP_NUMBER = "919934418459"; 
 
-const handleSendMessage = (e) => {
+const handleSendMessage = (e: React.FormEvent) => {
 e.preventDefault();
 if (!fullName.trim()) {
 alert("Please enter your name to connect.");
 return;
-}
+} 
 
 // Format a structured, respectful message for spiritual consulting
-const structuredText = 
-Jai Gurudev. 
-I would like to request a consultation.
+const structuredText = `Jai Gurudev.
+I would like to request a consultation. 
 
-*Name:* ${fullName.trim()}
-*Purpose:* ${service}
-*Query:* ${customMessage.trim() ? customMessage.trim() : 'Seeking guidance.'};
+*Name:* 
+𝑓𝑢𝑙𝑙𝑁𝑎𝑚𝑒.𝑡𝑟𝑖𝑚()
+
+*𝑃𝑢𝑟𝑝𝑜𝑠𝑒
+
+∶
+
+*
+{service}
+*Query:* ${customMessage.trim() ? customMessage.trim() : 'Seeking guidance.'}`; 
 
 // Encode text to safe URL format
 const encodedText = encodeURIComponent(structuredText);
-const whatsappUrl = https://wa.me{WHATSAPP_NUMBER}?text=${encodedText};
+const whatsappUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText};
 
 // Open WhatsApp in a secure new tab
 window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
@@ -37,9 +43,11 @@ window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 setFullName('');
 setCustomMessage('');
 setIsOpen(false);
-};
 
-return (
+}; 
+
+return ( 
+  
 <div className="fixed bottom-6 right-6 z-50 font-sans">
 {/* Dynamic Pre-chat Consultation Form */}
 {isOpen && (
