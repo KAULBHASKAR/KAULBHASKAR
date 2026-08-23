@@ -62,10 +62,9 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
         {isOpen && (
           <div style={{ width: '320px', backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0 8px 30px rgba(0,0,0,0.15)', marginBottom: '15px', overflow: 'hidden', display: 'flex', flexDirection: 'column', animation: 'slideIn 0.3s ease-out' }}>
             <div style={{ backgroundColor: brandColor, padding: '15px', color: '#fff', display: 'flex', alignItems: 'center', position: 'relative' }}>
-              <div style="background-color: rgb(37, 211, 102); padding: 15px;">
-                <h4 style="margin: 0px; font-size: 15px; color: #ffffff;">
-                  Team Support ● Online ✕
-                </h4>
+              <div>
+                <h4 style={{ margin: 0, fontSize: '15px' }}>{companyName}</h4>
+                <div style={{ fontSize: '11px', opacity: 0.9, marginTop: '2px' }}>● {companyStatus}</div>
               </div>
               <button type="button" onClick={() => setIsOpen(false)} style={{ position: 'absolute', right: '15px', background: 'none', border: 'none', color: '#fff', fontSize: '16px', cursor: 'pointer' }}>✕</button>
             </div>
