@@ -64,7 +64,8 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
             <div style={{ backgroundColor: brandColor, padding: '15px', color: '#fff', display: 'flex', alignItems: 'center', position: 'relative' }}>
               <div style="background-color: rgb(37, 211, 102); padding: 15px;">
                 <h4 style="margin: 0px; font-size: 15px; color: #ffffff;">
-                <div style={{ fontSize: '11px', opacity: 0.9, marginTop: '2px' }}>● {companyStatus}</div>
+                  Team Support ● Online ✕
+                </h4>
               </div>
               <button type="button" onClick={() => setIsOpen(false)} style={{ position: 'absolute', right: '15px', background: 'none', border: 'none', color: '#fff', fontSize: '16px', cursor: 'pointer' }}>✕</button>
             </div>
