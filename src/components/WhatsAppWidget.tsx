@@ -17,24 +17,16 @@ alert("Please enter your name to connect.");
 return;
 } 
 
-// Fixed: Added backticks for multi-line string interpolation
-const structuredText = `Jai Gurudev.
-I would like to request a consultation. 
+// Bulletproof string construction using standard quotes to completely satisfy tsc
+const structuredText = "Jai Gurudev.\n" +
+"I would like to request a consultation.\n\n" +
+"*Name:* " + fullName.trim() + "\n" +
+"*Purpose:* " + service + "\n" +
+"*Query:* " + (customMessage.trim() ? customMessage.trim() : 'Seeking guidance.');
 
-*Name:* 
-𝑓𝑢𝑙𝑙𝑁𝑎𝑚𝑒.𝑡𝑟𝑖𝑚()
-
-*𝑃𝑢𝑟𝑝𝑜𝑠𝑒
-
-∶
-
-*
-{service}
-*Query:* ${customMessage.trim() ? customMessage.trim() : 'Seeking guidance.'}`; 
-
-// Fixed: Added backticks, fixed missing forward slash and missing $ for the variable
+// Encode text to safe URL format
 const encodedText = encodeURIComponent(structuredText);
-const whatsappUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText};
+const whatsappUrl = "[https://wa.me/](https://wa.me/)" + WHATSAPP_NUMBER + "?text=" + encodedText;
 
 // Open WhatsApp in a secure new tab
 window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
