@@ -12,7 +12,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = (props) => {
   
   const handleChatRedirect = () => {
     const encodedMessage = encodeURIComponent(targetMessage);
-    const whatsappUrl = `https://wa.me{props.phoneNumber}?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${props.phoneNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
