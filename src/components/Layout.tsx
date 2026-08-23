@@ -2,7 +2,7 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router'; // 1. Added ScrollRestoration
 import Navbar from './Navbar'; 
-
+import WhatsAppWidget from './WhatsAppWidget'; // Added the widget import
 const Footer = lazy(() => import('./Footer'));
 
 export default function Layout() {
