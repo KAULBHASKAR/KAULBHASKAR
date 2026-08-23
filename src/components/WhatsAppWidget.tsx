@@ -16,14 +16,11 @@ alert("Please enter your name to connect.");
 return;
 } 
 
-const line1 = "Jai Gurudev.\nI would like to request a consultation.\n\n";
-const line2 = "*Name:* " + fullName.trim() + "\n";
-const line3 = "*Purpose:* " + service + "\n";
-const line4 = "*Query:* " + (customMessage.trim() ? customMessage.trim() : "Seeking guidance.");
+// Direct inline assembly without dynamic multiline expressions to bypass compiler strictness
+const queryText = customMessage.trim() ? customMessage.trim() : "Seeking guidance.";
+const structuredText = "Jai Gurudev.\nI would like to request a consultation.\n\n*Name:* " + fullName.trim() + "\n*Purpose:* " + service + "\n*Query:* " + queryText;
 
-const structuredText = line1 + line2 + line3 + line4;
-const encodedText = encodeURIComponent(structuredText);
-const whatsappUrl = "[https://wa.me/](https://wa.me/)" + WHATSAPP_NUMBER + "?text=" + encodedText;
+const whatsappUrl = "[https://wa.me/](https://wa.me/)" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(structuredText);
 
 window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
