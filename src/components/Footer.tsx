@@ -9,11 +9,11 @@ import {
 } from "react-icons/fa6";
 
 const socialLinks = [
-  { href: "https://facebook.com", icon: <FaFacebookF />, label: "Follow us on Facebook" },
+  { href: "https://facebook.com/KAULBHASKAR", icon: <FaFacebookF />, label: "Follow us on Facebook" },
   { href: "https://twitter.com", icon: <FaTwitter />, label: "Follow us on Twitter" },
   { href: "https://youtube.com", icon: <FaYoutube />, label: "Visit our YouTube channel" },
   { href: "https://linkedin.com", icon: <FaLinkedin />, label: "Connect with us on LinkedIn" },
-  { href: "https://wa.me", icon: <FaWhatsapp />, label: "Chat with us on WhatsApp" },
+  { href: "https://wa.me/919934418459", icon: <FaWhatsapp />, label: "Chat with us on WhatsApp" },
 ];
 
 const navLinks = [
