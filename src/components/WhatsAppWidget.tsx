@@ -12,31 +12,28 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = (props) => {
   
   const handleChatRedirect = () => {
     const encodedMessage = encodeURIComponent(targetMessage);
-    const whatsappUrl = `https://wa.me/${props.phoneNumber}?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me{props.phoneNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
-  // Natively inject keyframes for a continuous subtle heartbeat/pulse effect
+  // Continuous expanding ring effect behind the button
   const pulseKeyframes = `
     @keyframes whatsappPulse {
       0% {
         box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-        transform: scale(1);
       }
       70% {
         box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
-        transform: scale(1.03);
       }
       100% {
         box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-        transform: scale(1);
       }
     }
   `;
 
   const positionStyle: React.CSSProperties = {
     position: 'fixed',
-    bottom: '80px',
+    bottom: '24px',
     [targetPosition]: '24px',
     zIndex: 9999,
     cursor: 'pointer',
@@ -47,30 +44,21 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = (props) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
     border: 'none',
     transition: 'transform 0.2s ease-in-out',
-    // Apply continuous animation loop
+    // Combines standard shadow with the automated pulse loop
     animation: 'whatsappPulse 2s infinite ease-in-out',
   };
 
   return (
     <>
-      {/* Injecting keyframes dynamically inside the render loop */}
       <style>{pulseKeyframes}</style>
-      
       <button 
         style={positionStyle} 
         onClick={handleChatRedirect}
         aria-label="Chat on WhatsApp"
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.1)';
-          e.currentTarget.style.animationPlayState = 'paused'; // Pauses the pulse during manual hover expansion
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
-          e.currentTarget.style.animationPlayState = 'running'; // Resumes continuous pulse when mouse exits
-        }}
+        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
       >
         <svg 
           xmlns="http://w3.org" 
