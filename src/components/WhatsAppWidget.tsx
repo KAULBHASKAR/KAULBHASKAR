@@ -54,7 +54,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
     @keyframes blink { 0%, 100% { opacity: .2; } 20% { opacity: 1; } }
   `;
 
- return (
+  return (
     <>
       <style>{keyframes}</style>
       <div style={{ position: 'fixed', bottom: '30px', [position]: '30px', zIndex: 99999, fontFamily: 'sans-serif' }}>
@@ -63,10 +63,8 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
           <div style={{ width: '320px', backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0 8px 30px rgba(0,0,0,0.15)', marginBottom: '15px', overflow: 'hidden', display: 'flex', flexDirection: 'column', animation: 'slideIn 0.3s ease-out' }}>
             <div style={{ backgroundColor: brandColor, padding: '15px', color: '#fff', display: 'flex', alignItems: 'center', position: 'relative' }}>
               <div>
-                {/* Fixed color property explicitly to #fff for the company name */}
-                <h4 style={{ margin: 0, fontSize: '15px', color: '#fff' }}>{companyName}</h4>
-                {/* Fixed color property explicitly to #fff for the company status */}
-                <div style={{ fontSize: '11px', opacity: 0.9, marginTop: '2px', color: '#fff' }}>● {companyStatus}</div>
+                <h4 style={{ margin: 0, fontSize: '15px' }}>{companyName}</h4>
+                <div style={{ fontSize: '11px', opacity: 0.9, marginTop: '2px' }}>● {companyStatus}</div>
               </div>
               <button type="button" onClick={() => setIsOpen(false)} style={{ position: 'absolute', right: '15px', background: 'none', border: 'none', color: '#fff', fontSize: '16px', cursor: 'pointer' }}>✕</button>
             </div>
