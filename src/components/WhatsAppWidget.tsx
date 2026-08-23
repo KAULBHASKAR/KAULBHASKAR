@@ -14,7 +14,6 @@ alert("Please enter your name to connect.");
 return;
 } 
 
-// Handled purely via inline functions to completely empty lines 20-45 of complex operators
 const detailText = customMessage.trim() ? customMessage.trim() : "Seeking guidance.";
 const rawText = "Jai Gurudev.\nI would like to request a consultation.\n\n*Name:* " + fullName.trim() + "\n*Purpose:* " + service + "\n*Query:* " + detailText;
 
