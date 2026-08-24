@@ -101,7 +101,7 @@ const Feature: FC = () => {
                 <b>metaphysical</b> <b>resonance &</b> <b>energy alignment</b>
               </>
             }
-            description=" Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
+            description="We provide complete solutions for all your's Tantra Puja and Rituals. Make a Schedule for Puja and Rituals with Our Experts."
         </BentoTilt>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
