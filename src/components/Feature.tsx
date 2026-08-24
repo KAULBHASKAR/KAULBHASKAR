@@ -124,7 +124,7 @@ const Feature: FC = () => {
               src="videos/YANTRA.mp4"
               title={
                 <>
-                  <b>karmic roi</b>& strategic <b>lifepath maping</b>
+                  <b>karmic roi</b> <b>& </b>strategic <b>lifepath maping</b>
                 </>
               }
               description={`Precision analytical timelines for critical executive decision-making`}
