@@ -62,7 +62,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
   return (
     <>
       <style>{keyframes}</style>
-      <div style={{ position: 'fixed', bottom: '30px', [position]: '30px', zIndex: 99999, fontFamily: 'sans-serif', width: '60px', height: '60px' }}>
+      <div style={{ position: 'fixed', bottom: '90px', [position]: '30px', zIndex: 99999, fontFamily: 'sans-serif', width: '60px', height: '60px' }}>
         
         <div style={{ 
           position: 'absolute',
