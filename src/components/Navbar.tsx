@@ -67,7 +67,7 @@ export default function Navbar() {
       <nav className="flex items-center justify-between w-full px-4" aria-label="Main Navigation">
         <div className="flex items-center gap-6">
           <NavLink to="/" aria-label="Go to Home">
-            <img src="/img/logo01.svg" alt="Company Logo" width="80" height="80" className="w-20 h-20" loading="eager" />
+            <img src="/img/color-logo.svg" alt="Company Logo" width="40" height="40" className="w-15 h-15" loading="eager" />
           </NavLink>
           <button 
             onClick={() => window.location.href='tel:+919934418459'}
