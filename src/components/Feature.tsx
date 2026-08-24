@@ -93,15 +93,16 @@ const Feature: FC = () => {
           </p>
         </div>
 
-        <BentoTilt className="border-hsl relative mb-7 min-h-96 w-full overflow-hidden rounded-md md:h-[65vh]">
+         <BentoTilt className="border-hsl relative mb-7 min-h-96 w-full overflow-hidden rounded-md md:h-[65vh]">
           <BentoCard
             src="videos/feature-1.mp4"
             title={
               <>
-                <b>metaphysical</b> <b>resonance &</b> <b>energy alignment</b>
+                <b>tantra</b> <b>puja &</b> <b>rituals</b>
               </>
             }
             description="We provide complete solutions for all your's Tantra Puja and Rituals. Make a Schedule for Puja and Rituals with Our Experts."
+          />
         </BentoTilt>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
