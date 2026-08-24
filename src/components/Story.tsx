@@ -96,7 +96,7 @@ const Story: React.FC = () => {
               KAULBHASKAR is from the lineage of Sri Matsyendra Nath (also known as Machendra Nath) ji, a legend of Naths and one of 84 Maha Siddhas.
             </p>
             <p className="mt-5 font-circular-web text-lg text-violet-50 text-center md:text-start">
-              KAULBHASKAR, an Elite Architecct, is a Metaphysical Strategist for High-Performing Leaders.
+              KAULBHASKAR, an Elite Architect, is a Metaphysical Strategist for High-Performing Leaders.
             </p>
           </div>
         </div>
