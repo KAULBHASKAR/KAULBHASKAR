@@ -93,10 +93,10 @@ const Story: React.FC = () => {
         <div className="mt-10 flex w-full justify-center md:justify-end md:px-20 px-4">
           <div className="flex flex-col items-center md:items-start max-w-sm">
             <p className="font-circular-web text-lg text-violet-50 text-center md:text-start">
-              Guru Ji, popularly known as KAULBHASKAR, is from the lineage of Sri Matsyendra Nath (also known as Machendra Nath) ji, a legend of Naths and one of 84 Maha Siddhas.
+              KAULBHASKAR is from the lineage of Sri Matsyendra Nath (also known as Machendra Nath) ji, a legend of Naths and one of 84 Maha Siddhas.
             </p>
             <p className="mt-5 font-circular-web text-lg text-violet-50 text-center md:text-start">
-              Guru Ji, a Great KAUL, is a SRI VIDYA UPASAKA of DAKSHINAMURTI SAMPRADAYA.
+              KAULBHASKAR, an Elite Architecct, is a Metaphysical Strategist for High-Performing Leaders.
             </p>
           </div>
         </div>
