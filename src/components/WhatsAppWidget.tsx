@@ -66,7 +66,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
         
         <div style={{ 
           position: 'absolute',
-          bottom: '75px', 
+          bottom: '120px', 
           [position]: '0',
           width: '320px', 
           backgroundColor: '#fff', 
