@@ -98,10 +98,10 @@ const Feature: FC = () => {
             src="videos/feature-1.mp4"
             title={
               <>
-                <b>metaphysical</b> <b>resonance &</b> <b>energy alignment</b>
+                <b>tantra</b> <b>puja &</b> <b>rituals</b>
               </>
             }
-            description=" Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
+            description="We provide complete solutions for all your's Tantra Puja and Rituals. Make a Schedule for Puja and Rituals with Our Experts."
           />
         </BentoTilt>
 
@@ -111,7 +111,7 @@ const Feature: FC = () => {
               src="videos/feature-2.mp4"
               title={
                 <>
-                  metaphysics-<b>teaching ,</b>
+                  tantra-<b>teaching ,</b>
                   <b> initiation &</b> <b>ordination</b>
                 </>
               }
@@ -124,10 +124,12 @@ const Feature: FC = () => {
               src="videos/YANTRA.mp4"
               title={
                 <>
-                  <b>karmic</b> roi</b> &</b> strategic</b> lifepath<b>maping</b>
+                  <b>astrology</b> <b>services</b>
                 </>
               }
-              description={`Precision analytical timelines for critical executive decision-making`}
+              description={`Horoscope and Palm reading, Kerala Jyotish,
+Ashta Mangala Prashnam, Deva Prashnam, Tamboola Prashnam.
+We provide remedial solutions for Manglika Dosha, delayed marriage and progeny etc.`}
             />
           </BentoTilt>
 
