@@ -98,7 +98,7 @@ const Feature: FC = () => {
             src="videos/feature-1.mp4"
             title={
               <>
-                <b>tantra</b> <b>puja &</b> <b>rituals</b>
+                <b>metaphysical</b> <b>resonance &</b> <b>energy alignment</b>
               </>
             }
             description="We provide complete solutions for all your's Tantra Puja and Rituals. Make a Schedule for Puja and Rituals with Our Experts."
