@@ -191,12 +191,11 @@ const Hero: React.FC = () => {
               न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
               न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
               <br />
-              We can help you on an adventure around the world of Tantra in just
-              a simple way.
+              I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
             </p>
             <Button
               id="kaulbhaskar-guru ji"
-              title="Visit my other WEBSITE"
+              title="For academic researchers and deep lineage seekers, explore our foundational research archieve here"
               leftIcon={<TiLocationArrow />}
               containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
               onClick={() =>
