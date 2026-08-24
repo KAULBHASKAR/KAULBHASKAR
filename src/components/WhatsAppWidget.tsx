@@ -66,7 +66,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
         
         <div style={{ 
           position: 'absolute',
-          bottom: '120px', 
+          bottom: '75px', 
           [position]: '0',
           width: '320px', 
           backgroundColor: '#fff', 
@@ -75,9 +75,9 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
           overflow: 'hidden', 
           display: isOpen ? 'flex' : 'none', 
           flexDirection: 'column', 
-          animation: 'slideIn 0.3s ease-out' 
+          animation: 'slideIn 3.3s ease-out' 
         }}>
-          <div style={{ backgroundColor: brandColor, padding: '15px', color: '#fff', display: 'flex', alignItems: 'center', position: 'relative' }}>
+          <div style={{ backgroundColor: brandColor, padding: '20px', color: '#fff', display: 'flex', alignItems: 'center', position: 'relative' }}>
             <div>
               <h3 style={{ margin: 0, fontSize: '15px' }}>{companyName}</h3>
               <div style={{ fontSize: '11px', opacity: 0.9, marginTop: '2px' }}>● {companyStatus}</div>
