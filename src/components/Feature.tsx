@@ -139,7 +139,7 @@ const Feature: FC = () => {
                   <b>metaphysical rituals &</b> <b>deployments</b>
                 </>
               }
-              description="We engineer and execute specialized metaphysical remedial protocols, managing high-complexity deployments such as Rudrabhishekam, Baglamukhi systems, Maha Mrityunjaya sequences, and advanced planetary alignment Homas. Our technical team oversees the complete operational schedule, delivering meticulously audited, ritual-compliant solutions tailored to client-specific environmental constraints."
+              description="We engineer and execute specialized metaphysical remedial protocols, managing high-complexity deployments such as Pratyangira Homa, Mahavidya Homa, Baglamukhi systems, and advanced planetary alignment Homas. Our technical team oversees the complete operational schedule, delivering meticulously audited, ritual-compliant solutions tailored to client-specific environmental constraints."
             />
           </BentoTilt>
         </div>
