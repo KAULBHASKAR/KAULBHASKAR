@@ -132,40 +132,21 @@ const Feature: FC = () => {
           </BentoTilt>
 
           <BentoTilt className="bento-tilt_1 md:col-span-1">
+  <BentoTilt className="bento-tilt_1 md:col-span-1">
   <BentoCard
     src="videos/3d.mp4"
     title={
       <div className="flex flex-col gap-1">
         <span className="text-xs text-amber-500 font-medium tracking-wider uppercase">Spiritual Remedies</span>
-        <h3 class="text-xl md:text-2xl font-bold tracking-tight">
+        <h3 className="text-xl md:text-2xl font-bold tracking-tight">
           <b>gems,</b> <b>talisman &</b> <b>yantras</b>
         </h3>
       </div>
     }
-    description={
-      <div className="flex flex-col gap-4 mt-2">
-        <p class="text-sm text-zinc-400 leading-relaxed">
-          We provide authenticated gemstones, personalized talismans, and sacred rosaries tailored precisely to your planetary alignments. For dedicated Sadhakas, we arrange powerful, ritually energized cosmic layouts.
-        </p>
-        
-        <ul class="space-y-2.5 text-left border-t border-zinc-800/60 pt-4">
-          <li class="flex items-start gap-2.5 text-xs md:text-sm text-zinc-300">
-            <span class="flex-shrink-0 text-amber-400">💎</span>
-            <span><strong class="text-zinc-100">Consecrated Items:</strong> Mapped to individual planetary configurations.</span>
-          </li>
-          <li class="flex items-start gap-2.5 text-xs md:text-sm text-zinc-300">
-            <span class="flex-shrink-0 text-amber-400">🔱</span>
-            <span><strong class="text-zinc-100">Sacred Geometry:</strong> Authentic Meru and Kurma layouts built for advanced practice.</span>
-          </li>
-          <li class="flex items-start gap-2.5 text-xs md:text-sm text-zinc-300">
-            <span class="flex-shrink-0 text-amber-400">✨</span>
-            <span><strong class="text-zinc-100">Guru Blessings:</strong> Energized and consecrated by Sri Kaulbhaskar Guru Ji.</span>
-          </li>
-        </ul>
-      </div>
-    }
+    description="We provide authenticated gemstones, personalized talismans, and sacred rosaries tailored precisely to your planetary alignments. For dedicated Sadhakas, we arrange powerful, ritually energized cosmic layouts (Meru/Kurma) precisely consecrated by Sri Kaulbhaskar Guru Ji."
   />
 </BentoTilt>
+
 
         </div>
       </div>
