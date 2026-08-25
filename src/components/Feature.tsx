@@ -136,10 +136,10 @@ const Feature: FC = () => {
               src="videos/3d.mp4"
               title={
                 <>
-                  <b>gems,</b> <b>talisman &</b> <b>yantras</b>
+                  <b>metaphysical rituals &</b> <b>deployments</b>
                 </>
               }
-              description="We can provide consecrated Gems, Talisman and Rosary. For Sadhakas we can also arrange authentic and precise Meru/Kurma puja yantras, specially designed and consecrated by Sri Kaulbhaskar Guru Ji."
+              description="We engineer and execute specialized metaphysical remedial protocols, managing high-complexity deployments such as Rudrabhishekam, Baglamukhi systems, Maha Mrityunjaya sequences, and advanced planetary alignment Homas. Our technical team oversees the complete operational schedule, delivering meticulously audited, ritual-compliant solutions tailored to client-specific environmental constraints."
             />
           </BentoTilt>
         </div>
