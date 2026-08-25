@@ -131,23 +131,17 @@ const Feature: FC = () => {
             />
           </BentoTilt>
 
-          <BentoTilt className="bento-tilt_1 md:col-span-1">
-  <BentoTilt className="bento-tilt_1 md:col-span-1">
-  <BentoCard
-    src="videos/3d.mp4"
-    title={
-      <div className="flex flex-col gap-1">
-        <span className="text-xs text-amber-500 font-medium tracking-wider uppercase">Spiritual Remedies</span>
-        <h3 className="text-xl md:text-2xl font-bold tracking-tight">
-          <b>gems,</b> <b>talisman &</b> <b>yantras</b>
-        </h3>
-      </div>
-    }
-    description="We provide authenticated gemstones, personalized talismans, and sacred rosaries tailored precisely to your planetary alignments. For dedicated Sadhakas, we arrange powerful, ritually energized cosmic layouts (Meru/Kurma) precisely consecrated by Sri Kaulbhaskar Guru Ji."
-  />
-</BentoTilt>
-
-
+          <BentoTilt className="bento-title_1 md:col-span-1">
+            <BentoCard
+              src="videos/3d.mp4"
+              title={
+                <>
+                  <b>gems,</b> <b>talisman &</b> <b>yantras</b>
+                </>
+              }
+              description="We can provide consecrated Gems, Talisman and Rosary. For Sadhakas we can also arrange authentic and precise Meru/Kurma puja yantras, specially designed and consecrated by Sri Kaulbhaskar Guru Ji."
+            />
+          </BentoTilt>
         </div>
       </div>
     </section>
