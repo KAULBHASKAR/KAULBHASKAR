@@ -51,21 +51,21 @@ const Profile: React.FC = () => {
       <Helmet>
         <title>Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory</title>
         <meta name="description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        <link rel="canonical" href="https://vercel.app" />
+        <link rel="canonical" href="https://vwww.kaulbhaskar.com" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://vercel.app" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com" />
         <meta property="og:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta property="og:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        <meta property="og:image" content="https://vercel.app" />
+        <meta property="og:image" content="https://www.kaulbhaskar.com" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://vercel.app" />
+        <meta name="twitter:url" content="https://www.kaulbhaskar.com" />
         <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta name="twitter:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        <meta name="twitter:image" content="https://vercel.app" />
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com" />
       </Helmet>
 
       {/* Homepage Hero Section */}
