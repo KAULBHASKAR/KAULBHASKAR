@@ -1,5 +1,7 @@
 import React, { useState } from 'react'; 
 import type { ChangeEvent, FormEvent } from 'react'; 
+// Import Helmet directly to bypass SEO prop type errors
+import { Helmet } from 'react-helmet-async';
 import emailjs from '@emailjs/browser'; 
 import phoneImage from '/img/phone-image.jpeg'; 
 import contactImage from '/img/contact.webp'; 
@@ -58,16 +60,34 @@ export default function Contact(): React.JSX.Element {
 
   return ( 
     <div className="flex flex-col w-full min-h-screen"> 
+      {/* ✅ Safe layout variables that your SEO component already accepts */}
       <SEO 
         title="Contact Kaulbhaskar | Tantra & Astrology Guidance" 
-        description="Get in touch with Kaulbhaskar Guru Ji for Tantra and Astrology consultations." 
-        canonical="https://tantrasadhana.org" 
+        description="Book a consultation with Kaulbhaskar Guru Ji in Patna for professional Vedic Astrology readings, authentic Tantric rituals, and spiritual guidance." 
+        canonical="https://vercel.app" 
         breadcrumbs={[ 
-          { name: 'Home', url: 'https://tantrasadhana.org' }, 
-          { name: 'Services', url: 'https://tantrasadhana.org/services' }, 
-          { name: 'Contact', url: 'https://tantrasadhana.org' }, 
+          { name: 'Home', url: 'https://vercel.app' }, 
+          { name: 'Services', url: 'https://vercel.app/services' }, 
+          { name: 'Contact', url: 'https://vercel.app' }, 
         ]} 
       /> 
+
+      {/* ✅ Direct Helmet injection to add Open Graph tags without breaking TypeScript definitions */}
+      <Helmet>
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://vercel.app" />
+        <meta property="og:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
+        <meta property="og:description" content="Book a consultation with Kaulbhaskar Guru Ji in Patna for professional Vedic Astrology readings, authentic Tantric rituals, and spiritual guidance." />
+        <meta property="og:image" content="https://vercel.app/img/intro.webp" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://vercel.app" />
+        <meta name="twitter:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
+        <meta name="twitter:description" content="Book a consultation with Kaulbhaskar Guru Ji in Patna for professional Vedic Astrology readings, authentic Tantric rituals, and spiritual guidance." />
+        <meta name="twitter:image" content="https://vercel.app/img/intro.webp" />
+      </Helmet>
 
       <div className="relative w-full h-dvh flex items-center justify-center"> 
         <img src={phoneImage} alt="telephone" className="absolute inset-0 w-full h-full object-cover" /> 
