@@ -1,5 +1,7 @@
 import { useParams, Link } from "react-router";
 import { useState } from "react"; // Added for password state
+// Import Helmet directly to bypass SEO prop type errors
+import { Helmet } from "react-helmet-async";
 import matter from "gray-matter";
 import { Buffer } from "buffer";
 import SEO from "../components/SEO";
@@ -44,6 +46,13 @@ export default function BlogPost() {
   const postData = data as PostFrontMatter;
   const isProtected = !!postData.password;
 
+  // Fallback fallback configurations for image assets
+  const canonicalUrl = `https://vercel.app{slug}`;
+  const fallbackImage = "https://vercel.app";
+  const ogImageUrl = postData.featuredImage 
+    ? (postData.featuredImage.startsWith('http') ? postData.featuredImage : `https://vercel.app${postData.featuredImage}`)
+    : fallbackImage;
+
   // Handle password submission
   const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,6 +68,13 @@ export default function BlogPost() {
   if (isProtected && !isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-indigo-500 to-purple-500 px-4">
+        {/* Safe loading of tags even on locked layouts so search engine spiders can crawl metadata structure cleanly */}
+        <Helmet>
+          <title>Protected Content | KAULBHASKAR Blog</title>
+          <meta name="description" content="This spiritual sadhana layout framework requires authorized password entry credentials to view context details safely." />
+          <meta name="robots" content="noindex, follow" />
+        </Helmet>
+
         <div className="max-w-md w-full p-8 border rounded-2xl bg-white shadow-2xl text-center">
           <h2 className="text-2xl font-bold mb-2 text-gray-800">Restricted Access</h2>
           <p className="mb-6 text-gray-600">This Sadhana requires a password to view.</p>
@@ -93,18 +109,38 @@ export default function BlogPost() {
   // 2. AUTHORIZED CONTENT VIEW
   return (
     <article className="w-full px-6 py-10 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen">
+      {/* ✅ Safe layout variables that your SEO component already accepts */}
       <SEO
         title={`${postData.title} | Sri Kaulbhaskar Blog`}
-        description={postData.excerpt || ""}
-        canonical={`https://www.tantrasadhana.org/blog/${slug}`}
-        keywords={postData.keywords || ""}
-        featuredImage={postData.featuredImage || ""}
+        description={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."}
+        canonical={canonicalUrl}
+        keywords={postData.keywords || "Tantra wisdom, Sri Vidya sadhana"}
+        featuredImage={ogImageUrl}
         breadcrumbs={[
-          { name: "Home", url: "https://www.tantrasadhana.org" },
-          { name: "Blog", url: "https://www.tantrasadhana.org/blog" },
-          { name: postData.title, url: `https://www.tantrasadhana.org/${slug}` },
+          { name: "Home", url: "https://vercel.app" },
+          { name: "Blog", url: "https://vercel.app/blog" },
+          { name: postData.title, url: canonicalUrl },
         ]}
       />
+
+      {/* ✅ Direct Helmet injection to add dynamic Open Graph tags without breaking TypeScript definitions */}
+      <Helmet>
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={`${postData.title} | Sri Kaulbhaskar Blog`} />
+        <meta property="og:description" content={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="article:author" content={postData.authorName || "KAULBHASKAR Guru Ji"} />
+        <meta property="article:published_time" content={postData.date} />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={canonicalUrl} />
+        <meta name="twitter:title" content={`${postData.title} | Sri Kaulbhaskar Blog`} />
+        <meta name="twitter:description" content={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."} />
+        <meta name="twitter:image" content={ogImageUrl} />
+      </Helmet>
 
       <div className="max-w-5xl mx-auto">
         <Link to="/blog" className="mt-20 text-sm text-black hover:text-orange-200 mb-8 inline-block">
