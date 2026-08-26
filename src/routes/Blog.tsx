@@ -62,11 +62,11 @@ export default function Blog() {
       <SEO
         title="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji"
         description="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar."
-        canonical="https://vercel.app"
+        canonical="https://www.kaulbhaskar.com"
         keywords="Tantra blog, Astrology articles, Sri Vidya insights, Kaulbhaskar writings, Kulashastra, Tripura Stotra"
         breadcrumbs={[
-          { name: "Home", url: "https://vercel.app" },
-          { name: "Blog", url: "https://vercel.app" },
+          { name: "Home", url: "https://www.kaulbhaskar.com" },
+          { name: "Blog", url: "https://www.kaulbhaskar.com/blog" },
         ]}
       />
 
@@ -74,17 +74,17 @@ export default function Blog() {
       <Helmet>
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://vercel.app" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com" />
         <meta property="og:title" content="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji" />
         <meta property="og:description" content="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar." />
-        <meta property="og:image" content="https://vercel.app/img/intro.webp" />
+        <meta property="og:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://vercel.app" />
+        <meta name="twitter:url" content="https://www.kaulbhaskar.com" />
         <meta name="twitter:title" content="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji" />
         <meta name="twitter:description" content="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar." />
-        <meta name="twitter:image" content="https://vercel.app/img/intro.webp" />
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
       </Helmet>
 
       <h1 className="special-font hero-subheading text-center my-24">BLOG</h1>
