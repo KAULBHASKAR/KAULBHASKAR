@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
@@ -12,6 +12,11 @@ const Hero: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isClient, setIsClient] = useState(false);
 
+  // Core containers to hold pure imperatively generated DOM nodes
+  const currentVideoContainerRef = useRef<HTMLDivElement>(null);
+  const nextVideoContainerRef = useRef<HTMLDivElement>(null);
+  const bgVideoContainerRef = useRef<HTMLDivElement>(null);
+
   const totalVideo = 4;
   const upcomingVideoIndex = (currentIndex % totalVideo) + 1;
 
@@ -19,18 +24,64 @@ const Hero: React.FC = () => {
     setCurrentIndex(upcomingVideoIndex);
   };
 
-  // Safe client-side hydration switch
+  const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
+
+  // 1. Establish initial client mount baseline
   useEffect(() => {
     setIsClient(true);
-    
-    // Safety loader timeout fallback
     const timeout = setTimeout(() => {
       setIsLoading(false);
       ScrollTrigger.refresh(true);
     }, 2000);
-
     return () => clearTimeout(timeout);
   }, []);
+
+  // 2. Pure Imperative DOM Generation to bypass all React hydration loops
+  useLayoutEffect(() => {
+    if (!isClient) return;
+
+    // Helper to build a completely untainted hardware-level video DOM element
+    const createNativeVideoNode = (id: string, src: string, classString: string) => {
+      const video = document.createElement("video");
+      video.id = id;
+      video.src = src;
+      video.className = classString;
+      video.loop = true;
+      video.setAttribute("playsinline", "");
+      video.setAttribute("preload", "auto");
+      
+      // Strict DOM property enforcement (Critical for bypassing Chrome/Safari autoplay locks)
+      video.muted = true; 
+      video.defaultMuted = true;
+      
+      // Kickstart execution directly at the hardware layer
+      video.play().catch((err) => {
+        console.log(`Video node ${id} hardware engine autoplay retry tracking:`, err);
+      });
+
+      return video;
+    };
+
+    // Inject nodes fresh into target layouts, replacing stale instances
+    if (bgVideoContainerRef.current) {
+      bgVideoContainerRef.current.innerHTML = "";
+      const bgNode = createNativeVideoNode("bg-video", getVideoSrc(currentIndex), "absolute left-0 top-0 size-full object-cover");
+      bgVideoContainerRef.current.appendChild(bgNode);
+    }
+
+    if (nextVideoContainerRef.current) {
+      nextVideoContainerRef.current.innerHTML = "";
+      const nextNode = createNativeVideoNode("next-video", getVideoSrc(currentIndex), "absolute-center invisible absolute z-20 size-64 object-cover");
+      nextVideoContainerRef.current.appendChild(nextNode);
+    }
+
+    if (currentVideoContainerRef.current) {
+      currentVideoContainerRef.current.innerHTML = "";
+      const currentNode = createNativeVideoNode("current-video", getVideoSrc(upcomingVideoIndex), "size-64 origin-center scale-150 object-cover object-center");
+      currentVideoContainerRef.current.appendChild(currentNode);
+    }
+
+  }, [isClient, currentIndex]);
 
   // Main Intro + Scroll Animation
   useGSAP(() => {
@@ -52,15 +103,6 @@ const Hero: React.FC = () => {
     });
   }, []);
 
-  const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
-
-  // Explicitly inject raw DOM nodes to bypass the React SSR muted attribute hydration mismatch bug
-  const renderNativeVideo = (id: string, src: string, extraClass: string) => {
-    return {
-      __html: `<video id="${id}" src="${src}" loop muted playsinline autoplay preload="auto" class="${extraClass}"></video>`
-    };
-  };
-
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
       {isLoading && (
@@ -81,27 +123,12 @@ const Hero: React.FC = () => {
           <div
             onClick={handleMiniVideoClick}
             className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
-          >
-            {isClient && (
-              <div 
-                dangerouslySetInnerHTML={renderNativeVideo("current-video", getVideoSrc(upcomingVideoIndex), "size-64 origin-center scale-150 object-cover object-center")}
-              />
-            )}
-          </div>
+            ref={currentVideoContainerRef}
+          />
         </div>
 
-        {isClient && (
-          <div 
-            dangerouslySetInnerHTML={renderNativeVideo("next-video", getVideoSrc(currentIndex), "absolute-center invisible absolute z-20 size-64 object-cover")}
-          />
-        )}
-
-        {isClient && (
-          <div 
-            className="absolute left-0 top-0 size-full"
-            dangerouslySetInnerHTML={renderNativeVideo("bg-video", getVideoSrc(currentIndex), "absolute left-0 top-0 size-full object-cover")}
-          />
-        )}
+        <div ref={nextVideoContainerRef} />
+        <div ref={bgVideoContainerRef} className="absolute left-0 top-0 size-full" />
 
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
           BH<b>as</b>k<b>a</b>r
