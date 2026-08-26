@@ -64,11 +64,11 @@ export default function Contact(): React.JSX.Element {
       <SEO 
         title="Contact Kaulbhaskar | Tantra & Astrology Guidance" 
         description="Book a consultation with Kaulbhaskar Guru Ji in Patna for professional Vedic Astrology readings, authentic Tantric rituals, and spiritual guidance." 
-        canonical="https://vercel.app" 
+        canonical="https://www.kaulbhaskar.com" 
         breadcrumbs={[ 
-          { name: 'Home', url: 'https://vercel.app' }, 
-          { name: 'Services', url: 'https://vercel.app/services' }, 
-          { name: 'Contact', url: 'https://vercel.app' }, 
+          { name: 'Home', url: 'https://www.kaulbhaskar.com' }, 
+          { name: 'Services', url: 'https://www.kaulbhaskar.com/services' }, 
+          { name: 'Contact', url: 'https://www.kaulbhaskar.com/contact' }, 
         ]} 
       /> 
 
@@ -76,17 +76,17 @@ export default function Contact(): React.JSX.Element {
       <Helmet>
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://vercel.app" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com" />
         <meta property="og:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
         <meta property="og:description" content="Book a consultation with Kaulbhaskar Guru Ji in Patna for professional Vedic Astrology readings, authentic Tantric rituals, and spiritual guidance." />
-        <meta property="og:image" content="https://vercel.app/img/intro.webp" />
+        <meta property="og:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://vercel.app" />
+        <meta name="twitter:url" content="https://www.kaulbhaskar.com" />
         <meta name="twitter:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
         <meta name="twitter:description" content="Book a consultation with Kaulbhaskar Guru Ji in Patna for professional Vedic Astrology readings, authentic Tantric rituals, and spiritual guidance." />
-        <meta name="twitter:image" content="https://vercel.app/img/intro.webp" />
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
       </Helmet>
 
       <div className="relative w-full h-dvh flex items-center justify-center"> 
