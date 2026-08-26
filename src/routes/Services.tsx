@@ -19,7 +19,7 @@ const Services: React.FC = () => {
         canonical="https://www.kaulbhaskar.com"
         breadcrumbs={[
           { name: "Home", url: "https://www.kaulbhaskar.com" },
-          { name: "Services", url: "https://www.kaulbhaskar.com" },
+          { name: "Services", url: "https://www.kaulbhaskar.com/services" },
         ]}
       />
 
