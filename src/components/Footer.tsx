@@ -10,9 +10,9 @@ import {
 
 const socialLinks = [
   { href: "https://facebook.com/KAULBHASKAR", icon: <FaFacebookF />, label: "Follow us on Facebook" },
-  { href: "https://twitter.com", icon: <FaTwitter />, label: "Follow us on Twitter" },
-  { href: "https://youtube.com", icon: <FaYoutube />, label: "Visit our YouTube channel" },
-  { href: "https://linkedin.com", icon: <FaLinkedin />, label: "Connect with us on LinkedIn" },
+  { href: "https://twitter.com/KAULMARGA", icon: <FaTwitter />, label: "Follow us on Twitter" },
+  { href: "https://youtube.com/@kaulbhaskar/videos", icon: <FaYoutube />, label: "Visit our YouTube channel" },
+  { href: "https://linkedin.com/kaul-bhaskar-006a12234/", icon: <FaLinkedin />, label: "Connect with us on LinkedIn" },
   { href: "https://wa.me/919934418459", icon: <FaWhatsapp />, label: "Chat with us on WhatsApp" },
 ];
 
