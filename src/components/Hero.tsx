@@ -35,29 +35,48 @@ const Hero: React.FC = () => {
     setIsClient(true);
   }, []);
 
-  // Force autoplay on mount
+  // Robust Native Stream Event Listener Binding
   useEffect(() => {
-    if (bgVideoRef.current) {
-      bgVideoRef.current.play().catch(() => {
-        console.log("Autoplay blocked, waiting for user interaction");
+    if (!isClient || !bgVideoRef.current) return;
+
+    const videoEl = bgVideoRef.current;
+
+    const checkAndPlay = () => {
+      setIsLoading(false);
+      handleVideoLoad();
+      videoEl.play().catch((err) => {
+        console.log("Autoplay blocked by browser policy, waiting for user loop.", err);
       });
-    }
-  }, []);
+    };
 
-  // Failsafe loader
+    // Failsafe check: Did the browser engine catch up and buffer data before hydration completed?
+    if (videoEl.readyState >= 2) {
+      checkAndPlay();
+    }
+
+    // Explicitly bind to native DOM events directly bypassing React synthetic listeners
+    videoEl.addEventListener("loadeddata", handleVideoLoad);
+    videoEl.addEventListener("canplay", checkAndPlay);
+
+    // Initial manual invocation attempt
+    videoEl.play().catch(() => {});
+
+    return () => {
+      videoEl.removeEventListener("loadeddata", handleVideoLoad);
+      videoEl.removeEventListener("canplay", checkAndPlay);
+    };
+  }, [isClient, currentIndex]);
+
+  // Failsafe timeout to prevent permanent loading overlays if network stalls
   useEffect(() => {
-    if (bgVideoRef.current && bgVideoRef.current.readyState >= 2) {
-      setLoadedVideos((prev) => prev + 1);
-    }
-
     const timeout = setTimeout(() => {
       setIsLoading(false);
-    }, 5000);
+    }, 4000);
 
     return () => clearTimeout(timeout);
   }, []);
 
-  // Sync loading state with ScrollTrigger
+  // Sync loading state with ScrollTrigger layout
   useEffect(() => {
     if (loadedVideos >= 1) {
       setIsLoading(false);
@@ -163,16 +182,11 @@ const Hero: React.FC = () => {
           <video
             ref={bgVideoRef}
             src={getVideoSrc(currentIndex)}
-            autoPlay
             loop
             muted
             playsInline
+            preload="auto"
             className="absolute left-0 top-0 size-full object-cover"
-            onLoadedData={handleVideoLoad}
-            onCanPlay={() => {
-              setIsLoading(false);
-              bgVideoRef.current?.play();
-            }}
           />
         )}
 
