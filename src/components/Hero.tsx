@@ -9,7 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(1);
-  const [hasClicked, setHasClicked] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isClient, setIsClient] = useState(false);
 
@@ -17,7 +16,6 @@ const Hero: React.FC = () => {
   const upcomingVideoIndex = (currentIndex % totalVideo) + 1;
 
   const handleMiniVideoClick = () => {
-    setHasClicked(true);
     setCurrentIndex(upcomingVideoIndex);
   };
 
