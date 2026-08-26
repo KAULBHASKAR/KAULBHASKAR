@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
@@ -11,12 +11,7 @@ const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [hasClicked, setHasClicked] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [loadedVideos, setLoadedVideos] = useState<number>(0);
   const [isClient, setIsClient] = useState(false);
-
-  const currentVideoRef = useRef<HTMLVideoElement | null>(null);
-  const nextVideoRef = useRef<HTMLVideoElement | null>(null);
-  const bgVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const totalVideo = 4;
   const upcomingVideoIndex = (currentIndex % totalVideo) + 1;
@@ -26,92 +21,18 @@ const Hero: React.FC = () => {
     setCurrentIndex(upcomingVideoIndex);
   };
 
-  const handleVideoLoad = () => {
-    setLoadedVideos((prev) => prev + 1);
-  };
-
-  // Client-only guard
+  // Safe client-side hydration switch
   useEffect(() => {
     setIsClient(true);
-  }, []);
-
-  // Robust Native Stream Event Listener Binding
-  useEffect(() => {
-    if (!isClient || !bgVideoRef.current) return;
-
-    const videoEl = bgVideoRef.current;
-
-    const checkAndPlay = () => {
-      setIsLoading(false);
-      handleVideoLoad();
-      videoEl.play().catch((err) => {
-        console.log("Autoplay blocked by browser policy, waiting for user loop.", err);
-      });
-    };
-
-    // Failsafe check: Did the browser engine catch up and buffer data before hydration completed?
-    if (videoEl.readyState >= 2) {
-      checkAndPlay();
-    }
-
-    // Explicitly bind to native DOM events directly bypassing React synthetic listeners
-    videoEl.addEventListener("loadeddata", handleVideoLoad);
-    videoEl.addEventListener("canplay", checkAndPlay);
-
-    // Initial manual invocation attempt
-    videoEl.play().catch(() => {});
-
-    return () => {
-      videoEl.removeEventListener("loadeddata", handleVideoLoad);
-      videoEl.removeEventListener("canplay", checkAndPlay);
-    };
-  }, [isClient, currentIndex]);
-
-  // Failsafe timeout to prevent permanent loading overlays if network stalls
-  useEffect(() => {
+    
+    // Safety loader timeout fallback
     const timeout = setTimeout(() => {
       setIsLoading(false);
-    }, 4000);
+      ScrollTrigger.refresh(true);
+    }, 2000);
 
     return () => clearTimeout(timeout);
   }, []);
-
-  // Sync loading state with ScrollTrigger layout
-  useEffect(() => {
-    if (loadedVideos >= 1) {
-      setIsLoading(false);
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh(true);
-      });
-    }
-  }, [loadedVideos]);
-
-  // Video Transition Animation
-  useGSAP(
-    () => {
-      if (hasClicked && nextVideoRef.current) {
-        gsap.set("#next-video", { visibility: "visible" });
-
-        gsap.to("#next-video", {
-          transformOrigin: "center center",
-          scale: 1,
-          duration: 1,
-          ease: "power1.inOut",
-          onStart: () => {
-            nextVideoRef.current?.play().catch(() => {});
-          },
-        });
-
-        gsap.from("#current-video", {
-          transformOrigin: "center center",
-          scale: 0,
-          duration: 1.5,
-          ease: "power1.inOut",
-        });
-      }
-    },
-    { dependencies: [currentIndex], revertOnUpdate: true }
-  );
 
   // Main Intro + Scroll Animation
   useGSAP(() => {
@@ -135,6 +56,13 @@ const Hero: React.FC = () => {
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
 
+  // Explicitly inject raw DOM nodes to bypass the React SSR muted attribute hydration mismatch bug
+  const renderNativeVideo = (id: string, src: string, extraClass: string) => {
+    return {
+      __html: `<video id="${id}" src="${src}" loop muted playsinline autoplay preload="auto" class="${extraClass}"></video>`
+    };
+  };
+
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
       {isLoading && (
@@ -156,37 +84,24 @@ const Hero: React.FC = () => {
             onClick={handleMiniVideoClick}
             className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
           >
-            <video
-              ref={currentVideoRef}
-              src={getVideoSrc(upcomingVideoIndex)}
-              loop
-              muted
-              playsInline
-              id="current-video"
-              className="size-64 origin-center scale-150 object-cover object-center"
-            />
+            {isClient && (
+              <div 
+                dangerouslySetInnerHTML={renderNativeVideo("current-video", getVideoSrc(upcomingVideoIndex), "size-64 origin-center scale-150 object-cover object-center")}
+              />
+            )}
           </div>
         </div>
 
-        <video
-          ref={nextVideoRef}
-          src={getVideoSrc(currentIndex)}
-          loop
-          muted
-          playsInline
-          id="next-video"
-          className="absolute-center invisible absolute z-20 size-64 object-cover"
-        />
+        {isClient && (
+          <div 
+            dangerouslySetInnerHTML={renderNativeVideo("next-video", getVideoSrc(currentIndex), "absolute-center invisible absolute z-20 size-64 object-cover")}
+          />
+        )}
 
         {isClient && (
-          <video
-            ref={bgVideoRef}
-            src={getVideoSrc(currentIndex)}
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="absolute left-0 top-0 size-full object-cover"
+          <div 
+            className="absolute left-0 top-0 size-full"
+            dangerouslySetInnerHTML={renderNativeVideo("bg-video", getVideoSrc(currentIndex), "absolute left-0 top-0 size-full object-cover")}
           />
         )}
 
@@ -212,9 +127,7 @@ const Hero: React.FC = () => {
               title="Explore our foundational research archieve in Tantrasadhana.org"
               leftIcon={<TiLocationArrow />}
               containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
-              onClick={() =>
-                window.open("https://www.tantrasadhana.org", "_blank")
-              }
+              onClick={() => window.open("https://tantrasadhana.org", "_blank")}
             />
           </div>
         </div>
