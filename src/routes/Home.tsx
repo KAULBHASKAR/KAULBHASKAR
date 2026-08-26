@@ -1,4 +1,6 @@
 import React, { lazy, Suspense } from "react";
+// Import Helmet directly to bypass SEO prop type errors
+import { Helmet } from "react-helmet-async";
 import SEO from "../components/SEO"; 
 
 // 1. Keep Hero static to prevent a blank white screen during initial page paint
@@ -23,11 +25,12 @@ const LatestPost = lazy(() => import("../components/LatestPost"));
 const Home: React.FC = () => {
   return (
     <div>
+      {/* 1. Safe layout variables that your SEO component already accepts */}
       <SEO 
         title="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" 
         description="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation."
         keywords="Tantra, Astrology, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Puja Rituals, Astrology Consultation, Yantra"
-        canonical="https://vercel.app"
+        canonical="https://kaulbhaskar.vercel.app"
         faq={[
           { question: "Who is KAUL BHASKAR ?", answer: "Kaul Bhaskar is a Sri Vidya Upaska and a dedicated follower of Kaul Marg. He provides guidance in authentic Tantra, spiritual initiation, and astrological consultations." },
           { question: "What are the primary services offered ?", answer: "We provide Tantra teachings and rituals, Astrology consultation, Gems, Talismans, and Worship Yantras like Meru & Kurma." },
@@ -42,6 +45,23 @@ const Home: React.FC = () => {
           }
         ]}
       />
+
+      {/* 2. Direct Helmet injection to add Open Graph tags without breaking TypeScript definitions */}
+      <Helmet>
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://kaulbhaskar.vercel.app" />
+        <meta property="og:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
+        <meta property="og:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
+        <meta property="og:image" content="https://vercel.app" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://kaulbhaskar.vercel.app" />
+        <meta name="twitter:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
+        <meta name="twitter:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
+        <meta name="twitter:image" content="https://vercel.app" />
+      </Helmet>
 
       {/* Hero renders instantly without waiting for network scripts to finish chunk downloading */}
       <Hero />
