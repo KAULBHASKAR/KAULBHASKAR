@@ -39,7 +39,7 @@ const About: React.FC = () => {
         keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
         breadcrumbs={[
           { name: "Home", url: "https://www.kaulbhaskar.com" },
-          { name: "About Us", url: "https://www.kaulbhaskar.com" },
+          { name: "About Us", url: "https://www.kaulbhaskar.com/about-us" },
         ]}
       />
 
