@@ -117,8 +117,8 @@ export default function BlogPost() {
         keywords={postData.keywords || "Tantra wisdom, Sri Vidya sadhana"}
         featuredImage={ogImageUrl}
         breadcrumbs={[
-          { name: "Home", url: "https://vercel.app" },
-          { name: "Blog", url: "https://vercel.app/blog" },
+          { name: "Home", url: "https://www.kaulbhaskar.com" },
+          { name: "Blog", url: "https://www.kaulbhaskar.com/blog" },
           { name: postData.title, url: canonicalUrl },
         ]}
       />
