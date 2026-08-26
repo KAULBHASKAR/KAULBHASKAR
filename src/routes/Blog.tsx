@@ -1,6 +1,8 @@
 // src/routes/Blog.tsx
 import { useState } from "react";
 import { Link } from "react-router";
+// Import Helmet directly to bypass SEO prop type errors
+import { Helmet } from "react-helmet-async";
 import matter from "gray-matter";
 import { Buffer } from "buffer";
 import SEO from "../components/SEO";
@@ -56,16 +58,34 @@ export default function Blog() {
 
   return (
     <div className="px-6 py-10 w-full bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen">
+      {/* ✅ Safe layout variables that your SEO component already accepts */}
       <SEO
         title="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji"
-        description="Explore spiritual insights..."
-        canonical="https://www.tantrasadhana.org/blog"
-        keywords="Tantra blog, Astrology articles"
+        description="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar."
+        canonical="https://vercel.app"
+        keywords="Tantra blog, Astrology articles, Sri Vidya insights, Kaulbhaskar writings, Kulashastra, Tripura Stotra"
         breadcrumbs={[
-          { name: "Home", url: "https://www.tantrasadhana.org" },
-          { name: "Blog", url: "https://www.tantrasadhana.org/blog" },
+          { name: "Home", url: "https://vercel.app" },
+          { name: "Blog", url: "https://vercel.app" },
         ]}
       />
+
+      {/* ✅ Direct Helmet injection to add Open Graph tags without breaking TypeScript definitions */}
+      <Helmet>
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://vercel.app" />
+        <meta property="og:title" content="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji" />
+        <meta property="og:description" content="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar." />
+        <meta property="og:image" content="https://vercel.app/img/intro.webp" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://vercel.app" />
+        <meta name="twitter:title" content="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji" />
+        <meta name="twitter:description" content="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar." />
+        <meta name="twitter:image" content="https://vercel.app/img/intro.webp" />
+      </Helmet>
 
       <h1 className="special-font hero-subheading text-center my-24">BLOG</h1>
       
@@ -105,4 +125,3 @@ export default function Blog() {
     </div>
   );
 }
-
