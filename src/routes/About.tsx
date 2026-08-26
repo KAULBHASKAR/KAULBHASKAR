@@ -29,7 +29,7 @@ const About: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full content-center">
-            <SEO
+      <SEO
         title="About Kaulbhaskar Guru Ji | Tantra & Astrology Experts"
         description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
         canonical="https://vercel.app"
@@ -38,20 +38,9 @@ const About: React.FC = () => {
           { name: "Home", url: "https://vercel.app" },
           { name: "About Us", url: "https://vercel.app" },
         ]}
-        // Adding the fallback parameters to read inside your custom SEO wrapper
-        openGraph={{
-          type: "profile",
-          url: "https://vercel.app",
-          title: "About Kaulbhaskar Guru Ji | Tantra & Astrology Experts",
-          description: "Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana.",
-          image: "https://vercel.app/img/satyendra-large.webp",
-        }}
-        twitter={{
-          card: "summary_large_image",
-          title: "About Kaulbhaskar Guru Ji | Tantra & Astrology Experts",
-          description: "Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana.",
-          image: "https://vercel.app/img/satyendra-large.webp",
-        }}
+        ogType="profile"
+        ogUrl="https://vercel.app"
+        ogImage="https://vercel.app/img/satyendra-large.webp"
       />
 
       <div className="flexCenter max-container relative w-full min-h-screen">
@@ -115,52 +104,50 @@ const About: React.FC = () => {
       </section>
 
       <section className="mx-auto w-full h-auto px-4 lg:px-8 pb-10">
-  <div className="flex flex-col lg:flex-row w-full h-auto gap-5 justify-center items-center">
-    
-    <img 
-      src="/mentor/S.Bakshi.webp" 
-      alt="Expert S. Bakshi" 
-      loading="lazy" 
-      decoding="async" 
-      className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
-    />
+        <div className="flex flex-col lg:flex-row w-full h-auto gap-5 justify-center items-center">
+          
+          <img 
+            src="/mentor/S.Bakshi.webp" 
+            alt="Expert S. Bakshi" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
 
-    <img 
-      src="/mentor/Aradhya.webp" 
-      alt="Expert Aradhya" 
-      loading="lazy" 
-      decoding="async" 
-      className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
-    />
+          <img 
+            src="/mentor/Aradhya.webp" 
+            alt="Expert Aradhya" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
 
-    <img 
-      src="/mentor/Subhas.webp" 
-      alt="Expert Subhas" 
-      loading="lazy" 
-      decoding="async" 
-      className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
-    />
+          <img 
+            src="/mentor/Subhas.webp" 
+            alt="Expert Subhas" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
 
-    <img 
-      src="/mentor/Kiran.webp" 
-      alt="Expert Kiran" 
-      loading="lazy" 
-      decoding="async" 
-      className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
-    />
+          <img 
+            src="/mentor/Kiran.webp" 
+            alt="Expert Kiran" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
 
-    <img 
-      src="/mentor/YATAN.webp" 
-      alt="Expert Yatan" 
-      loading="lazy" 
-      decoding="async" 
-      className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
-    />
+          <img 
+            src="/mentor/YATAN.webp" 
+            alt="Expert Yatan" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
 
-  </div>
-</section>
-
-
+        </div>
+      </section>
     </div>
   );
 };
