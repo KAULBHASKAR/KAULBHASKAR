@@ -29,15 +29,29 @@ const About: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full content-center">
-      <SEO
+            <SEO
         title="About Kaulbhaskar Guru Ji | Tantra & Astrology Experts"
         description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
-        canonical="https://tantrasadhana.org"
-        keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
+        canonical="https://vercel.app"
+        keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji, Sri Vidya Upasana, Patna"
         breadcrumbs={[
-          { name: "Home", url: "https://tantrasadhana.org" },
-          { name: "About Us", url: "https://tantrasadhana.org/about-us" },
+          { name: "Home", url: "https://vercel.app" },
+          { name: "About Us", url: "https://vercel.app" },
         ]}
+        // Adding the fallback parameters to read inside your custom SEO wrapper
+        openGraph={{
+          type: "profile",
+          url: "https://vercel.app",
+          title: "About Kaulbhaskar Guru Ji | Tantra & Astrology Experts",
+          description: "Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana.",
+          image: "https://vercel.app/img/satyendra-large.webp",
+        }}
+        twitter={{
+          card: "summary_large_image",
+          title: "About Kaulbhaskar Guru Ji | Tantra & Astrology Experts",
+          description: "Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana.",
+          image: "https://vercel.app/img/satyendra-large.webp",
+        }}
       />
 
       <div className="flexCenter max-container relative w-full min-h-screen">
