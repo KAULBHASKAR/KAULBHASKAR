@@ -35,11 +35,11 @@ const About: React.FC = () => {
       <SEO
         title="About Kaulbhaskar Guru Ji | Tantra & Astrology Experts"
         description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
-        canonical="https://vercel.app"
+        canonical="https://www.kaulbhaskar.com"
         keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
         breadcrumbs={[
-          { name: "Home", url: "https://vercel.app" },
-          { name: "About Us", url: "https://vercel.app" },
+          { name: "Home", url: "https://www.kaulbhaskar.com" },
+          { name: "About Us", url: "https://www.kaulbhaskar.com" },
         ]}
       />
 
@@ -47,17 +47,17 @@ const About: React.FC = () => {
       <Helmet>
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://vercel.app" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com" />
         <meta property="og:title" content="About Kaulbhaskar Guru Ji | Tantra & Astrology Experts" />
         <meta property="og:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
-        <meta property="og:image" content="https://vercel.app/img/satyendra-large.webp" />
+        <meta property="og:image" content="https://www.kaulbhaskar.com/img/satyendra-large.webp" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://vercel.app" />
+        <meta name="twitter:url" content="https://www.kaulbhaskar.com" />
         <meta name="twitter:title" content="About Kaulbhaskar Guru Ji | Tantra & Astrology Experts" />
         <meta name="twitter:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
-        <meta name="twitter:image" content="https://vercel.app/img/satyendra-large.webp" />
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/satyendra-large.webp" />
       </Helmet>
 
       <div className="flexCenter max-container relative w-full min-h-screen">
