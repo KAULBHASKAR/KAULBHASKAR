@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
@@ -7,15 +7,18 @@ import { ScrollTrigger } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// 🚨 PLACE YOUR BASE64 VIDEO STRINGS HERE
+const HERO_VIDEOS_BASE64: Record<number, string> = {
+  1: "data:video/mp4;base64,PASTE_YOUR_HERO_BG_1_BASE64_STRING_HERE",
+  2: "data:video/mp4;base64,PASTE_YOUR_HERO_BG_2_BASE64_STRING_HERE",
+  3: "data:video/mp4;base64,PASTE_YOUR_HERO_BG_3_BASE64_STRING_HERE",
+  4: "data:video/mp4;base64,PASTE_YOUR_HERO_BG_4_BASE64_STRING_HERE",
+};
+
 const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isClient, setIsClient] = useState(false);
-
-  // Core containers to hold pure imperatively generated DOM nodes
-  const currentVideoContainerRef = useRef<HTMLDivElement>(null);
-  const nextVideoContainerRef = useRef<HTMLDivElement>(null);
-  const bgVideoContainerRef = useRef<HTMLDivElement>(null);
 
   const totalVideo = 4;
   const upcomingVideoIndex = (currentIndex % totalVideo) + 1;
@@ -24,64 +27,10 @@ const Hero: React.FC = () => {
     setCurrentIndex(upcomingVideoIndex);
   };
 
-  const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
-
-  // 1. Establish initial client mount baseline
   useEffect(() => {
     setIsClient(true);
-    const timeout = setTimeout(() => {
-      setIsLoading(false);
-      ScrollTrigger.refresh(true);
-    }, 2000);
-    return () => clearTimeout(timeout);
+    setIsLoading(false);
   }, []);
-
-  // 2. Pure Imperative DOM Generation to bypass all React hydration loops
-  useLayoutEffect(() => {
-    if (!isClient) return;
-
-    // Helper to build a completely untainted hardware-level video DOM element
-    const createNativeVideoNode = (id: string, src: string, classString: string) => {
-      const video = document.createElement("video");
-      video.id = id;
-      video.src = src;
-      video.className = classString;
-      video.loop = true;
-      video.setAttribute("playsinline", "");
-      video.setAttribute("preload", "auto");
-      
-      // Strict DOM property enforcement (Critical for bypassing Chrome/Safari autoplay locks)
-      video.muted = true; 
-      video.defaultMuted = true;
-      
-      // Kickstart execution directly at the hardware layer
-      video.play().catch((err) => {
-        console.log(`Video node ${id} hardware engine autoplay retry tracking:`, err);
-      });
-
-      return video;
-    };
-
-    // Inject nodes fresh into target layouts, replacing stale instances
-    if (bgVideoContainerRef.current) {
-      bgVideoContainerRef.current.innerHTML = "";
-      const bgNode = createNativeVideoNode("bg-video", getVideoSrc(currentIndex), "absolute left-0 top-0 size-full object-cover");
-      bgVideoContainerRef.current.appendChild(bgNode);
-    }
-
-    if (nextVideoContainerRef.current) {
-      nextVideoContainerRef.current.innerHTML = "";
-      const nextNode = createNativeVideoNode("next-video", getVideoSrc(currentIndex), "absolute-center invisible absolute z-20 size-64 object-cover");
-      nextVideoContainerRef.current.appendChild(nextNode);
-    }
-
-    if (currentVideoContainerRef.current) {
-      currentVideoContainerRef.current.innerHTML = "";
-      const currentNode = createNativeVideoNode("current-video", getVideoSrc(upcomingVideoIndex), "size-64 origin-center scale-150 object-cover object-center");
-      currentVideoContainerRef.current.appendChild(currentNode);
-    }
-
-  }, [isClient, currentIndex]);
 
   // Main Intro + Scroll Animation
   useGSAP(() => {
@@ -123,12 +72,43 @@ const Hero: React.FC = () => {
           <div
             onClick={handleMiniVideoClick}
             className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
-            ref={currentVideoContainerRef}
-          />
+          >
+            {isClient && (
+              <video
+                src={HERO_VIDEOS_BASE64[upcomingVideoIndex]}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="size-64 origin-center scale-150 object-cover object-center"
+              />
+            )}
+          </div>
         </div>
 
-        <div ref={nextVideoContainerRef} />
-        <div ref={bgVideoContainerRef} className="absolute left-0 top-0 size-full" />
+        {isClient && (
+          <video
+            id="next-video"
+            src={HERO_VIDEOS_BASE64[currentIndex]}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute-center invisible absolute z-20 size-64 object-cover"
+          />
+        )}
+
+        {isClient && (
+          <video
+            id="bg-video"
+            src={HERO_VIDEOS_BASE64[currentIndex]}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute left-0 top-0 size-full object-cover"
+          />
+        )}
 
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
           BH<b>as</b>k<b>a</b>r
