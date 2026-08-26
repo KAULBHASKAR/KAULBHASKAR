@@ -1,4 +1,4 @@
- import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
@@ -6,14 +6,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger);
-
-// 🚨 PLACE YOUR BASE64 VIDEO STRINGS HERE
-const HERO_VIDEOS_BASE64: Record<number, string> = {
-  1: "data:video/mp4;base64,PASTE_YOUR_HERO_BG_1_BASE64_STRING_HERE",
-  2: "data:video/mp4;base64,PASTE_YOUR_HERO_BG_2_BASE64_STRING_HERE",
-  3: "data:video/mp4;base64,PASTE_YOUR_HERO_BG_3_BASE64_STRING_HERE",
-  4: "data:video/mp4;base64,PASTE_YOUR_HERO_BG_4_BASE64_STRING_HERE",
-};
 
 const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(1);
@@ -52,6 +44,9 @@ const Hero: React.FC = () => {
     });
   }, []);
 
+  // Use root relative paths for Vite public static content assets
+  const getVideoSrc = (index: number) => `/videos/hero-bg-${index}.mp4`;
+
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
       {isLoading && (
@@ -73,9 +68,11 @@ const Hero: React.FC = () => {
             onClick={handleMiniVideoClick}
             className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
           >
+            {/* 🚨 CRITICAL: Render ONLY on client-side to prevent refresh lockouts */}
             {isClient && (
               <video
-                src={HERO_VIDEOS_BASE64[upcomingVideoIndex]}
+                key={`current-${upcomingVideoIndex}`}
+                src={getVideoSrc(upcomingVideoIndex)}
                 autoPlay
                 loop
                 muted
@@ -88,8 +85,9 @@ const Hero: React.FC = () => {
 
         {isClient && (
           <video
+            key={`next-${currentIndex}`}
             id="next-video"
-            src={HERO_VIDEOS_BASE64[currentIndex]}
+            src={getVideoSrc(currentIndex)}
             autoPlay
             loop
             muted
@@ -100,8 +98,9 @@ const Hero: React.FC = () => {
 
         {isClient && (
           <video
+            key={`bg-${currentIndex}`}
             id="bg-video"
-            src={HERO_VIDEOS_BASE64[currentIndex]}
+            src={getVideoSrc(currentIndex)}
             autoPlay
             loop
             muted
