@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+ import { useRef, useState } from "react";
+// Use type imports for anything used only as a TypeScript definition
 import type { ReactNode, MouseEvent, FC } from "react";
 
 interface BentoTiltProps {
@@ -34,6 +35,7 @@ const BentoTilt: FC<BentoTiltProps> = ({ children, className = "" }) => {
       onMouseLeave={handleMouseLeave}
       style={{ 
         transform: transformStyle,
+        // transition: ensures it glides back smoothly
         transition: "transform 0.5s ease-out" 
       }}
     >
@@ -49,28 +51,22 @@ interface BentoCardProps {
 }
 
 const BentoCard: FC<BentoCardProps> = ({ src, title, description }) => {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Forcing raw HTML string injection onto the client layer. 
-  // This guarantees browser layout engines catch the lowercase muted attribute immediately on layout build.
-  const rawVideoHTML = {
-    __html: `<video src="${src}" loop muted playsinline autoplay preload="auto" class="absolute inset-0 w-full h-full object-cover object-center"></video>`
-  };
-
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-md bg-zinc-950">
-      {isClient && (
-        <div className="absolute inset-0 w-full h-full" dangerouslySetInnerHTML={rawVideoHTML} />
-      )}
+    <div className="relative w-full h-full overflow-hidden rounded-md">
+      <video
+        src={src}
+        loop
+        muted
+        autoPlay
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover object-center"
+      />
 
-      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-red-500 pointer-events-none">
+      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-red-500">
         <div className="bento-title special-font">
           {title}
           {description && (
+            // Swapped break-words for wrap-break-word as requested
             <p className="mt-3 wrap-break-word text-xs md:text-base text-white font-robert-regular">
               {description}
             </p>
@@ -131,7 +127,7 @@ const Feature: FC = () => {
                   <b>karmic roi</b> <b>& </b>strategic <b>lifepath maping</b>
                 </>
               }
-              description="Precision analytical timelines for critical executive decision-making"
+              description={`Precision analytical timelines for critical executive decision-making`}
             />
           </BentoTilt>
 
