@@ -1,4 +1,6 @@
 import React, { lazy, Suspense, useEffect } from "react";
+// Import Helmet directly to bypass SEO prop type errors
+import { Helmet } from "react-helmet-async";
 // Removed useLocation to prevent Router context errors
 import LatestPost from "../components/LatestPost";
 import SEO from "../components/SEO";
@@ -29,19 +31,34 @@ const About: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full content-center">
+      {/* 1. Safe layout variables that your SEO component already accepts */}
       <SEO
         title="About Kaulbhaskar Guru Ji | Tantra & Astrology Experts"
         description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
         canonical="https://vercel.app"
-        keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji, Sri Vidya Upasana, Patna"
+        keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
         breadcrumbs={[
           { name: "Home", url: "https://vercel.app" },
           { name: "About Us", url: "https://vercel.app" },
         ]}
-        ogType="profile"
-        ogUrl="https://vercel.app"
-        ogImage="https://vercel.app/img/satyendra-large.webp"
       />
+
+      {/* 2. Direct Helmet injection to add Open Graph tags without breaking TypeScript definitions */}
+      <Helmet>
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="profile" />
+        <meta property="og:url" content="https://vercel.app" />
+        <meta property="og:title" content="About Kaulbhaskar Guru Ji | Tantra & Astrology Experts" />
+        <meta property="og:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
+        <meta property="og:image" content="https://vercel.app/img/satyendra-large.webp" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://vercel.app" />
+        <meta name="twitter:title" content="About Kaulbhaskar Guru Ji | Tantra & Astrology Experts" />
+        <meta name="twitter:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
+        <meta name="twitter:image" content="https://vercel.app/img/satyendra-large.webp" />
+      </Helmet>
 
       <div className="flexCenter max-container relative w-full min-h-screen">
         <img
