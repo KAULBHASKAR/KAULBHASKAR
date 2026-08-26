@@ -1,147 +1,161 @@
-import React, { useEffect, useState } from "react";
-import Button from "../components/Button";
-import { TiLocationArrow } from "react-icons/ti";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
+import { useEffect, useRef, useState } from "react";
+import type { ReactNode, MouseEvent, FC } from "react";
 
-gsap.registerPlugin(ScrollTrigger);
+interface BentoTiltProps {
+  children: ReactNode;
+  className?: string;
+}
 
-const Hero: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isClient, setIsClient] = useState(false);
+const BentoTilt: FC<BentoTiltProps> = ({ children, className = "" }) => {
+  const [transformStyle, setTransformStyle] = useState<string>("");
+  const itemRef = useRef<HTMLDivElement>(null);
 
-  const totalVideo = 4;
-  const upcomingVideoIndex = (currentIndex % totalVideo) + 1;
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!itemRef.current) return;
 
-  const handleMiniVideoClick = () => {
-    setCurrentIndex(upcomingVideoIndex);
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+
+    const relativeX = (clientX / innerWidth) * -20;
+    const relativeY = (clientY / innerHeight) * 20;
+
+    setTransformStyle(`rotateX(${relativeY}deg) rotateY(${relativeX}deg)`);
   };
 
-  useEffect(() => {
-    setIsClient(true);
-    setIsLoading(false);
-  }, []);
-
-  // Main Intro + Scroll Animation
-  useGSAP(() => {
-    gsap.set("#video-frame", {
-      clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
-      borderRadius: "0 0 40% 10%",
-    });
-
-    gsap.from("#video-frame", {
-      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      borderRadius: "0 0 0 0",
-      ease: "power1.inOut",
-      scrollTrigger: {
-        trigger: "#video-frame",
-        start: "center center",
-        end: "bottom center",
-        scrub: true,
-      },
-    });
-  }, []);
-
-  // Use root relative paths for Vite public static content assets
-  const getVideoSrc = (index: number) => `/videos/hero-bg-${index}.mp4`;
+  const handleMouseLeave = () => {
+    setTransformStyle("");
+  };
 
   return (
-    <div className="relative h-screen w-screen overflow-x-hidden">
-      {isLoading && (
-        <div className="flex-center absolute z-100 h-screen w-screen bg-violet-50">
-          <div className="three-body">
-            <div className="three-body__dot" />
-            <div className="three-body__dot" />
-            <div className="three-body__dot" />
-          </div>
-        </div>
-      )}
-
-      <div
-        id="video-frame"
-        className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
-      >
-        <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
-          <div
-            onClick={handleMiniVideoClick}
-            className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
-          >
-            {/* 🚨 CRITICAL: Render ONLY on client-side to prevent refresh lockouts */}
-            {isClient && (
-              <video
-                key={`current-${upcomingVideoIndex}`}
-                src={getVideoSrc(upcomingVideoIndex)}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="size-64 origin-center scale-150 object-cover object-center"
-              />
-            )}
-          </div>
-        </div>
-
-        {isClient && (
-          <video
-            key={`next-${currentIndex}`}
-            id="next-video"
-            src={getVideoSrc(currentIndex)}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute-center invisible absolute z-20 size-64 object-cover"
-          />
-        )}
-
-        {isClient && (
-          <video
-            key={`bg-${currentIndex}`}
-            id="bg-video"
-            src={getVideoSrc(currentIndex)}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute left-0 top-0 size-full object-cover"
-          />
-        )}
-
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
-          BH<b>as</b>k<b>a</b>r
-        </h1>
-
-        <div className="absolute left-0 top-0 z-40 size-full">
-          <div className="mt-24 px-5 sm:px-10">
-            <h1 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
-              K<b>a</b>u<b>l</b>
-            </h1>
-            <p className="mb-5 max-w-72 font-robert-regular text-white">
-              त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
-              न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
-              न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
-              न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
-              <br />
-              I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
-            </p>
-            <Button
-              id="kaulbhaskar-guru ji"
-              title="Explore our foundational research archieve in Tantrasadhana.org"
-              leftIcon={<TiLocationArrow />}
-              containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
-              onClick={() => window.open("https://tantrasadhana.org", "_blank")}
-            />
-          </div>
-        </div>
-      </div>
-
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
-        BH<b>as</b>k<b>a</b>r
-      </h1>
+    <div
+      className={className}
+      ref={itemRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ 
+        transform: transformStyle,
+        transition: "transform 0.5s ease-out" 
+      }}
+    >
+      {children}
     </div>
   );
 };
 
-export default Hero;
+interface BentoCardProps {
+  src: string;
+  title: ReactNode;
+  description?: string;
+}
+
+const BentoCard: FC<BentoCardProps> = ({ src, title, description }) => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Format paths with an absolute root slash for Vite's static public asset server
+  const absoluteSrc = src.startsWith("/") ? src : `/${src}`;
+
+  return (
+    <div className="relative w-full h-full overflow-hidden rounded-md bg-zinc-950">
+      {/* 🚨 CRITICAL: By wrapping with isClient, we bypass SSR structural mix-ups completely */}
+      {isClient && (
+        <video
+          key={absoluteSrc}
+          src={absoluteSrc}
+          loop
+          muted
+          autoPlay
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+      )}
+
+      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-red-500 pointer-events-none">
+        <div className="bento-title special-font">
+          {title}
+          {description && (
+            <p className="mt-3 wrap-break-word text-xs md:text-base text-white font-robert-regular">
+              {description}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Feature: FC = () => {
+  return (
+    <section className="bg-black pb-10">
+      <div className="container mx-auto px-3 md:px-10">
+        <div className="px-5 py-32">
+          <p className="font-circular-web text-2xl text-white">
+            Into Very mysterious metaphysical world
+          </p>
+
+          <p className="max-w-md font-circular-web text-lg text-yellow-500 ">
+            Immerse yourself in a rich metaphysical tradition where you will
+            experience endless bliss, and your self will merge with the supreme
+            consciousness.
+          </p>
+        </div>
+
+        <BentoTilt className="border-hsl relative mb-7 min-h-96 w-full overflow-hidden rounded-md md:h-[65vh]">
+          <BentoCard
+            src="videos/feature-1.mp4"
+            title={
+              <>
+                <b>metaphysical</b> <b>resonance &</b> <b>energy alignment</b>
+              </>
+            }
+            description="Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
+          />
+        </BentoTilt>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
+          <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2">
+            <BentoCard
+              src="videos/feature-2.mp4"
+              title={
+                <>
+                  metaphysics-<b>teaching ,</b>
+                  <b> initiation &</b> <b>ordination</b>
+                </>
+              }
+              description="Mass Market Digital Program for breaking subconscious barriers and mastering mental focus."
+            />
+          </BentoTilt>
+
+          <BentoTilt className="bento-title_1 md:col-span-1">
+            <BentoCard
+              src="videos/YANTRA.mp4"
+              title={
+                <>
+                  <b>karmic roi</b> <b>& </b>strategic <b>lifepath maping</b>
+                </>
+              }
+              description="Precision analytical timelines for critical executive decision-making"
+            />
+          </BentoTilt>
+
+          <BentoTilt className="bento-title_1 md:col-span-1">
+            <BentoCard
+              src="videos/3d.mp4"
+              title={
+                <>
+                  <b>metaphysical rituals &</b> <b>deployments</b>
+                </>
+              }
+              description="We engineer and execute specialized metaphysical remedial protocols, managing high-complexity deployments such as Pratyangira Homa, Mahavidya Homa, Baglamukhi systems, and advanced planetary alignment Homas. Our technical team oversees the complete operational schedule, delivering meticulously audited, ritual-compliant solutions tailored to client-specific environmental constraints."
+            />
+          </BentoTilt>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Feature;
