@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-// Use type imports for anything used only as a TypeScript definition
 import type { ReactNode, MouseEvent, FC } from "react";
 
 interface BentoTiltProps {
@@ -35,7 +34,6 @@ const BentoTilt: FC<BentoTiltProps> = ({ children, className = "" }) => {
       onMouseLeave={handleMouseLeave}
       style={{ 
         transform: transformStyle,
-        // transition: ensures it glides back smoothly
         transition: "transform 0.5s ease-out" 
       }}
     >
@@ -51,52 +49,25 @@ interface BentoCardProps {
 }
 
 const BentoCard: FC<BentoCardProps> = ({ src, title, description }) => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-  // 1. Force layout execution to safely run purely Client-Side
   useEffect(() => {
-    setMounted(true);
+    setIsClient(true);
   }, []);
 
-  // 2. Playback Failsafe Recovery Hook for Hard Refreshes
-  useEffect(() => {
-    if (!mounted || !videoRef.current) return;
-
-    const targetVideo = videoRef.current;
-
-    const forcePlayback = () => {
-      targetVideo.play().catch((err) => {
-        console.log("Autoplay bound block tracking state: ", err);
-      });
-    };
-
-    // If media stream has already buffered frames natively, kickstart play
-    if (targetVideo.readyState >= 2) {
-      forcePlayback();
-    }
-
-    targetVideo.addEventListener("canplay", forcePlayback);
-    return () => {
-      targetVideo.removeEventListener("canplay", forcePlayback);
-    };
-  }, [mounted, src]);
+  // Forcing raw HTML string injection onto the client layer. 
+  // This guarantees browser layout engines catch the lowercase muted attribute immediately on layout build.
+  const rawVideoHTML = {
+    __html: `<video src="${src}" loop muted playsinline autoplay preload="auto" class="absolute inset-0 w-full h-full object-cover object-center"></video>`
+  };
 
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-md bg-zinc-900">
-      {mounted && (
-        <video
-          ref={videoRef}
-          src={src}
-          loop
-          muted
-          playsInline
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+    <div className="relative w-full h-full overflow-hidden rounded-md bg-zinc-950">
+      {isClient && (
+        <div className="absolute inset-0 w-full h-full" dangerouslySetInnerHTML={rawVideoHTML} />
       )}
 
-      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-red-500">
+      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-red-500 pointer-events-none">
         <div className="bento-title special-font">
           {title}
           {description && (
@@ -160,7 +131,7 @@ const Feature: FC = () => {
                   <b>karmic roi</b> <b>& </b>strategic <b>lifepath maping</b>
                 </>
               }
-              description={`Precision analytical timelines for critical executive decision-making`}
+              description="Precision analytical timelines for critical executive decision-making"
             />
           </BentoTilt>
 
