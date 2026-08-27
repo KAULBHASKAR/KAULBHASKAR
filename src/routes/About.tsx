@@ -75,7 +75,7 @@ const About: React.FC = () => {
           About Us
         </h1>
 
-        <h2 className="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-xl text-amber-400 font-bold p-6 text-center max-w-3xl pageHeader">
+        <h2 className="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-xl text-green-500 font-bold p-6 text-center max-w-3xl pageHeader">
           I guide the world's most powerful minds to master the cosmic laws that govern destiny, internal peace, and legacy.
         </h2>
       </div>
