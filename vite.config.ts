@@ -28,11 +28,15 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            return id.toString().split('node_modules/')[1].split('/')[0].toString();
-
-            if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router/')) {
+            // 1. Isolate the heavy esprima library completely
+            if (id.includes('esprima')) {
+              return 'vendor-esprima';
+            }
+            // 2. Isolate core framework and routing modules
+            if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router') || id.includes('@remix-run/router')) {
               return 'vendor-framework';
             }
+            // 3. Keep your existing custom categories
             if (id.includes('gray-matter') || id.includes('buffer')) {
               return 'vendor-blog-logic';
             }
@@ -41,6 +45,8 @@ export default defineConfig({
             if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
             if (id.includes('react-markdown') || id.includes('remark-gfm')) return 'vendor-content';
 
+            // 4. Group all remaining smaller modules into one generic bundle 
+            // instead of splitting them into a hundred tiny files
             return 'vendor-libs';
           }
         },
