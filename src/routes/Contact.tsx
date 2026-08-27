@@ -63,7 +63,7 @@ export default function Contact(): React.JSX.Element {
       {/* ✅ Safe layout variables that your SEO component already accepts */}
       <SEO 
         title="Contact Kaulbhaskar | Tantra & Astrology Guidance" 
-        description="Book a consultation with Kaulbhaskar Guru Ji in Patna for professional Vedic Astrology readings, authentic Tantric rituals, and spiritual guidance." 
+        description="Book a consultation with Kaulbhaskar Guru Ji in Patna for professional Strategic lifepath maping, authentic Tantric rituals, and spiritual guidance." 
         canonical="https://www.kaulbhaskar.com" 
         breadcrumbs={[ 
           { name: 'Home', url: 'https://www.kaulbhaskar.com' }, 
@@ -79,14 +79,14 @@ export default function Contact(): React.JSX.Element {
         <meta property="og:url" content="https://www.kaulbhaskar.com" />
         <meta property="og:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
         <meta property="og:description" content="Book a consultation with Kaulbhaskar Guru Ji in Patna for professional Vedic Astrology readings, authentic Tantric rituals, and spiritual guidance." />
-        <meta property="og:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
+        <meta property="og:image" content="https://www.kaulbhaskar.com/img/satyendra-large.webp" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.kaulbhaskar.com" />
         <meta name="twitter:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
         <meta name="twitter:description" content="Book a consultation with Kaulbhaskar Guru Ji in Patna for professional Vedic Astrology readings, authentic Tantric rituals, and spiritual guidance." />
-        <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/satyendra-large.webp" />
       </Helmet>
 
       <div className="relative w-full h-dvh flex items-center justify-center"> 
