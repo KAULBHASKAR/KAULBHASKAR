@@ -133,7 +133,15 @@ const Feature: FC = () => {
 
           <BentoTilt className="bento-title_1 md:col-span-1">
             <BentoCard
-              src="videos/3d.mp4"
+             <img
+          src="/img/ABOUT_US.png"
+          alt="yoga background"
+          width={1440}
+          height={580}
+          loading="lazy"
+          decoding="async"
+          className="w-screen h-screen object-cover object-center 2xl:rounded-s-xl"
+        />
               title={
                 <>
                   <b>metaphysical rituals &</b> <b>deployments</b>
