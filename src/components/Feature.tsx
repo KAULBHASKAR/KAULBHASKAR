@@ -108,15 +108,15 @@ const Feature: FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
           <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2">
             <BentoCard
-              src="videos/feature-2.mp4"
-              title={
-                <>
-                  metaphysics-<b>teaching ,</b>
-                  <b> initiation &</b> <b>ordination</b>
-                </>
-              }
-              description="Mass Market Digital Program for breaking subconscious barriers and mastering mental focus."
-            />
+              <img
+          src="/img/ABOUT_US.png"
+          alt="yoga background"
+          width={1440}
+          height={580}
+          loading="lazy"
+          decoding="async"
+          className="w-screen h-screen object-cover object-center 2xl:rounded-s-xl"
+        />
           </BentoTilt>
 
           <BentoTilt className="bento-title_1 md:col-span-1">
