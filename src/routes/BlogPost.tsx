@@ -46,12 +46,37 @@ export default function BlogPost() {
   const postData = data as PostFrontMatter;
   const isProtected = !!postData.password;
 
-  // Fallback fallback configurations for image assets
-  const canonicalUrl = `https://vercel.app{slug}`;
-  const fallbackImage = "https://vercel.app";
+  // ✅ Fixed absolute domain pathways to match sitemap routing standard
+  const canonicalUrl = `https://kaulbhaskar.com{slug}`;
+  const fallbackImage = "https://kaulbhaskar.com";
   const ogImageUrl = postData.featuredImage 
-    ? (postData.featuredImage.startsWith('http') ? postData.featuredImage : `https://vercel.app${postData.featuredImage}`)
+    ? (postData.featuredImage.startsWith('http') ? postData.featuredImage : `https://www.kaulbhaskar.com${postData.featuredImage}`)
     : fallbackImage;
+
+  // ✅ Setup Structured JSON-LD BlogPosting Schema Object
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": postData.title,
+    "description": postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji.",
+    "image": ogImageUrl,
+    "datePublished": postData.date ? new Date(postData.date).toISOString().split('T')[0] : "2026-08-28",
+    "url": canonicalUrl,
+    "mainEntityOfPage": canonicalUrl,
+    "author": {
+      "@type": "Person",
+      "name": postData.authorName || "KAULBHASKAR Guru Ji",
+      "image": postData.authorAvatar || "https://kaulbhaskar.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "KAUL TANTRA SADHANA",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://kaulbhaskar.com"
+      }
+    }
+  };
 
   // Handle password submission
   const handleVerify = (e: React.FormEvent) => {
@@ -140,6 +165,11 @@ export default function BlogPost() {
         <meta name="twitter:title" content={`${postData.title} | Sri Kaulbhaskar Blog`} />
         <meta name="twitter:description" content={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."} />
         <meta name="twitter:image" content={ogImageUrl} />
+
+        {/* ✅ Injected TypeScript-Safe JSON-LD Object */}
+        <script type="application/ld+json">
+          {JSON.stringify(articleSchema)}
+        </script>
       </Helmet>
 
       <div className="max-w-5xl mx-auto">
@@ -152,7 +182,7 @@ export default function BlogPost() {
             {postData.title}
           </h1>
           <div className="flex items-center gap-4 mb-8">
-            <img src={postData.authorAvatar} className="w-14 h-14 rounded-full border-2 border-white shadow-md" alt="" />
+            <img src={postData.authorAvatar || "https://kaulbhaskar.com"} className="w-14 h-14 rounded-full border-2 border-white shadow-md" alt="" />
             <div>
               <p className="font-bold text-black text-lg">{postData.authorName}</p>
               <p className="text-black/80">{postData.date}</p>
