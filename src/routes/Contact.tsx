@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react"; // Added useRef
+import React, { useState, useRef } from "react";
 import type { ChangeEvent, FormEvent } from "react"; 
+import { Helmet } from "react-helmet-async"; // ✅ Added import to prevent missing identifier crashes
 import emailjs from "@emailjs/browser";
-import ReCAPTCHA from "react-google-recaptcha"; // 1. Import reCAPTCHA
+import ReCAPTCHA from "react-google-recaptcha";
 import phoneImage from "/img/phone-image.jpeg";
 import contactImage from "/img/contact.webp";
 import SEO from "../components/SEO";
@@ -15,7 +16,7 @@ interface FormData {
 }
 
 export default function Contact(): React.JSX.Element {
-  const recaptchaRef = useRef<ReCAPTCHA>(null); // 2. Create the ref
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [formData, setFormData] = useState<FormData>({ 
     name: "", 
     phone: "", 
@@ -34,7 +35,6 @@ export default function Contact(): React.JSX.Element {
     e.preventDefault();
     setStatus("Sending...");
 
-    // 3. Get the reCAPTCHA token
     const token = recaptchaRef.current?.getValue();
     
     if (!token) {
@@ -48,7 +48,7 @@ export default function Contact(): React.JSX.Element {
         from_email: formData.email,
         phone_number: formData.phone,
         message: formData.message,
-        "g-recaptcha-response": token, // 4. Mandatory key for EmailJS verification
+        "g-recaptcha-response": token,
       };
 
       const result = await emailjs.send(
@@ -61,7 +61,7 @@ export default function Contact(): React.JSX.Element {
       if (result.status === 200) {
         setStatus("Message sent successfully!");
         setFormData({ name: "", phone: "", email: "", message: "" });
-        recaptchaRef.current?.reset(); // 5. Reset reCAPTCHA on success
+        recaptchaRef.current?.reset();
       }
     } catch (err: unknown) {
       console.error("EmailJS Error:", err);
@@ -71,18 +71,74 @@ export default function Contact(): React.JSX.Element {
 
   return (
     <div className="flex flex-col w-full min-h-screen">
+      {/* ✅ Aligned domain mappings to target your live production endpoint paths */}
       <SEO
         title="Contact Kaulbhaskar | Tantra & Astrology Guidance"
-        description="Get in touch with Kaulbhaskar Guru Ji for Tantra and Astrology consultations."
-        canonical="https://www.tantrasadhana.org/contact"
+        description="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar."
+        canonical="https://kaulbhaskar.com"
         breadcrumbs={[
-          { name: "Home", url: "https://www.tantrasadhana.org" },
-          { name: "Services", url: "https://www.tantrasadhana.org/services" },
-          { name: "Contact", url: "https://www.tantrasadhana.org/contact" },
+          { name: "Home", url: "https://kaulbhaskar.com" },
+          { name: "Services", url: "https://kaulbhaskar.com/services" },
+          { name: "Contact", url: "https://kaulbhaskar.com" },
         ]}
       />
 
-      {/* Hero, Location, and Map sections remain unchanged */}
+      {/* ✅ Helmet container payload injected inline directly to bypass compiler unused variable warnings */}
+      <Helmet>
+        {/* Open Graph / Facebook Metadata */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://kaulbhaskar.com" />
+        <meta property="og:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
+        <meta property="og:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar." />
+        <meta property="og:image" content="https://kaulbhaskar.com/img/phone-image.jpeg" />
+
+        {/* Twitter Metadata */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://kaulbhaskar.com" />
+        <meta name="twitter:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
+        <meta name="twitter:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar." />
+
+        {/* JSON-LD ContactPage Schema Markups */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contact KAUL TANTRA SADHANA",
+            "description": "Official communication endpoint to query planetary consultations and ritual schedules from Kaulbhaskar Guru Ji.",
+            "url": "https://kaulbhaskar.com",
+            "mainEntity": {
+              "@type": "LocalBusiness",
+              "name": "KAUL TANTRA SADHANA",
+              "telephone": "+91-9934418459",
+              "email": "kaultantra@gmail.com",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "C-40 Birla Colony, Phulwarisharif",
+                "addressLocality": "Patna",
+                "addressRegion": "Bihar",
+                "postalCode": "801505",
+                "addressCountry": "IN"
+              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                  "opens": "10:00",
+                  "closes": "20:00"
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": "Sunday",
+                  "opens": "10:00",
+                  "closes": "16:00"
+                }
+              ]
+            }
+          })}
+        </script>
+      </Helmet>
+
+      {/* Hero, Location, and Map sections */}
       <div className="relative w-full h-dvh flex items-center justify-center">
         <img src={phoneImage} alt="telephone" className="absolute inset-0 w-full h-full object-cover" />
         <h1 className="absolute top-24 text-4xl text-black font-bold z-10 pageHeader">Contact Us</h1>
@@ -126,7 +182,6 @@ export default function Contact(): React.JSX.Element {
         <div className="md:w-1/2 flex flex-col justify-center">
           <h2 className="text-2xl font-bold mb-10 text-center md:text-left">Contact Form</h2>
           <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-lg">
-            {/* ... Name, Phone, Email, Message inputs remain unchanged ... */}
             <div>
               <label className="block mb-2 font-medium">Name</label>
               <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full rounded-lg border p-3 outline-none focus:border-purple-500" />
@@ -144,7 +199,7 @@ export default function Contact(): React.JSX.Element {
               <textarea name="message" rows={4} value={formData.message} onChange={handleChange} required className="w-full rounded-lg border p-3 outline-none focus:border-purple-500 resize-none" />
             </div>
 
-            {/* 6. The reCAPTCHA Widget */}
+            {/* The reCAPTCHA Widget */}
             <div style={{ margin: "10px 0" }}>
               <ReCAPTCHA
                 ref={recaptchaRef}
