@@ -7,7 +7,7 @@ const Camp: FC = () => {
     <section className="2xl:max-container relative flex flex-col py-10 lg:mb-10 lg:py-20 xl:mb-20">
       <div className="flex h-85 w-full items-start justify-start gap-8 lg:h-100 xl:h-160">
         <img
-          src="/img/ABOUT_BG.webp"
+          src="/img/ABOUT_US.webp"
           alt="yoga background"
           width={1440}
           height={580}
