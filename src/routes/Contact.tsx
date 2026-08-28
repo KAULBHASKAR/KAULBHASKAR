@@ -79,7 +79,7 @@ export default function Contact(): React.JSX.Element {
         breadcrumbs={[
           { name: "Home", url: "https://kaulbhaskar.com" },
           { name: "Services", url: "https://kaulbhaskar.com/services" },
-          { name: "Contact", url: "https://kaulbhaskar.com" },
+          { name: "Contact", url: "https://kaulbhaskar.com/contact" },
         ]}
       />
 
@@ -87,14 +87,14 @@ export default function Contact(): React.JSX.Element {
       <Helmet>
         {/* Open Graph / Facebook Metadata */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://kaulbhaskar.com" />
+        <meta property="og:url" content="https://kaulbhaskar.com/contact" />
         <meta property="og:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
         <meta property="og:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar." />
         <meta property="og:image" content="https://kaulbhaskar.com/img/phone-image.jpeg" />
 
         {/* Twitter Metadata */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://kaulbhaskar.com" />
+        <meta name="twitter:url" content="https://kaulbhaskar.com/contact" />
         <meta name="twitter:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
         <meta name="twitter:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar." />
 
