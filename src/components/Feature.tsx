@@ -49,24 +49,25 @@ interface BentoCardProps {
   altText?: string;
   title: ReactNode;
   description?: string;
-  imageClass?: string;
 }
 
-const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", title, description, imageClass = "object-cover" }) => {
+const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", title, description }) => {
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-md bg-neutral-950">
+    <div className="relative w-full h-full overflow-hidden rounded-md">
+      {/* Replaced video with an img element */}
       <img
         src={src}
         alt={altText}
         loading="lazy"
-        className={`absolute inset-0 w-full h-full object-center ${imageClass}`}
+        className="absolute inset-0 w-full h-full object-cover object-center"
       />
 
-      <div className="relative z-10 flex flex-col justify-between p-5 pb-6 text-red-500 h-full bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-red-500">
         <div className="bento-title special-font">
           {title}
           {description && (
-            <p className="mt-3 wrap-break-word text-xs md:text-sm lg:text-base text-white font-robert-regular leading-relaxed max-w-xl">
+            // Swapped break-words for wrap-break-word as requested
+            <p className="mt-3 wrap-break-word text-xs md:text-base text-white font-robert-regular">
               {description}
             </p>
           )}
@@ -105,15 +106,11 @@ const Feature: FC = () => {
           />
         </BentoTilt>
 
-        {/* Change: Added explicit layout gap rules and structural responsive tracking behavior */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:grid-rows-[auto_auto]">
-          
-          {/* TRIAD Card: Uses h-[50vh] on mobile so it looks deep, scales dynamically to min-h on desktop */}
-          <BentoTilt className="bento-title_1 h-[50vh] md:h-full min-h-[28rem] w-full md:col-span-1 md:row-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
+          <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2">
             <BentoCard
               src="img/TRIAD.webp"
               altText="Metaphysics teaching and ordination"
-              imageClass="object-cover md:object-contain"
               title={
                 <>
                   {"metaphysics-"}<b>{"teaching, "}</b>
@@ -124,8 +121,7 @@ const Feature: FC = () => {
             />
           </BentoTilt>
 
-          {/* ROI Card: Clean adaptive viewport tracking layout height on phones */}
-          <BentoTilt className="bento-title_1 h-[30vh] md:h-full min-h-[14rem] w-full md:col-span-1">
+          <BentoTilt className="bento-title_1 md:col-span-1">
             <BentoCard
               src="img/ROI.webp"
               altText="Karmic lifepath map"
@@ -138,8 +134,7 @@ const Feature: FC = () => {
             />
           </BentoTilt>
 
-          {/* RITUAL Card: Set to h-auto on mobile to automatically expand for the long text paragraph */}
-          <BentoTilt className="bento-title_1 h-auto md:h-full min-h-[18rem] w-full md:col-span-1">
+          <BentoTilt className="bento-title_1 md:col-span-1">
             <BentoCard
               src="img/RITUAL.webp"
               altText="Metaphysical rituals setup"
