@@ -95,7 +95,7 @@ const Feature: FC = () => {
 
         <BentoTilt className="border-hsl relative mb-7 min-h-96 w-full overflow-hidden rounded-md md:h-[65vh]">
           <BentoCard
-            src="images/feature-1.jpg"
+            src="img/Vindhyachal1.webp"
             altText="Metaphysical resonance overview"
             title={
               <>
@@ -109,7 +109,7 @@ const Feature: FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
           <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2">
             <BentoCard
-              src="images/feature-2.jpg"
+              src="img/Vindhyachal2.webp"
               altText="Metaphysics teaching and ordination"
               title={
                 <>
@@ -123,7 +123,7 @@ const Feature: FC = () => {
 
           <BentoTilt className="bento-title_1 md:col-span-1">
             <BentoCard
-              src="images/YANTRA.jpg"
+              src="imag/Vindhyachal3.webp"
               altText="Karmic lifepath map"
               title={
                 <>
@@ -136,7 +136,7 @@ const Feature: FC = () => {
 
           <BentoTilt className="bento-title_1 md:col-span-1">
             <BentoCard
-              src="images/3d.jpg"
+              src="img/LOGO.webp"
               altText="Metaphysical rituals setup"
               title={
                 <>
