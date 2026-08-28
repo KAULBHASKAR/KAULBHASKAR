@@ -45,6 +45,27 @@ const InteractiveTooltip: React.FC<TooltipProps> = ({ text, tooltipKey }) => {
 };
 
 const Profile: React.FC = () => {
+  // ✅ Structured JSON-LD Person & Lineage Schema definition
+  const profileSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "KAULBHASKAR GURU Ji",
+    "description": "Metaphysical consultant bridging classical Astrological systems with authentic Tantric sciences for corporate and high-performance strategy.",
+    "url": "https://kaulbhaskar.com",
+    "image": "https://kaulbhaskar.com",
+    "jobTitle": "Metaphysical Strategist & Spiritual Consultant",
+    "knowsAbout": [
+      "Vedic Astrology",
+      "Sri Vidya Metaphysics",
+      "Kaul Marg Traditions",
+      "Tantric Ritual Mechanics"
+    ],
+    "worksFor": {
+      "@type": "Organization",
+      "name": "KAUL TANTRA SADHANA",
+      "url": "https://www.kaulbhaskar.com"
+    }
+  };
   return (
     <div className="bg-yellow-500 min-h-screen font-serif text-stone-800 selection:bg-orange-200 pt-32">
       {/* Dynamic Helmet Head Meta Tags Injections */}
