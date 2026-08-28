@@ -53,8 +53,7 @@ interface BentoCardProps {
 
 const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", title, description }) => {
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-md">
-      {/* Replaced video with an img element */}
+    <div className="relative w-full h-full overflow-hidden rounded-md bg-neutral-900">
       <img
         src={src}
         alt={altText}
@@ -62,11 +61,10 @@ const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", t
         className="absolute inset-0 w-full h-full object-cover object-center"
       />
 
-      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-red-500">
+      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-red-500 h-full">
         <div className="bento-title special-font">
           {title}
           {description && (
-            // Swapped break-words for wrap-break-word as requested
             <p className="mt-3 wrap-break-word text-xs md:text-base text-white font-robert-regular">
               {description}
             </p>
@@ -106,8 +104,9 @@ const Feature: FC = () => {
           />
         </BentoTilt>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
-          <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2">
+        {/* Change: Added md:grid-rows-2 and md:h-[65vh] so the desktop grid structure is locked in aspect ratio */}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:grid-rows-2 md:h-[65vh]">
+          <BentoTilt className="bento-title_1 h-96 w-full md:h-full md:col-span-1 md:row-span-2">
             <BentoCard
               src="img/TRIAD.webp"
               altText="Metaphysics teaching and ordination"
@@ -121,7 +120,7 @@ const Feature: FC = () => {
             />
           </BentoTilt>
 
-          <BentoTilt className="bento-title_1 md:col-span-1">
+          <BentoTilt className="bento-title_1 h-48 w-full md:h-full md:col-span-1">
             <BentoCard
               src="img/ROI.webp"
               altText="Karmic lifepath map"
@@ -134,7 +133,7 @@ const Feature: FC = () => {
             />
           </BentoTilt>
 
-          <BentoTilt className="bento-title_1 md:col-span-1">
+          <BentoTilt className="bento-title_1 h-48 w-full md:h-full md:col-span-1">
             <BentoCard
               src="img/RITUAL.webp"
               altText="Metaphysical rituals setup"
