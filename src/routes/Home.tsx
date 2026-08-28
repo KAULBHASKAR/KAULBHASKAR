@@ -23,6 +23,31 @@ const Meet = lazy(() => import("../components/Meet"));
 const LatestPost = lazy(() => import("../components/LatestPost"));
 
 const Home: React.FC = () => {
+  // Define the structured data schema object
+  const jsonLdSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "KAUL TANTRA SADHANA",
+    "alternativeName": "KAULBHASKAR",
+    "url": "https://www.kaulbhaskar.com",
+    "logo": "https://kaulbhaskar.com", 
+    "image": "https://kaulbhaskar.com", 
+    "description": "Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation.",
+    "telephone": "+91-9934418459",
+    "email": "kaultantra@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Patna",
+      "addressRegion": "Bihar",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "25.5941",
+      "longitude": "85.1376"
+    }
+  };
+
   return (
     <div>
       {/* 1. Safe layout variables that your SEO component already accepts */}
@@ -46,7 +71,7 @@ const Home: React.FC = () => {
         ]}
       />
 
-      {/* 2. Direct Helmet injection to add Open Graph tags without breaking TypeScript definitions */}
+      {/* 2. Direct Helmet injection to add Open Graph tags and JSON-LD */}
       <Helmet>
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -61,6 +86,11 @@ const Home: React.FC = () => {
         <meta name="twitter:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
         <meta name="twitter:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
         <meta name="twitter:image" content="https://www.kaulbhaskar.com" />
+
+        {/* JSON-LD Schema Markup */}
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLdSchema)}
+        </script>
       </Helmet>
 
       {/* Hero renders instantly without waiting for network scripts to finish chunk downloading */}
@@ -68,7 +98,7 @@ const Home: React.FC = () => {
 
       {/* Layer 1: Elements immediately seen below the hero image */}
       <Suspense 
-        fallback={
+        fallback = {
           <div className="flex-center h-[30vh] w-full">
             <div className="three-body">
               <div className="three-body__dot"></div>
@@ -85,7 +115,7 @@ const Home: React.FC = () => {
 
       {/* Layer 2: Middle interactive items including the calendar */}
       <Suspense 
-        fallback={
+        fallback = {
           <div className="flex-center h-[30vh] w-full">
             <div className="three-body">
               <div className="three-body__dot"></div>
@@ -101,7 +131,7 @@ const Home: React.FC = () => {
 
       {/* Layer 3: Heavy items deeper down the page loaded entirely asynchronously */}
       <Suspense 
-        fallback={
+        fallback = {
           <div className="flex-center h-[30vh] w-full">
             <div className="three-body">
               <div className="three-body__dot"></div>
