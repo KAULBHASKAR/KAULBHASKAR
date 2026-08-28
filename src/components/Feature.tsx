@@ -49,20 +49,22 @@ interface BentoCardProps {
   altText?: string;
   title: ReactNode;
   description?: string;
+  imageClass?: string; // New prop to handle custom image behaviors per card
 }
 
-const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", title, description }) => {
+const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", title, description, imageClass = "object-cover" }) => {
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-md bg-neutral-900">
+    <div className="relative w-full h-full overflow-hidden rounded-md bg-neutral-950">
       <img
         src={src}
         alt={altText}
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        // Dynamic class allows specific cards like TRIAD to use object-contain on desktop
+        className={`absolute inset-0 w-full h-full object-center ${imageClass}`}
       />
 
-      {/* Changed pb-20 to pb-6 and added flex-1 to let text flow safely without hitting box thresholds */}
-      <div className="relative z-10 flex flex-col justify-between p-5 pb-6 text-red-500 h-full bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+      {/* Added a strong dark gradient overlay at the bottom to guarantee text is readable even if the image shrinks */}
+      <div className="relative z-10 flex flex-col justify-between p-5 pb-6 text-red-500 h-full bg-gradient-to-t from-black/90 via-black/40 to-transparent">
         <div className="bento-title special-font">
           {title}
           {description && (
@@ -105,14 +107,14 @@ const Feature: FC = () => {
           />
         </BentoTilt>
 
-        {/* Change: Switched md:grid-rows-2 to dynamic md:grid-rows-[auto_auto] so heights adapt to the text load */}
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:grid-rows-[auto_auto]">
           
-          {/* TRIAD Card: Extended height dynamically using min-h on desktop */}
+          {/* TRIAD Card: Added imageClass="object-cover md:object-contain" to prevent any clipping on desktop */}
           <BentoTilt className="bento-title_1 min-h-[28rem] w-full md:col-span-1 md:row-span-2 h-full">
             <BentoCard
               src="img/TRIAD.webp"
               altText="Metaphysics teaching and ordination"
+              imageClass="object-cover md:object-contain"
               title={
                 <>
                   {"metaphysics-"}<b>{"teaching, "}</b>
@@ -137,7 +139,7 @@ const Feature: FC = () => {
             />
           </BentoTilt>
 
-          {/* RITUAL Card: Expanded min-h and scaled font so the massive paragraph fits comfortably */}
+          {/* RITUAL Card */}
           <BentoTilt className="bento-title_1 min-h-[18rem] w-full md:col-span-1 h-full">
             <BentoCard
               src="img/RITUAL.webp"
