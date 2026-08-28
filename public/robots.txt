@@ -1,3 +1,12 @@
+# https://kaulbhaskar.com
+
+# Allow all search engines to crawl the website
 User-agent: *
 Allow: /
-Sitemap: https://www.tantrasadhana.org
+
+# Disallow paths that do not need to be indexed (if any exist)
+Disallow: /admin/
+Disallow: /dashboard/
+
+# Point search engines directly to your sitemap
+Sitemap: https://kaulbhaskar.com
