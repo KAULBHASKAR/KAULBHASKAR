@@ -62,7 +62,7 @@ const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", t
         className="absolute inset-0 w-full h-full object-cover object-center"
       />
 
-      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-red-500">
+      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-white">
         <div className="bento-title special-font">
           {title}
           {description && (
