@@ -51,7 +51,7 @@ const Profile: React.FC = () => {
       <Helmet>
         <title>Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory</title>
         <meta name="description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        <link rel="canonical" href="https://vwww.kaulbhaskar.com" />
+        <link rel="canonical" href="https://vwww.kaulbhaskar.com/profile" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
