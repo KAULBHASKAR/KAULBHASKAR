@@ -1,4 +1,4 @@
- import { useRef, useState } from "react";
+import { useRef, useState } from "react";
 // Use type imports for anything used only as a TypeScript definition
 import type { ReactNode, MouseEvent, FC } from "react";
 
@@ -46,19 +46,19 @@ const BentoTilt: FC<BentoTiltProps> = ({ children, className = "" }) => {
 
 interface BentoCardProps {
   src: string;
+  altText?: string;
   title: ReactNode;
   description?: string;
 }
 
-const BentoCard: FC<BentoCardProps> = ({ src, title, description }) => {
+const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", title, description }) => {
   return (
     <div className="relative w-full h-full overflow-hidden rounded-md">
-      <video
+      {/* Replaced video with an img element */}
+      <img
         src={src}
-        loop
-        muted
-        autoPlay
-        playsInline
+        alt={altText}
+        loading="lazy"
         className="absolute inset-0 w-full h-full object-cover object-center"
       />
 
@@ -95,10 +95,11 @@ const Feature: FC = () => {
 
         <BentoTilt className="border-hsl relative mb-7 min-h-96 w-full overflow-hidden rounded-md md:h-[65vh]">
           <BentoCard
-            src="videos/feature-1.mp4"
+            src="img/RESONANCE.webp"
+            altText="Metaphysical resonance overview"
             title={
               <>
-                <b>metaphysical</b> <b>resonance &</b> <b>energy alignment</b>
+                <b>metaphysical</b> <b>resonance{" & "}</b> <b>energy alignment</b>
               </>
             }
             description="Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
@@ -108,11 +109,12 @@ const Feature: FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
           <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2">
             <BentoCard
-              src="videos/feature-2.mp4"
+              src="img/TRIAD.webp"
+              altText="Metaphysics teaching and ordination"
               title={
                 <>
-                  metaphysics-<b>teaching ,</b>
-                  <b> initiation &</b> <b>ordination</b>
+                  {"metaphysics-"}<b>{"teaching, "}</b>
+                  <b>{"initiation & "}</b> <b>{"ordination"}</b>
                 </>
               }
               description="Mass Market Digital Program for breaking subconscious barriers and mastering mental focus."
@@ -121,22 +123,24 @@ const Feature: FC = () => {
 
           <BentoTilt className="bento-title_1 md:col-span-1">
             <BentoCard
-              src="videos/YANTRA.mp4"
+              src="img/ROI.webp"
+              altText="Karmic lifepath map"
               title={
                 <>
-                  <b>karmic roi</b> <b>& </b>strategic <b>lifepath maping</b>
+                  <b>karmic roi</b> <b>{" & "}</b>strategic <b>lifepath mapping</b>
                 </>
               }
-              description={`Precision analytical timelines for critical executive decision-making`}
+              description="Precision analytical timelines for critical executive decision-making"
             />
           </BentoTilt>
 
           <BentoTilt className="bento-title_1 md:col-span-1">
             <BentoCard
-              src="videos/3d.mp4"
+              src="img/RITUAL.webp"
+              altText="Metaphysical rituals setup"
               title={
                 <>
-                  <b>metaphysical rituals &</b> <b>deployments</b>
+                  <b>metaphysical rituals{" & "}</b> <b>deployments</b>
                 </>
               }
               description="We engineer and execute specialized metaphysical remedial protocols, managing high-complexity deployments such as Pratyangira Homa, Mahavidya Homa, Baglamukhi systems, and advanced planetary alignment Homas. Our technical team oversees the complete operational schedule, delivering meticulously audited, ritual-compliant solutions tailored to client-specific environmental constraints."
