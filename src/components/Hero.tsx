@@ -176,12 +176,14 @@ const Hero: React.FC = () => {
           />
         )}
 
+        {/* Unified Main H1 Title for semantic SEO structure */}
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
           BH<b>as</b>k<b>a</b>r
         </h1>
 
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
+            {/* Secondary Heading changed to H2 */}
             <h2 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
               K<b>a</b>u<b>l</b>
             </h2>
@@ -194,7 +196,7 @@ const Hero: React.FC = () => {
               I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
             </p>
             <Button
-              id="kaulbhaskar-guru ji"
+              id="kaulbhaskar-guruji" // Fixed: Removed whitespace inside ID attribute
               title="Explore our foundational research archieve in Tantrasadhana.org"
               leftIcon={<TiLocationArrow />}
               containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
@@ -205,10 +207,6 @@ const Hero: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <h2 className="special-font hero-heading absolute bottom-5 right-5 text-black">
-        BH<b>as</b>k<b>a</b>r
-      </h2>
     </div>
   );
 };
