@@ -21,7 +21,14 @@ export default defineConfig({
       deleteOriginFile: false,
     }),
   ],
+  // FIX 1: Provide fallback object polyfills for browser environments (iOS Safari fix)
+  define: {
+    'process.env': {},
+    'global': 'globalThis',
+  },
   build: {
+    // FIX 2: Explicitly target es2020 / iOS 14+ compatible JS standards
+    target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
     cssCodeSplit: true,
     chunkSizeWarningLimit: 600,
     rollupOptions: {
@@ -37,8 +44,12 @@ export default defineConfig({
               return 'vendor-framework';
             }
             // 3. Keep your existing custom categories
-            if (id.includes('gray-matter') || id.includes('buffer')) {
+            if (id.includes('gray-matter')) {
               return 'vendor-blog-logic';
+            }
+            // FIX 3: Isolate and handle standard buffer module separately if pulled
+            if (id.includes('buffer')) {
+              return 'vendor-buffer-poly';
             }
             if (id.includes('react-big-calendar')) return 'vendor-calendar';
             if (id.includes('gsap')) return 'vendor-gsap';
@@ -46,7 +57,6 @@ export default defineConfig({
             if (id.includes('react-markdown') || id.includes('remark-gfm')) return 'vendor-content';
 
             // 4. Group all remaining smaller modules into one generic bundle 
-            // instead of splitting them into a hundred tiny files
             return 'vendor-libs';
           }
         },
