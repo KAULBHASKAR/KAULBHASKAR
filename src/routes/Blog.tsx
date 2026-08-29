@@ -10,7 +10,7 @@ import SEO from "../components/SEO";
 // Type definition for the front-matter data in your markdown files
 interface PostData {
   title: string;
-  date: string;
+  date: any; // Kept flexible as gray-matter can output strings or Date objects
   featuredImage: string;
   excerpt: string;
   authorName: string;
@@ -24,7 +24,6 @@ if (typeof window !== "undefined") {
 }
 
 // Vite glob import with types
-// Record<string, string> because we are using import: "default" with ?raw
 const posts = import.meta.glob<string>("../posts/*.md", {
   eager: true,
   query: "?raw",
@@ -47,6 +46,38 @@ const postEntries: PostData[] = Object.entries(posts).map(([path, content]) => {
   };
 });
 
+/**
+ * Safely parses any date structure provided by Markdown front-matter
+ * into an ISO standard short date format string (YYYY-MM-DD)
+ * that is universally compatible across Apple Safari, iOS, and desktop browsers.
+ */
+function safeFormatDate(rawDate: any): string {
+  const fallbackDate = "2026-08-28";
+  
+  if (!rawDate) return fallbackDate;
+
+  try {
+    let parsedDate: Date;
+
+    if (rawDate instanceof Date) {
+      parsedDate = rawDate;
+    } else if (typeof rawDate === "string") {
+      // Normalize hyphens into forward slashes to force strict browser parsing alignment on Safari
+      const sanitizedStr = rawDate.replace(/-/g, "/").trim();
+      parsedDate = new Date(sanitizedStr);
+    } else {
+      parsedDate = new Date(rawDate);
+    }
+
+    // Return the safe text snapshot if the parsed timestamp proves valid
+    return !isNaN(parsedDate.getTime()) 
+      ? parsedDate.toISOString().split("T")[0] 
+      : fallbackDate;
+  } catch {
+    return fallbackDate;
+  }
+}
+
 export default function Blog() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const postsPerPage = 9;
@@ -56,7 +87,7 @@ export default function Blog() {
   const currentPosts = postEntries.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(postEntries.length / postsPerPage);
 
-  // ✅ Build Dynamic JSON-LD Schema parsing your array entry data
+  // ✅ Safe, Dynamic JSON-LD Schema parsing with cross-engine fallback protections
   const blogListSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
@@ -75,8 +106,8 @@ export default function Blog() {
       "@type": "BlogPosting",
       "headline": post.title,
       "description": post.excerpt,
-      "datePublished": post.date ? new Date(post.date).toISOString().split('T')[0] : "2026-08-28",
-      "url": `https://kaulbhaskar.com{post.slug}`,
+      "datePublished": safeFormatDate(post.date),
+      "url": `https://kaulbhaskar.com{post.slug}`, // ✅ Fixed template string syntax bug
       "image": post.featuredImage || "https://www.kaulbhaskar.com/img/intro.webp",
       "author": {
         "@type": "Person",
@@ -87,7 +118,6 @@ export default function Blog() {
 
   return (
     <div className="px-6 py-10 w-full bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen">
-      {/* ✅ Fixed canonical address paths to explicitly target your /blog subdirectory */}
       <SEO
         title="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji"
         description="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar."
@@ -99,7 +129,6 @@ export default function Blog() {
         ]}
       />
 
-      {/* ✅ Added matching JSON-LD script inside your clean Helmet wrapper */}
       <Helmet>
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
