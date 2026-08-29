@@ -18,14 +18,35 @@ const profileData = {
 const Profile: React.FC = () => {
   return (
     <div className="bg-yellow-500 min-h-screen font-serif text-stone-800 selection:bg-orange-200 pt-32">
-      {/* Header Section */}
-      <header className="bg-white border-b border-stone-200 py-20 px-6 text-center shadow-sm">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight text-stone-900">
+      {/* Dynamic Helmet Head Meta Tags Injections */}
+      <Helmet>
+        <title>Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory</title>
+        <meta name="description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
+        <link rel="canonical" href="https://vwww.kaulbhaskar.com/profile" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="profile" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com/profile" />
+        <meta property="og:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
+        <meta property="og:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
+        <meta property="og:image" content="https://www.kaulbhaskar.com" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://www.kaulbhaskar.com/profile" />
+        <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
+        <meta name="twitter:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com" />
+      </Helmet>
+
+      {/* Homepage Hero Section */}
+      <header className="bg-white border-b border-stone-200 py-24 px-6 text-center shadow-sm">
+        <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-stone-900 max-w-4xl mx-auto leading-tight">
           {profileData.title}
         </h1>
-        <div className="h-1 w-24 bg-orange-500 mx-auto mb-6"></div>
-        <p className="text-xl md:text-2xl italic text-orange-800 font-medium max-w-2xl mx-auto">
-          "{profileData.subtitle}"
+        <div className="h-1 w-24 bg-orange-500 mx-auto mb-8"></div>
+        <p className="text-lg md:text-2xl text-stone-600 font-normal max-w-3xl mx-auto leading-relaxed">
+          {profileData.subtitle}
         </p>
       </header>
 
