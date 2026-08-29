@@ -86,20 +86,7 @@ const About: React.FC = () => {
           {JSON.stringify(aboutSchema)}
         </script>
       </Helmet>
-      {/* 🌟 SEO FIX: Primary Structural H1 Tag for Search Crawlers */}
-      <h1 style={{
-        position: 'absolute',
-        width: '1px',
-        height: '1px',
-        padding: '0',
-        margin: '-1px',
-        overflow: 'hidden',
-        clip: 'rect(0, 0, 0, 0)',
-        whiteSpace: 'nowrap',
-        border: '0'
-      }}>
-        About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts
-      </h1>
+
       <div className="flexCenter max-container relative w-full min-h-screen">
         <img
           src="/img/ABOUT_US.png"
