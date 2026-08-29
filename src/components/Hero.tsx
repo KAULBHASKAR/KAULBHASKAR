@@ -182,9 +182,9 @@ const Hero: React.FC = () => {
 
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
-            <h1 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
+            <h2 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
               K<b>a</b>u<b>l</b>
-            </h1>
+            </h2>
             <p className="mb-5 max-w-72 font-robert-regular text-white">
               त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
               न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
@@ -206,9 +206,9 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
+      <h2 className="special-font hero-heading absolute bottom-5 right-5 text-black">
         BH<b>as</b>k<b>a</b>r
-      </h1>
+      </h2>
     </div>
   );
 };
