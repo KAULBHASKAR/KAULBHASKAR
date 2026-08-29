@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+
 const profileData = {
   title: "Profile",
   subtitle: "I am a TANTRA and ASTROLOGY mentor.",
@@ -18,11 +19,11 @@ const profileData = {
 const Profile: React.FC = () => {
   return (
     <div className="bg-yellow-500 min-h-screen font-serif text-stone-800 selection:bg-orange-200 pt-32">
-      {/* Dynamic Helmet Head Meta Tags Injections */}
+      {/* Fixed Dynamic Helmet Head Meta Tags (Typo resolved) */}
       <Helmet>
         <title>Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory</title>
         <meta name="description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        <link rel="canonical" href="https://vwww.kaulbhaskar.com/profile" />
+        <link rel="canonical" href="https://www.kaulbhaskar.com/profile" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
@@ -39,11 +40,27 @@ const Profile: React.FC = () => {
         <meta name="twitter:image" content="https://www.kaulbhaskar.com" />
       </Helmet>
 
+      {/* 🌟 SEO FIX: Standalone static H1 tag fallback targeting raw Search Crawlers */}
+      <h1 style={{
+        position: 'absolute',
+        width: '1px',
+        height: '1px',
+        padding: '0',
+        margin: '-1px',
+        overflow: 'hidden',
+        clip: 'rect(0, 0, 0, 0)',
+        whiteSpace: 'nowrap',
+        border: '0'
+      }}>
+        Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory
+      </h1>
+
       {/* Homepage Hero Section */}
       <header className="bg-white border-b border-stone-200 py-24 px-6 text-center shadow-sm">
-        <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-stone-900 max-w-4xl mx-auto leading-tight">
+        {/* 🌟 LAYOUT FIX: Changed visual element to h2 to maintain strict single-H1 node hierarchy */}
+        <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-stone-900 max-w-4xl mx-auto leading-tight">
           {profileData.title}
-        </h1>
+        </h2>
         <div className="h-1 w-24 bg-orange-500 mx-auto mb-8"></div>
         <p className="text-lg md:text-2xl text-stone-600 font-normal max-w-3xl mx-auto leading-relaxed">
           {profileData.subtitle}
@@ -55,7 +72,7 @@ const Profile: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           <div className="bg-white p-8 border-l-4 border-orange-600 shadow-md flex flex-col justify-between">
             <div>
-              <h2 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2">Known As</h2>
+              <h3 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2">Known As</h3>
               <p className="text-2xl font-black text-stone-900">{profileData.knownAs}</p>
             </div>
             {/* Image below KAULBHASKAR */}
@@ -68,7 +85,7 @@ const Profile: React.FC = () => {
           
           <div className="bg-white p-8 border-l-4 border-stone-800 shadow-md flex flex-col justify-between">
             <div>
-              <h2 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2">Direct Disciple Of</h2>
+              <h3 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2">Direct Disciple Of</h3>
               <p className="text-2xl font-black text-stone-900">{profileData.discipleOf}</p>
               <p className="text-lg font-semibold text-orange-700">{profileData.guruAs}</p>
             </div>
