@@ -74,7 +74,7 @@ const Profile: React.FC = () => {
             </div>
             {/* Image below An Esteemed KAUL of Prayagraj */}
             <img 
-              src="/img/GURU-JI-1.jpg" 
+              src="/img/GURU.webp" 
               alt="An Esteemed Kaul of Prayagraj" 
               className="mt-4 w-full h-48 object-contain rounded shadow-sm border border-stone-100" 
             />
