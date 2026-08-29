@@ -92,20 +92,7 @@ const Home: React.FC = () => {
           {JSON.stringify(jsonLdSchema)}
         </script>
       </Helmet>
-       {/* 🌟 PLACE THE H1 CODE HERE (RIGHT ABOVE THE HERO) 🌟 */}
-      <h1 style={{
-        position: 'absolute',
-        width: '1px',
-        height: '1px',
-        padding: '0',
-        margin: '-1px',
-        overflow: 'hidden',
-        clip: 'rect(0, 0, 0, 0)',
-        whiteSpace: 'nowrap',
-        border: '0'
-      }}>
-        KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance
-      </h1>
+
       {/* Hero renders instantly without waiting for network scripts to finish chunk downloading */}
       <Hero />
 
