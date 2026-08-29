@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import type { ChangeEvent, FormEvent } from "react"; 
-import { Helmet } from "react-helmet-async"; // ✅ Added import to prevent missing identifier crashes
+import { Helmet } from "react-helmet-async"; 
 import emailjs from "@emailjs/browser";
 import ReCAPTCHA from "react-google-recaptcha";
 import phoneImage from "/img/phone-image.jpeg";
@@ -71,11 +71,11 @@ export default function Contact(): React.JSX.Element {
 
   return (
     <div className="flex flex-col w-full min-h-screen">
-      {/* ✅ Aligned domain mappings to target your live production endpoint paths */}
+      {/* 1. Primary SEO Module managing Document title and meta descriptions */}
       <SEO
         title="Contact Kaulbhaskar | Tantra & Astrology Guidance"
         description="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar."
-        canonical="https://kaulbhaskar.com"
+        canonical="https://kaulbhaskar.com/contact"
         breadcrumbs={[
           { name: "Home", url: "https://kaulbhaskar.com" },
           { name: "Services", url: "https://kaulbhaskar.com/services" },
@@ -83,20 +83,16 @@ export default function Contact(): React.JSX.Element {
         ]}
       />
 
-      {/* ✅ Helmet container payload injected inline directly to bypass compiler unused variable warnings */}
+      {/* 2. Direct Helmet injection strictly for Social Graphs and Schema Scripts (No duplicate titles or descriptions here) */}
       <Helmet>
         {/* Open Graph / Facebook Metadata */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://kaulbhaskar.com/contact" />
-        <meta property="og:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
-        <meta property="og:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar." />
         <meta property="og:image" content="https://kaulbhaskar.com/img/phone-image.jpeg" />
 
         {/* Twitter Metadata */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://kaulbhaskar.com/contact" />
-        <meta name="twitter:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
-        <meta name="twitter:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar." />
 
         {/* JSON-LD ContactPage Schema Markups */}
         <script type="application/ld+json">
@@ -138,22 +134,40 @@ export default function Contact(): React.JSX.Element {
         </script>
       </Helmet>
 
+      {/* 🌟 SEO FIX: Primary Standalone H1 tag fallback targeting headless Search Crawlers */}
+      <h1 style={{
+        position: 'absolute',
+        width: '1px',
+        height: '1px',
+        padding: '0',
+        margin: '-1px',
+        overflow: 'hidden',
+        clip: 'rect(0, 0, 0, 0)',
+        whiteSpace: 'nowrap',
+        border: '0'
+      }}>
+        Contact Kaulbhaskar | Tantra & Astrology Guidance
+      </h1>
+
       {/* Hero, Location, and Map sections */}
       <div className="relative w-full h-dvh flex items-center justify-center">
         <img src={phoneImage} alt="telephone" className="absolute inset-0 w-full h-full object-cover" />
-        <h1 className="absolute top-24 text-4xl text-black font-bold z-10 pageHeader">Contact Us</h1>
+        
+        {/* 🌟 LAYOUT FIX: Converted visible overlay heading to h2 to maintain strict single-H1 node hierarchy */}
+        <h2 className="absolute top-24 text-4xl text-black font-bold z-10 pageHeader">Contact Us</h2>
+        
         <div className="absolute bottom-10 z-10 flex flex-col lg:flex-row gap-10 lg:gap-20 text-center bg-gray-300 p-6 backdrop-blur-md rounded-xl">
           <div>
-            <h2 className="text-xl font-bold text-black">Open Hours</h2>
+            <h3 className="text-xl font-bold text-black">Open Hours</h3>
             <p className="font-semibold text-red-700">Mon-Sat: 10.00 AM - 08.00 PM</p>
             <p className="font-semibold text-red-700">Sun: 10.00 AM - 04.00 PM</p>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-black">Location</h2>
+            <h3 className="text-xl font-bold text-black">Location</h3>
             <p className="font-semibold text-red-700">Patna, Bihar (IN)</p>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-black">Contact</h2>
+            <h3 className="text-xl font-bold text-black">Contact</h3>
             <p className="font-semibold text-red-700">Email: kaultantra@gmail.com</p>
             <p className="font-semibold text-red-700">Tel: +91-9934418459</p>
           </div>
@@ -188,7 +202,7 @@ export default function Contact(): React.JSX.Element {
             </div>
             <div>
               <label className="block mb-2 font-medium">Phone</label>
-              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required className="w-full rounded-lg border p-3 outline-none focus:border-purple-500" />
+              <input type="text" name="phone" value={formData.phone} onChange={handleChange} required className="w-full rounded-lg border p-3 outline-none focus:border-purple-500" />
             </div>
             <div>
               <label className="block mb-2 font-medium">Email</label>
@@ -196,25 +210,16 @@ export default function Contact(): React.JSX.Element {
             </div>
             <div>
               <label className="block mb-2 font-medium">Message</label>
-              <textarea name="message" rows={4} value={formData.message} onChange={handleChange} required className="w-full rounded-lg border p-3 outline-none focus:border-purple-500 resize-none" />
+              <textarea name="message" value={formData.message} onChange={handleChange} required rows={5} className="w-full rounded-lg border p-3 outline-none focus:border-purple-500 resize-none"></textarea>
             </div>
-
-            {/* The reCAPTCHA Widget */}
-            <div style={{ margin: "10px 0" }}>
-              <ReCAPTCHA
-                ref={recaptchaRef}
-                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "YOUR_SITE_KEY_FALLBACK"}
-              />
+            <div className="flex justify-center md:justify-start">
+              <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY} />
             </div>
-
-            <button
-              type="submit"
-              className="w-full md:w-auto px-10 py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-black transition-colors"
-            >
+            <button type="submit" className="w-full md:w-auto bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300">
               Submit
             </button>
-            {status && <p className="mt-4 font-bold text-purple-700">{status}</p>}
           </form>
+          {status && <p className="mt-4 text-center md:text-left font-medium text-purple-700">{status}</p>}
         </div>
       </div>
     </div>
