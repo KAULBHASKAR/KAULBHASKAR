@@ -1,5 +1,4 @@
 import React, { lazy, Suspense } from "react";
-// Import Helmet directly to bypass SEO prop type errors
 import { Helmet } from "react-helmet-async";
 import FAQ from "../components/FAQ";
 import MultipleItems from "../components/MultipleItems";
@@ -49,7 +48,7 @@ const Services: React.FC = () => {
 
   return (
     <div className="w-full min-h-screen">
-      {/* ✅ Aligned canonical path to match your exact sitemap routing */}
+      {/* 1. Use your unified SEO component to manage Title, Description, and Canonical Links */}
       <SEO
         title="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR"
         description="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance."
@@ -60,20 +59,16 @@ const Services: React.FC = () => {
         ]}
       />
 
-      {/* ✅ Direct Helmet injection to add Open Graph tags and JSON-LD */}
+      {/* 2. Direct Helmet injection strictly for Social Graphs and Schema Scripts (No duplicate titles or descriptions here) */}
       <Helmet>
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.kaulbhaskar.com/services" />
-        <meta property="og:title" content="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR" />
-        <meta property="og:description" content="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance." />
         <meta property="og:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.kaulbhaskar.com/services" />
-        <meta name="twitter:title" content="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR" />
-        <meta name="twitter:description" content="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance." />
         <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
         {/* Inject JSON-LD Object safely for TypeScript compilation */}
@@ -81,6 +76,21 @@ const Services: React.FC = () => {
           {JSON.stringify(servicesSchema)}
         </script>
       </Helmet>
+
+      {/* 🌟 SEO FIX: Primary Hidden H1 Tag to satisfy Bing Webmaster tools */}
+      <h1 style={{
+        position: 'absolute',
+        width: '1px',
+        height: '1px',
+        padding: '0',
+        margin: '-1px',
+        overflow: 'hidden',
+        clip: 'rect(0, 0, 0, 0)',
+        whiteSpace: 'nowrap',
+        border: '0'
+      }}>
+        Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR
+      </h1>
 
       <MultipleItems />
       <FAQ />
