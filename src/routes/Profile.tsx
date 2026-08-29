@@ -29,7 +29,7 @@ const Profile: React.FC = () => {
         </p>
       </header>
 
-      <main className="max-w-4xl mx-auto py-16 px-6">
+     <main className="max-w-4xl mx-auto py-16 px-6">
         {/* Core Identity Cards */}
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           <div className="bg-white p-8 border-l-4 border-orange-600 shadow-md flex flex-col justify-between">
@@ -53,7 +53,7 @@ const Profile: React.FC = () => {
             </div>
             {/* Image below An Esteemed KAUL of Prayagraj */}
             <img 
-              src="/img/GURU.webp" 
+              src="/img/GURU-JI-1.jpg" 
               alt="An Esteemed Kaul of Prayagraj" 
               className="mt-4 w-full h-48 object-contain rounded shadow-sm border border-stone-100" 
             />
