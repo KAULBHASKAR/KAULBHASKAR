@@ -1,4 +1,6 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { InteractiveTooltip } from '../components/InteractiveTooltip'; // Adjust path as needed
 
 // Upgraded copy variables for premium, international branding
 const profileData = {
