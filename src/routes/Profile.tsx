@@ -1,6 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import { InteractiveTooltip } from '../components/InteractiveTooltip'; // Adjust path as needed
 
 // Upgraded copy variables for premium, international branding
 const profileData = {
@@ -47,28 +45,6 @@ const InteractiveTooltip: React.FC<TooltipProps> = ({ text, tooltipKey }) => {
 const Profile: React.FC = () => {
   return (
     <div className="bg-yellow-500 min-h-screen font-serif text-stone-800 selection:bg-orange-200 pt-32">
-      {/* Dynamic Helmet Head Meta Tags Injections */}
-      <Helmet>
-        <title>Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory</title>
-        <meta name="description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        {/* Fixed: Removed 'vwww' typo from canonical path */}
-        <link rel="canonical" href="https://www.kaulbhaskar.com/profile" />
-
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://www.kaulbhaskar.com/profile" />
-        <meta property="og:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
-        <meta property="og:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        {/* Fixed: Pointed image metadata to an actual graphic asset instead of a root directory */}
-        <meta property="og:image" content="https://kaulbhaskar.com" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://www.kaulbhaskar.com/profile" />
-        <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
-        <meta name="twitter:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        <meta name="twitter:image" content="https://kaulbhaskar.com" />
-      </Helmet>
       {/* Homepage Hero Section */}
       <header className="bg-white border-b border-stone-200 py-24 px-6 text-center shadow-sm">
         <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-stone-900 max-w-4xl mx-auto leading-tight">
