@@ -54,7 +54,7 @@ const Home: React.FC = () => {
       <SEO 
         title="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" 
         description="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar."
-        keywords="Tantra, Astrology, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Puja Rituals, Astrology Consultation, Yantra"
+        keywords="Tantra Advisory, Sri Vidya Upasaka, Metaphysical Advisor, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Astrology Consultation"
         canonical="https://www.kaulbhaskar.com"
         faq={[
           { question: "Who is KAUL BHASKAR ?", answer: "Kaul Bhaskar is a Sri Vidya Upaska and a dedicated follower of Kaul Marg. He provides guidance in authentic Tantra, spiritual initiation, and astrological consultations." },
