@@ -53,7 +53,7 @@ const Home: React.FC = () => {
       {/* 1. Safe layout variables that your SEO component already accepts */}
       <SEO 
         title="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" 
-        description="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath maping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar."
+        description="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar."
         keywords="Tantra, Astrology, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Puja Rituals, Astrology Consultation, Yantra"
         canonical="https://www.kaulbhaskar.com"
         faq={[
@@ -77,14 +77,14 @@ const Home: React.FC = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.kaulbhaskar.com" />
         <meta property="og:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
-        <meta property="og:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
+        <meta property="og:description" content="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
         <meta property="og:image" content="https://www.kaulbhaskar.com" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.kaulbhaskar.com" />
         <meta name="twitter:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
-        <meta name="twitter:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
+        <meta name="twitter:description" content="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
         <meta name="twitter:image" content="https://www.kaulbhaskar.com" />
 
         {/* JSON-LD Schema Markup */}
