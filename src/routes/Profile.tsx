@@ -1,12 +1,11 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import { InteractiveTooltip } from '../components/InteractiveTooltip'; // Adjust path as needed
 
+// Upgraded copy variables for premium, international branding
 const profileData = {
-  title: "Profile",
-  subtitle: "I am a TANTRA and ASTROLOGY mentor.",
+  title: "Metaphysical Strategy for High-Performers",
+  subtitle: "Kaulbhaskar provides high-performers with data-driven spiritual systems to safely navigate modern power structures.",
   knownAs: "KAULBHASKAR",
-  discipleOf: "KULBHUSHANANAND NATH", // Fixed: Corrected missing 'A' spelling discrepancy
+  discipleOf: "KULBHUSHANANAD NATH",
   guruAs: "- An Esteemed KAUL of Prayagraj",
   lineage: [
     { label: "Sri Guru", name: "Sri KULBHUSHANANAND NATH Ji" },
@@ -17,32 +16,35 @@ const profileData = {
   ]
 };
 
+// Tooltip dictionary mapping keyword keys to premium executive explanations
+const tooltips: Record<string, string> = {
+  eliteFamily: "A heritage designation indicating a background rooted in high-court scholarship, land governance, and intellectual leadership within traditional Indian society (historically identified as Bhumihar Brahmin of the Kaushik Gotra).",
+  sriVidya: "A sophisticated school of Vedic metaphysics focused on mastering cosmic energy, geometry, and consciousness to achieve absolute balance between immense material wealth and spiritual liberation.",
+  kaulMarg: "An unbroken chain of oral tradition and energetic transmission passed down directly through generations of masters, ensuring all advisory practices remain authentic and free from modern alterations.",
+  astrologicalSystems: "Three distinct mathematical and analytical frameworks within Vedic astrology (Parasara, Jaimini, and Krishnamurthi). Combining them allows for multi-layered data verification, offering highly accurate timing for business decisions and risk management."
+};
+
+interface TooltipProps {
+  text: string;
+  tooltipKey: keyof typeof tooltips;
+}
+
+// Reusable custom React Tooltip component utilizing Tailwind's group-hover states
+const InteractiveTooltip: React.FC<TooltipProps> = ({ text, tooltipKey }) => {
+  return (
+    <span className="relative inline-block group cursor-help border-b-2 border-dashed border-orange-500 text-stone-900 font-semibold px-1 bg-orange-50/50 hover:bg-orange-100/80 transition-colors rounded">
+      {text}
+      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 hidden group-hover:block w-72 md:w-80 bg-stone-900 text-stone-200 text-sm font-normal normal-case p-4 rounded-xl shadow-2xl border border-stone-800 z-50 leading-relaxed font-sans animate-fade-in">
+        {tooltips[tooltipKey]}
+        <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-stone-900"></span>
+      </span>
+    </span>
+  );
+};
+
 const Profile: React.FC = () => {
   return (
     <div className="bg-yellow-500 min-h-screen font-serif text-stone-800 selection:bg-orange-200 pt-32">
-      {/* Dynamic Helmet Head Meta Tags Injections */}
-      <Helmet>
-        <title>Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory</title>
-        <meta name="description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        {/* Fixed: Removed 'vwww' typo from canonical path */}
-        <link rel="canonical" href="https://www.kaulbhaskar.com/profile" />
-
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://www.kaulbhaskar.com/profile" />
-        <meta property="og:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
-        <meta property="og:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        {/* Fixed: Pointed image metadata to an actual graphic asset instead of a root directory */}
-        <meta property="og:image" content="https://kaulbhaskar.com" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://www.kaulbhaskar.com/profile" />
-        <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
-        <meta name="twitter:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        <meta name="twitter:image" content="https://kaulbhaskar.com" />
-      </Helmet>
-
       {/* Homepage Hero Section */}
       <header className="bg-white border-b border-stone-200 py-24 px-6 text-center shadow-sm">
         <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-stone-900 max-w-4xl mx-auto leading-tight">
@@ -54,33 +56,33 @@ const Profile: React.FC = () => {
         </p>
       </header>
 
-     <main className="max-w-4xl mx-auto py-16 px-6">
+      <main className="max-w-4xl mx-auto py-16 px-6">
         {/* Core Identity Cards */}
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           <div className="bg-white p-8 border-l-4 border-orange-600 shadow-md flex flex-col justify-between">
             <div>
-              <h2 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2">Known As</h2>
+              <h2 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2 font-sans">Known As</h2>
               <p className="text-2xl font-black text-stone-900">{profileData.knownAs}</p>
             </div>
-            {/* Image below KAULBHASKAR */}
+            {/* Added: Portrait Graphic below Identity Name */}
             <img 
               src="/img/satyendra-large.webp" 
               alt="Kaulbhaskar Profile Portrait" 
-              className="mt-4 w-full h-48 object-contain rounded shadow-sm border border-stone-100" 
+              className="mt-6 w-full h-48 object-contain rounded shadow-sm border border-stone-100 bg-stone-50" 
             />
           </div>
-        
+
           <div className="bg-white p-8 border-l-4 border-stone-800 shadow-md flex flex-col justify-between">
             <div>
-              <h2 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2">Direct Disciple Of</h2>
+              <h2 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2 font-sans">Direct Disciple Of</h2>
               <p className="text-2xl font-black text-stone-900">{profileData.discipleOf}</p>
               <p className="text-lg font-semibold text-orange-700">{profileData.guruAs}</p>
             </div>
-            {/* Image below An Esteemed KAUL of Prayagraj */}
+            {/* Added: Lineage Graphic below Guru Designation */}
             <img 
               src="/img/GURU.webp" 
               alt="Lineage Guru Portrait Illustration" 
-              className="mt-4 w-full h-48 object-contain rounded shadow-sm border border-stone-100" 
+              className="mt-6 w-full h-48 object-contain rounded shadow-sm border border-stone-100 bg-stone-50" 
             />
           </div>
         </div>
@@ -112,16 +114,18 @@ const Profile: React.FC = () => {
         {/* Lineage Table */}
         <section className="bg-stone-900 text-stone-200 rounded-2xl overflow-hidden shadow-2xl">
           <div className="p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-10 text-orange-400 text-center uppercase tracking-widest">
+            <h2 className="text-2xl md:text-3xl font-bold mb-10 text-orange-400 text-center uppercase tracking-widest font-sans">
               Guru-Parampara
             </h2>
             <div className="space-y-0">
-              {profileData.lineage.map((item) => (
+              {profileData.lineage.map((item, index) => (
                 <div 
-                  key={item.label} // Fixed: Relied on unique label tags instead of generic mapping arrays
-                  className="flex flex-col md:flex-row py-6 border-b border-stone-800 last:border-b-0" // Cleaned conditional styling logic down to basic CSS selectors
+                  key={index} 
+                  className={`flex flex-col md:flex-row py-6 border-b border-stone-800 ${
+                    index === profileData.lineage.length - 1 ? 'border-b-0' : ''
+                  }`}
                 >
-                  <div className="md:w-1/3 text-orange-300/80 text-base md:text-lg uppercase font-bold tracking-tighter mb-2 md:mb-0 md:pr-4">
+                  <div className="md:w-1/3 text-orange-300/80 text-base md:text-lg uppercase font-bold tracking-tight mb-2 md:mb-0 md:pr-4 font-sans">
                     {item.label}
                   </div>
                   <div className="md:w-2/3 text-lg md:text-xl font-semibold md:pl-4">
