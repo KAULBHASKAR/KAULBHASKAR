@@ -1,7 +1,7 @@
 export default function Cohort() {
   const handleApplyClick = () => {
     // Fixed mailto URL syntax by adding a subject prefix and proper formatting
-    window.location.href = "mailto:kaulbhaskar@gmail.com";
+    window.location.href = "mailto:kaultantra@gmail.com";
   };
 
   return (
