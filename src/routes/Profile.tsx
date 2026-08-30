@@ -67,7 +67,7 @@ const Profile: React.FC = () => {
               className="mt-4 w-full h-48 object-contain rounded shadow-sm border border-stone-100" 
             />
           </div>
-          
+        
           <div className="bg-white p-8 border-l-4 border-stone-800 shadow-md flex flex-col justify-between">
             <div>
               <h2 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2">Direct Disciple Of</h2>
