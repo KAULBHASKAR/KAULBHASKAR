@@ -1,5 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { InteractiveTooltip } from '../components/InteractiveTooltip'; // Adjust path as needed
+
 const profileData = {
   title: "Profile",
   subtitle: "I am a TANTRA and ASTROLOGY mentor.",
