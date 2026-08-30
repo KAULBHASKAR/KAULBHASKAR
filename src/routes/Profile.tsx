@@ -83,32 +83,24 @@ const Profile: React.FC = () => {
 
         {/* Biography Section */}
         <section className="mb-20">
-          <h2 className="text-4xl font-bold mb-10 text-stone-900 border-b-2 border-orange-100 pb-4">Biography</h2>
+          <h2 className="text-4xl font-bold mb-10 text-stone-900 border-b-2 border-orange-100 pb-4">Executive Biography</h2>
           
-          {/* Using prose-2xl for a much larger, readable font size */}
           <div className="prose prose-stone prose-xl md:prose-2xl max-w-none text-stone-700 leading-relaxed space-y-10">
             <p className="text-2xl">
-              I, of <span className="font-semibold text-stone-900">Kaushik Gotra</span>, was born into a respectable Bhumihar Brahmin Family of Bihar. 
-              After completing my <span className="italic">B.Sc. and L.L.B.</span> degrees, I did roaring practice of law at the 
-              <span className="font-semibold text-stone-900"> Patna High Court</span> until 2010.
+              A former high-court litigator with a strong academic foundation in science and law, 
+              <span className="font-semibold text-stone-900"> Kaulbhaskar</span> spent decades handling complex legal disputes before pivoting fully into high-level metaphysical advisory. Born into a highly respected, traditional <InteractiveTooltip text="elite family" tooltipKey="eliteFamily" /> in Bihar, India, he transitioned his rigorous analytical mastery from the courtroom to the study of ancient energetic mechanics. Today, he bridges heritage wisdom with modern leadership strategy as a full-time consultant in classical Astrology and authentic Tantric sciences.
             </p>
             
             <p className="text-2xl">
-              Transitioning from law to spirituality, I am now a full-time Tantra and Astrology practitioner. 
-              For over <span className="text-orange-700 font-bold">30 years</span>, I have dedicated myself to 
-              <span className="font-semibold text-stone-900"> SRI VIDYA upasna</span> within the rare 
-              <span className="text-orange-700 font-bold"> Dakshina Murti Sampradaya</span>.
+              For more than three decades, Kaulbhaskar has maintained the strict spiritual protocols of <InteractiveTooltip text="Sri Vidya" tooltipKey="sriVidya" />, descending directly through the venerable, lineage-backed <InteractiveTooltip text="Kaul Marg tradition" tooltipKey="kaulMarg" />. 
             </p>
 
-            {/* Fields separated as requested */}
             <p className="text-2xl">
-              As a staunch follower of <span className="uppercase tracking-wide">Kaul Marg</span>, I carry the spiritual discipline of my Great lineage descending from Param Shiva to my Kaulavadhuta Guru, into my practice. 
-              In the realm of <span className="font-semibold"> Astrology </span>, my expertise spans the <span className="font-semibold"> Parasara, Jaimini, </span> and <span className="font-semibold"> Krishnamurthi </span> systems.
+              His advanced corporate and personal consulting fuses three distinct classical <InteractiveTooltip text="astrological systems" tooltipKey="astrologicalSystems" /> of mathematics—Parasara, Jaimini, and Krishnamurthi—to provide precise strategic foresight.
             </p>
      
             <p className="bg-orange-50 p-8 rounded-xl border-l-8 border-orange-200 italic text-stone-800 text-xl md:text-2xl">
-              My spiritual path is shared with my wife, a philanthropist and dedicated upasika of 
-              Goddess Dashmayee Bala Tripura Sundari. Her support remains the cornerstone of my success in both worlds.
+              Kaulbhaskar’s global advisory work is supported by his wife, an active philanthropist and accomplished practitioner of the Goddess lineage, whose partnership anchors their high-impact success in both the material and spiritual worlds.
             </p>
           </div>
         </section>
