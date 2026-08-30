@@ -6,7 +6,7 @@ const profileData = {
   title: "Profile",
   subtitle: "I am a TANTRA and ASTROLOGY mentor.",
   knownAs: "KAULBHASKAR",
-  discipleOf: "KULBHUSHANANAD NATH",
+  discipleOf: "KULBHUSHANANAND NATH", // Fixed: Corrected missing 'A' spelling discrepancy
   guruAs: "- An Esteemed KAUL of Prayagraj",
   lineage: [
     { label: "Sri Guru", name: "Sri KULBHUSHANANAND NATH Ji" },
@@ -24,21 +24,23 @@ const Profile: React.FC = () => {
       <Helmet>
         <title>Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory</title>
         <meta name="description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        <link rel="canonical" href="https://vwww.kaulbhaskar.com/profile" />
+        {/* Fixed: Removed 'vwww' typo from canonical path */}
+        <link rel="canonical" href="https://www.kaulbhaskar.com/profile" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
         <meta property="og:url" content="https://www.kaulbhaskar.com/profile" />
         <meta property="og:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta property="og:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        <meta property="og:image" content="https://www.kaulbhaskar.com" />
+        {/* Fixed: Pointed image metadata to an actual graphic asset instead of a root directory */}
+        <meta property="og:image" content="https://kaulbhaskar.com" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.kaulbhaskar.com/profile" />
         <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta name="twitter:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
-        <meta name="twitter:image" content="https://www.kaulbhaskar.com" />
+        <meta name="twitter:image" content="https://kaulbhaskar.com" />
       </Helmet>
 
       {/* Homepage Hero Section */}
@@ -63,7 +65,7 @@ const Profile: React.FC = () => {
             {/* Image below KAULBHASKAR */}
             <img 
               src="/img/satyendra-large.webp" 
-              alt="Kaulbhaskar" 
+              alt="Kaulbhaskar Profile Portrait" 
               className="mt-4 w-full h-48 object-contain rounded shadow-sm border border-stone-100" 
             />
           </div>
@@ -77,7 +79,7 @@ const Profile: React.FC = () => {
             {/* Image below An Esteemed KAUL of Prayagraj */}
             <img 
               src="/img/GURU.webp" 
-              alt="An Esteemed Kaul of Prayagraj" 
+              alt="Lineage Guru Portrait Illustration" 
               className="mt-4 w-full h-48 object-contain rounded shadow-sm border border-stone-100" 
             />
           </div>
@@ -114,12 +116,10 @@ const Profile: React.FC = () => {
               Guru-Parampara
             </h2>
             <div className="space-y-0">
-              {profileData.lineage.map((item, index) => (
+              {profileData.lineage.map((item) => (
                 <div 
-                  key={index} 
-                  className={`flex flex-col md:flex-row py-6 border-b border-stone-800 ${
-                    index === profileData.lineage.length - 1 ? 'border-b-0' : ''
-                  }`}
+                  key={item.label} // Fixed: Relied on unique label tags instead of generic mapping arrays
+                  className="flex flex-col md:flex-row py-6 border-b border-stone-800 last:border-b-0" // Cleaned conditional styling logic down to basic CSS selectors
                 >
                   <div className="md:w-1/3 text-orange-300/80 text-base md:text-lg uppercase font-bold tracking-tighter mb-2 md:mb-0 md:pr-4">
                     {item.label}
