@@ -30,7 +30,7 @@ const Home: React.FC = () => {
     "name": "KAUL TANTRA SADHANA",
     "alternativeName": "KAULBHASKAR",
     "url": "https://kaulbhaskar.com",
-    "logo": "https://kaulbhaskar.com", 
+    "logo": "https://kaulbhaskar.com", // Recommended fallback to explicit image path
     "image": "https://kaulbhaskar.com", 
     "description": "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage.",
     "telephone": "+91-9934418459",
@@ -40,114 +40,69 @@ const Home: React.FC = () => {
       "addressLocality": "Patna",
       "addressRegion": "Bihar",
       "addressCountry": "IN"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "25.5941",
-      "longitude": "85.1376"
     }
   };
 
-  return (
-    <div>
-      {/* 1. Safe layout variables that your SEO component already accepts */}
-      <SEO 
-        title="KAULBHASKAR a Legend KAULA | Tantra & Spiritual Guidance" 
-        description="Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage."
-        keywords="KAULA, Tantra, Astrology, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Puja Rituals, Astrology Consultation, Yantra"
-        canonical="https://kaulbhaskar.com"
-        faq={[
-          { question: "Who is KAUL BHASKAR ?", answer: "Kaul Bhaskar, a Metaphysical Advisor to Elite Leaders, is a Sri Vidya Upaska and a dedicated follower of Kaul Marg. He provides guidance in authentic Tantra, spiritual initiation, and astrological consultations." },
-          { question: "What are the primary services offered ?", answer: "We provides high-performers with data-driven spiritual systems to safely navigate modern power structures." },
-          { question: "What is the charges, if any ?", answer: "Services range from Astrology Consultation (₹5,000) to specialized rituals like Shat Chandi (₹2,50,000). Contact us for specific details." }
-        ]}
-        mentors={[
-          { 
-            name: "KAULBHASKAR Guru Ji", 
-            role: "Spiritual Mentor & Expert in Tantra", 
-            description: "Belongs to the lineage of famous siddha yogi Sri MATSYENDRA NATH Ji.",
-            image: "https://kaulbhaskar.com"
-          }
-        ]}
-      />
+  // Define dedicated variables for metadata uniformity
+  const pageTitle = "KAUL TANTRA SADHANA | Metaphysical Advisory for Global Leaders";
+  const pageDesc = "Authentic Tantric rituals & Sri Vidya Upasana guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage.";
+  const ogImageUrl = "https://kaulbhaskar.com"; // Replace with your actual hosted image path
 
-      {/* 2. Direct Helmet injection to add Open Graph tags and JSON-LD */}
+  return (
+    <>
       <Helmet>
-        {/* Open Graph / Facebook */}
+        {/* Standard Meta Tags */}
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDesc} />
+
+        {/* Facebook / Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://kaulbhaskar.com" />
-        <meta property="og:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
-        <meta property="og:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
-        <meta property="og:image" content="https://kaulbhaskar.com" />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDesc} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="KAUL TANTRA SADHANA - Sri Vidya Upasana & Tantric Rituals Banner" />
 
-        {/* Twitter */}
+        {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://kaulbhaskar.com" />
-        <meta name="twitter:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
-        <meta name="twitter:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
-        <meta name="twitter:image" content="https://kaulbhaskar.com" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDesc} />
+        <meta name="twitter:image" content={ogImageUrl} />
 
-        {/* JSON-LD Schema Markup */}
+        {/* Structured Data (JSON-LD) */}
         <script type="application/ld+json">
           {JSON.stringify(jsonLdSchema)}
         </script>
       </Helmet>
 
-      {/* Hero renders instantly without waiting for network scripts to finish chunk downloading */}
-      <Hero />
+      {/* Legacy SEO fallback template if needed */}
+      <SEO />
 
-      {/* Layer 1: Elements immediately seen below the hero image */}
-      <Suspense 
-        fallback = {
-          <div className="flex-center h-[30vh] w-full">
-            <div className="three-body">
-              <div className="three-body__dot"></div>
-              <div className="three-body__dot"></div>
-              <div className="three-body__dot"></div>
-            </div>
-          </div>
-        }
-      >
-        <Cohort />
-        <Intro />
-        <Feature />
-      </Suspense>
-
-      {/* Layer 2: Middle interactive items including the calendar */}
-      <Suspense 
-        fallback = {
-          <div className="flex-center h-[30vh] w-full">
-            <div className="three-body">
-              <div className="three-body__dot"></div>
-            </div>
-          </div>
-        }
-      >
-        <Camp />
-        <CalendarComponent />
-        <Gallery />
-        <Mudra />
-      </Suspense>
-
-      {/* Layer 3: Heavy items deeper down the page loaded entirely asynchronously */}
-      <Suspense 
-        fallback = {
-          <div className="flex-center h-[30vh] w-full">
-            <div className="three-body">
-              <div className="three-body__dot"></div>
-            </div>
-          </div>
-        }
-      >
-        <FAQ />
-        <StatsComponent />
-        <Story />
-        <Testimonial />
-        <Mentor />
-        <LatestPost />
-        <Meet />
-      </Suspense>
-    </div>
+      {/* Main Page Layout */}
+      <main>
+        <Hero />
+        
+        <Suspense fallback={<div>Loading content...</div>}>
+          <Intro />
+          <Cohort />
+          <StatsComponent />
+          <Feature />
+          <Camp />
+          <CalendarComponent />
+          <Gallery />
+          <Mudra />
+          <FAQ />
+          <Story />
+          <Testimonial />
+          <Mentor />
+          <Meet />
+          <LatestPost />
+        </Suspense>
+      </main>
+    </>
   );
 };
 
