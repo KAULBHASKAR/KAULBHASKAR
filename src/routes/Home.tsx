@@ -50,12 +50,11 @@ const Home: React.FC = () => {
 
   return (
     <>
+            {/* 1. Standard Helmet Metadata injection */}
       <Helmet>
-        {/* Standard Meta Tags */}
         <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />
 
-        {/* Facebook / Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://kaulbhaskar.com" />
         <meta property="og:title" content={pageTitle} />
@@ -65,21 +64,19 @@ const Home: React.FC = () => {
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="KAUL TANTRA SADHANA - Sri Vidya Upasana & Tantric Rituals Banner" />
 
-        {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://kaulbhaskar.com" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDesc} />
         <meta name="twitter:image" content={ogImageUrl} />
 
-        {/* Structured Data (JSON-LD) */}
         <script type="application/ld+json">
           {JSON.stringify(jsonLdSchema)}
         </script>
       </Helmet>
 
-      {/* Legacy SEO fallback template if needed */}
-      <SEO />
+      {/* 2. FIXED: Properties passed directly to satisfy the SEO component type checks */}
+      <SEO title={pageTitle} description={pageDesc} />
 
       {/* Main Page Layout */}
       <main>
@@ -102,6 +99,7 @@ const Home: React.FC = () => {
           <LatestPost />
         </Suspense>
       </main>
+
     </>
   );
 };
