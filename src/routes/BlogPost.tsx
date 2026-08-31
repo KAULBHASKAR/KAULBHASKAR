@@ -1,10 +1,7 @@
 import { useParams, Link } from "react-router";
-import { useState } from "react"; // Added for password state
-// Import Helmet directly to bypass SEO prop type errors
-import { Helmet } from "react-helmet-async";
+import { useState } from "react";
 import matter from "gray-matter";
 import { Buffer } from "buffer";
-import SEO from "../components/SEO";
 import CopyProtectedArticle from "../components/CopyProtectedArticle";
 
 interface PostFrontMatter {
@@ -16,7 +13,7 @@ interface PostFrontMatter {
   authorAvatar: string;
   authorBio?: string;
   date: string;
-  password?: string; // Add password to front-matter type
+  password?: string;
 }
 
 if (typeof window !== "undefined") {
@@ -46,14 +43,14 @@ export default function BlogPost() {
   const postData = data as PostFrontMatter;
   const isProtected = !!postData.password;
 
-  // ✅ Fixed absolute domain pathways to match sitemap routing standard
+  // ✅ Fixed string interpolation bug & matched routing structure
   const canonicalUrl = `https://kaulbhaskar.com{slug}`;
   const fallbackImage = "https://kaulbhaskar.com";
   const ogImageUrl = postData.featuredImage 
     ? (postData.featuredImage.startsWith('http') ? postData.featuredImage : `https://www.kaulbhaskar.com${postData.featuredImage}`)
     : fallbackImage;
 
-  // ✅ Setup Structured JSON-LD BlogPosting Schema Object
+  // ✅ Structured JSON-LD BlogPosting Schema Object
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -78,7 +75,6 @@ export default function BlogPost() {
     }
   };
 
-  // Handle password submission
   const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputPassword === postData.password) {
@@ -89,16 +85,14 @@ export default function BlogPost() {
     }
   };
 
-  // 1. RESTRICTED VIEW (If protected and not verified)
+  // 1. RESTRICTED PASSWORD VIEW
   if (isProtected && !isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-indigo-500 to-purple-500 px-4">
-        {/* Safe loading of tags even on locked layouts so search engine spiders can crawl metadata structure cleanly */}
-        <Helmet>
-          <title>Protected Content | KAULBHASKAR Blog</title>
-          <meta name="description" content="This spiritual sadhana layout framework requires authorized password entry credentials to view context details safely." />
-          <meta name="robots" content="noindex, follow" />
-        </Helmet>
+        {/* React 19 native hoisting manages these tags automatically without Helmet wrappers */}
+        <title>Protected Content | KAULBHASKAR Blog</title>
+        <meta name="description" content="This spiritual sadhana layout framework requires authorized password entry credentials to view context details safely." />
+        <meta name="robots" content="noindex, follow" />
 
         <div className="max-w-md w-full p-8 border rounded-2xl bg-white shadow-2xl text-center">
           <h2 className="text-2xl font-bold mb-2 text-gray-800">Restricted Access</h2>
@@ -131,46 +125,35 @@ export default function BlogPost() {
     );
   }
 
-  // 2. AUTHORIZED CONTENT VIEW
+  // 2. OPEN / UNLOCKED CONTENT VIEW
   return (
     <article className="w-full px-6 py-10 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen">
-      {/* ✅ Safe layout variables that your SEO component already accepts */}
-      <SEO
-        title={`${postData.title} | Sri Kaulbhaskar Blog`}
-        description={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."}
-        canonical={canonicalUrl}
-        keywords={postData.keywords || "Tantra wisdom, Sri Vidya sadhana"}
-        featuredImage={ogImageUrl}
-        breadcrumbs={[
-          { name: "Home", url: "https://www.kaulbhaskar.com" },
-          { name: "Blog", url: "https://www.kaulbhaskar.com/blog" },
-          { name: postData.title, url: canonicalUrl },
-        ]}
-      />
+      {/* ✅ Native React 19 Document Metadata Hoisting tags */}
+      <title>{`${postData.title} | Sri Kaulbhaskar Blog`}</title>
+      <meta name="description" content={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."} />
+      <meta name="keywords" content={postData.keywords || "Tantra wisdom, Sri Vidya sadhana"} />
+      <link rel="canonical" href={canonicalUrl} />
 
-      {/* ✅ Direct Helmet injection to add dynamic Open Graph tags without breaking TypeScript definitions */}
-      <Helmet>
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:title" content={`${postData.title} | Sri Kaulbhaskar Blog`} />
-        <meta property="og:description" content={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."} />
-        <meta property="og:image" content={ogImageUrl} />
-        <meta property="article:author" content={postData.authorName || "KAULBHASKAR Guru Ji"} />
-        <meta property="article:published_time" content={postData.date} />
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:title" content={`${postData.title} | Sri Kaulbhaskar Blog`} />
+      <meta property="og:description" content={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."} />
+      <meta property="og:image" content={ogImageUrl} />
+      <meta property="article:author" content={postData.authorName || "KAULBHASKAR Guru Ji"} />
+      <meta property="article:published_time" content={postData.date} />
 
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={canonicalUrl} />
-        <meta name="twitter:title" content={`${postData.title} | Sri Kaulbhaskar Blog`} />
-        <meta name="twitter:description" content={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."} />
-        <meta name="twitter:image" content={ogImageUrl} />
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={canonicalUrl} />
+      <meta name="twitter:title" content={`${postData.title} | Sri Kaulbhaskar Blog`} />
+      <meta name="twitter:description" content={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."} />
+      <meta name="twitter:image" content={ogImageUrl} />
 
-        {/* ✅ Injected TypeScript-Safe JSON-LD Object */}
-        <script type="application/ld+json">
-          {JSON.stringify(articleSchema)}
-        </script>
-      </Helmet>
+      {/* ✅ TypeScript-Safe Native JSON-LD Injection */}
+      <script type="application/ld+json">
+        {JSON.stringify(articleSchema)}
+      </script>
 
       <div className="max-w-5xl mx-auto">
         <Link to="/blog" className="mt-20 text-sm text-black hover:text-orange-200 mb-8 inline-block">
@@ -190,15 +173,7 @@ export default function BlogPost() {
           </div>
         </header>
 
-        {/* Use your reusable CopyProtectedArticle component here */}
-        <CopyProtectedArticle 
-          content={content} 
-          className="prose-invert text-white text-xl md:text-2xl" 
-        />
-
-        <footer className="mt-20 pt-10 border-t border-white/20 text-center text-black/60 font-medium">
-          ॐ End of Wisdom ॐ
-        </footer>
+        <CopyProtectedArticle content={content} />
       </div>
     </article>
   );
