@@ -78,14 +78,14 @@ const Home: React.FC = () => {
         <meta property="og:url" content="https://kaulbhaskar.com" />
         <meta property="og:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
         <meta property="og:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
-        <meta property="og:image" content="https://kaulbhaskar.com" />
+        <meta property="og:image" content="https://kaulbhaskar.com/img/ABOUT_BG.webp" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://kaulbhaskar.com" />
         <meta name="twitter:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
         <meta name="twitter:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
-        <meta name="twitter:image" content="https://kaulbhaskar.com" />
+        <meta name="twitter:image" content="https://kaulbhaskar.com/img/ABOUT_BG.webp" />
 
         {/* JSON-LD Schema Markup */}
         <script type="application/ld+json">
