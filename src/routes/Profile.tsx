@@ -7,7 +7,7 @@ const profileData = {
   subtitle: "Kaulbhaskar provides high-performers with data-driven spiritual systems to safely navigate modern power structures.",
   knownAs: "KAULBHASKAR",
   discipleOf: "KULBHUSHANANAD NATH",
-  guruAs: "- An Esteemed KAUL of Prayagraj",
+  guruAs: "- An Esteemed KAULA of Prayagraj",
   lineage: [
     { label: "Sri Guru", name: "Sri KULBHUSHANANAND NATH Ji" },
     { label: "Grand Guru (Param Guru)", name: "Sri GUPTAVATAR BABA SRI" },
@@ -49,21 +49,21 @@ const Profile: React.FC = () => {
       {/* Dynamic Helmet Head Meta Tags Injections */}
       <Helmet>
         <title>Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory</title>
-        <meta name="description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
+        <meta name="description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
         <link rel="canonical" href="https://kaulbhaskar.com" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
         <meta property="og:url" content="https://kaulbhaskar.com" />
         <meta property="og:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
-        <meta property="og:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
+        <meta property="og:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
         <meta property="og:image" content="https://kaulbhaskar.com" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://kaulbhaskar.com" />
         <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
-        <meta name="twitter:description" content="Discover the analytical background and ancient spiritual lineage of Kaulbhaskar. Bridging elite traditional lineage with precision astrological and Tantric consulting." />
+        <meta name="twitter:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
         <meta name="twitter:image" content="https://kaulbhaskar.com" />
       </Helmet>
 
