@@ -52,7 +52,7 @@ const Services: React.FC = () => {
       {/* ✅ Aligned canonical path to match your exact sitemap routing */}
       <SEO
         title="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR"
-        description="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance."
+        description="Access elite metaphysical protocols like Pratyangira & Baglamukhi rituals engineered for leaders. Optimize cosmic timelines & life paths. "
         canonical="https://www.kaulbhaskar.com/services"
         breadcrumbs={[
           { name: "Home", url: "https://www.kaulbhaskar.com" },
@@ -66,14 +66,14 @@ const Services: React.FC = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.kaulbhaskar.com/services" />
         <meta property="og:title" content="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR" />
-        <meta property="og:description" content="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance." />
+        <meta property="og:description" content="Access elite metaphysical protocols like Pratyangira & Baglamukhi rituals engineered for leaders. Optimize cosmic timelines & life paths. " />
         <meta property="og:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.kaulbhaskar.com/services" />
         <meta name="twitter:title" content="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR" />
-        <meta name="twitter:description" content="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance." />
+        <meta name="twitter:description" content="Access elite metaphysical protocols like Pratyangira & Baglamukhi rituals engineered for leaders. Optimize cosmic timelines & life paths. " />
         <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
         {/* Inject JSON-LD Object safely for TypeScript compilation */}
