@@ -89,14 +89,14 @@ export default function Contact(): React.JSX.Element {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://kaulbhaskar.com/contact" />
         <meta property="og:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
-        <meta property="og:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar." />
+        <meta property="og:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra, Astrology & Spiritual consultations in Patna, Bihar." />
         <meta property="og:image" content="https://kaulbhaskar.com/img/phone-image.jpeg" />
 
         {/* Twitter Metadata */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://kaulbhaskar.com/contact" />
         <meta name="twitter:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
-        <meta name="twitter:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar." />
+        <meta name="twitter:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra, Astrology & Spiritual consultations in Patna, Bihar." />
 
         {/* JSON-LD ContactPage Schema Markups */}
         <script type="application/ld+json">
