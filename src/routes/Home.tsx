@@ -52,13 +52,13 @@ const Home: React.FC = () => {
     <div>
       {/* 1. Safe layout variables that your SEO component already accepts */}
       <SEO 
-        title="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" 
-        description="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar."
-        keywords="Tantra Advisory, Sri Vidya Upasaka, Metaphysical Advisor, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Astrology Consultation"
+        title="KAULBHASKAR a Legend KAULA | Tantra & Spiritual Guidance" 
+        description="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation."
+        keywords="KAULA, Tantra, Astrology, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Puja Rituals, Astrology Consultation, Yantra"
         canonical="https://www.kaulbhaskar.com"
         faq={[
-          { question: "Who is KAUL BHASKAR ?", answer: "Kaul Bhaskar is a Sri Vidya Upaska and a dedicated follower of Kaul Marg. He provides guidance in authentic Tantra, spiritual initiation, and astrological consultations." },
-          { question: "What are the primary services offered ?", answer: "We provide Tantra teachings and rituals, Astrology consultation, Gems, Talismans, and Worship Yantras like Meru & Kurma." },
+          { question: "Who is KAUL BHASKAR ?", answer: "Kaul Bhaskar, a Metaphysical Advisor to Elite Leaders, is a Sri Vidya Upaska and a dedicated follower of Kaul Marg. He provides guidance in authentic Tantra, spiritual initiation, and astrological consultations." },
+          { question: "What are the primary services offered ?", answer: "We provides high-performers with data-driven spiritual systems to safely navigate modern power structures." },
           { question: "What is the charges, if any ?", answer: "Services range from Astrology Consultation (₹5,000) to specialized rituals like Shat Chandi (₹2,50,000). Contact us for specific details." }
         ]}
         mentors={[
@@ -77,14 +77,14 @@ const Home: React.FC = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.kaulbhaskar.com" />
         <meta property="og:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
-        <meta property="og:description" content="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
+        <meta property="og:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
         <meta property="og:image" content="https://www.kaulbhaskar.com" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.kaulbhaskar.com" />
         <meta name="twitter:title" content="KAULBHASKAR a Legend KAUL | Tantra, Astrology & Spiritual Guidance" />
-        <meta name="twitter:description" content="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
+        <meta name="twitter:description" content="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation." />
         <meta name="twitter:image" content="https://www.kaulbhaskar.com" />
 
         {/* JSON-LD Schema Markup */}
