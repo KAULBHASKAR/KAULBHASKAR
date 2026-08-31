@@ -40,7 +40,7 @@ const About: React.FC = () => {
         "Tantra",
         "Astrology",
         "Sri Vidya Upasana",
-        "Kaul Marga",
+        "Kaula Marga",
         "Dakshinamurti Sampradaya"
       ],
       "affiliation": {
@@ -55,8 +55,8 @@ const About: React.FC = () => {
     <div className="flex flex-col w-full content-center">
       {/* 1. Aligned to your /about-us sitemap setup path configuration */}
       <SEO
-        title="About Kaulbhaskar Guru Ji | Tantra & Astrology Experts"
-        description="Explore professional spiritual guidance, authentic Tantric rituals, strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar."
+        title="About Kaulbhaskar Guru Ji | Tantra, Astrology & Spiritual Mentor"
+        description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
         canonical="https://kaulbhaskar.com/about-us"
         keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
         breadcrumbs={[
@@ -71,14 +71,14 @@ const About: React.FC = () => {
         <meta property="og:type" content="profile" />
         <meta property="og:url" content="https://kaulbhaskar.com/about-us" />
         <meta property="og:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
-        <meta property="og:description" content="Explore professional spiritual guidance, authentic Tantric rituals, strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
+        <meta property="og:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
         <meta property="og:image" content="https://kaulbhaskar.com" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://kaulbhaskar.com/about-us" />
         <meta name="twitter:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
-        <meta name="twitter:description" content="Explore professional spiritual guidance, authentic Tantric rituals, strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
+        <meta name="twitter:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
         <meta name="twitter:image" content="https://kaulbhaskar.com" />
 
         {/* Inject JSON-LD Object safely for TypeScript compilation */}
