@@ -32,7 +32,7 @@ const Home: React.FC = () => {
     "url": "https://www.kaulbhaskar.com",
     "logo": "https://kaulbhaskar.com", 
     "image": "https://kaulbhaskar.com", 
-    "description": "Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation.",
+    "description": "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage.",
     "telephone": "+91-9934418459",
     "email": "kaultantra@gmail.com",
     "address": {
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
       {/* 1. Safe layout variables that your SEO component already accepts */}
       <SEO 
         title="KAULBHASKAR a Legend KAULA | Tantra & Spiritual Guidance" 
-        description="Connect with experts in Tantra & Astrology led by Sri KAULBHASKAR Ji, lineage of Sri MATSYENDRA NATH Ji. Services include Puja, Rituals, and Astro-consultation."
+        description="Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage."
         keywords="KAULA, Tantra, Astrology, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Puja Rituals, Astrology Consultation, Yantra"
         canonical="https://www.kaulbhaskar.com"
         faq={[
