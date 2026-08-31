@@ -1,6 +1,7 @@
 // src/components/Layout.tsx
 import { lazy, Suspense } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router'; 
+import { Helmet } from 'react-helmet-async'; // ✅ Added Helmet import
 import Navbar from './Navbar'; 
 import { WhatsAppWidget } from './WhatsAppWidget'; 
 
@@ -9,9 +10,11 @@ const Footer = lazy(() => import('./Footer'));
 export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col relative">
-      {/* ⚛️ Global Open Graph Baseline Only */}
-      <meta property="og:type" content="website" />
-      <meta property="twitter:card" content="summary_large_image" />
+      {/* ✅ Correctly wrapped in Helmet to hoist tags out of the body and into the head */}
+      <Helmet>
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
 
       <ScrollRestoration /> 
 
