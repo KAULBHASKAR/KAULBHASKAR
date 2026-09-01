@@ -2,28 +2,27 @@ import React, { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 
 // --- Interfaces for Structured Data ---
-interface Breadcrumb {
+export interface Breadcrumb {
   name: string;
   url: string;
 }
 
-interface FAQItem {
+export interface FAQItem {
   question: string;
   answer: string;
 }
 
-interface Mentor {
+export interface Mentor {
   name: string;
   role: string;
   image?: string;
   description?: string;
 }
 
-interface SEOProps {
+export interface SEOProps {
   title: string;
   description: string;
   canonical?: string;
-  keywords?: string;
   breadcrumbs?: Breadcrumb[];
   faq?: FAQItem[];
   mentors?: Mentor[];
@@ -31,21 +30,35 @@ interface SEOProps {
   type?: string;
 }
 
+const DEFAULT_SITE_URL = "https://kaulbhaskar.com";
+// Optimized Open Graph image standard path (recommended size: 1200x630)
+const DEFAULT_IMAGE = `${DEFAULT_SITE_URL}/img/og-main-fallback.jpg`;
+
 const SEO: React.FC<SEOProps> = ({
   title,
   description,
   canonical,
-  keywords,
   breadcrumbs,
   faq,
   mentors,
-  featuredImage = "https://vercel.app",
+  featuredImage = DEFAULT_IMAGE,
   type = "website",
 }) => {
+  // Resolve current absolute canonical URL string
+  const activeUrl = canonical || DEFAULT_SITE_URL;
 
-  // 1. Memoize Breadcrumb Schema to prevent repetitive parsing passes
+  // Validation rules for title & metadata parameters
+  const cleanTitle = title.trim();
+  
+  // Truncate meta description cleanly to prevent arbitrary browser clipping
+  const cleanDescription = useMemo(() => {
+    const trimmed = description.trim().replace(/["']/g, ""); // Stripping quotes prevents snippet injection truncation bugs
+    return trimmed.length > 155 ? `${trimmed.substring(0, 152)}...` : trimmed;
+  }, [description]);
+
+  // 1. Memoize Breadcrumb Schema
   const breadcrumbString = useMemo(() => {
-    if (!breadcrumbs) return null;
+    if (!breadcrumbs || breadcrumbs.length === 0) return null;
     return JSON.stringify({
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -53,14 +66,14 @@ const SEO: React.FC<SEOProps> = ({
         "@type": "ListItem",
         "position": index + 1,
         "name": crumb.name,
-        "item": crumb.url,
+        "item": crumb.url.startsWith("http") ? crumb.url : `${DEFAULT_SITE_URL}${crumb.url}`,
       })),
     });
   }, [breadcrumbs]);
 
   // 2. FAQ Schema formatted directly into strict string format
   const faqString = useMemo(() => {
-    if (!faq) return null;
+    if (!faq || faq.length === 0) return null;
     return JSON.stringify({
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -77,7 +90,7 @@ const SEO: React.FC<SEOProps> = ({
 
   // 3. Mentors/Team Schema mapped cleanly
   const mentorString = useMemo(() => {
-    if (!mentors) return null;
+    if (!mentors || mentors.length === 0) return null;
     return JSON.stringify({
       "@context": "https://schema.org",
       "@type": "ItemList",
@@ -89,8 +102,8 @@ const SEO: React.FC<SEOProps> = ({
           "@type": "Person",
           "name": mentor.name,
           "jobTitle": mentor.role,
-          "image": mentor.image,
-          "description": mentor.description,
+          "image": mentor.image || undefined,
+          "description": mentor.description || undefined,
         },
       })),
     });
@@ -99,23 +112,31 @@ const SEO: React.FC<SEOProps> = ({
   return (
     <Helmet>
       {/* Standard Meta Tags */}
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      {keywords && <meta name="keywords" content={keywords} />}
-      {canonical && <link rel="canonical" href={canonical} />}
+      <title>{cleanTitle}</title>
+      <meta name="description" content={cleanDescription} />
+      <link rel="canonical" href={activeUrl} />
 
-      {/* Open Graph / Facebook */}
+      {/* Open Graph / Facebook Metadata */}
+      <meta property="og:site_name" content="Kaul Bhaskar" />
       <meta property="og:type" content={type} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
+      <meta property="og:title" content={cleanTitle} />
+      <meta property="og:description" content={cleanDescription} />
+      <meta property="og:url" content={activeUrl} />
+      
+      {/* Structural Open Graph Image Dimensions */}
       <meta property="og:image" content={featuredImage} />
-      <meta property="og:url" content={canonical || "https://www.kaulbhaskar.com"} />
+      <meta property="og:image:secure_url" content={featuredImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:alt" content={`Preview image for ${cleanTitle}`} />
 
-      {/* Twitter Cards */}
+      {/* Twitter Cards Metadata */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:title" content={cleanTitle} />
+      <meta name="twitter:description" content={cleanDescription} />
       <meta name="twitter:image" content={featuredImage} />
+      <meta name="twitter:image:alt" content={`Preview image for ${cleanTitle}`} />
 
       {/* Inject Structured Data Safely using memoized values */}
       {breadcrumbString && (
