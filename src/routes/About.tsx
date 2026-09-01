@@ -58,6 +58,7 @@ const About: React.FC = () => {
         title="About Kaulbhaskar Guru Ji | Tantra, Astrology & Spiritual Mentor"
         description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
         canonical="https://kaulbhaskar.com/about-us"
+        keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
         breadcrumbs={[
           { name: "Home", url: "https://kaulbhaskar.com" },
           { name: "About Us", url: "https://kaulbhaskar.com/about-us" },
