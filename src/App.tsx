@@ -12,7 +12,8 @@ const Blog = lazy(() => import('./routes/Blog'));
 const BlogPost = lazy(() => import('./routes/BlogPost'));
 const Contact = lazy(() => import('./routes/Contact'));
 const Profile = lazy(() => import('./routes/Profile'));
-const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
+const ScrollToTop = lazy(() => import('./components/ScrollToTop')) as React.ComponentType<any>;
+
 
 // 2. Helper to wrap elements in Suspense for cleaner code
 const withSuspense = (Component: React.ReactNode) => (
