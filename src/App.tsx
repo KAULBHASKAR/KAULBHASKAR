@@ -1,8 +1,8 @@
 // src/App.tsx
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import { HelmetProvider } from 'react-helmet-async';
 import Layout from './components/Layout';
+
 
 // 1. Lazy load all page components
 const Home = lazy(() => import('./routes/Home'));
@@ -24,7 +24,7 @@ const withSuspense = (Component: React.ReactNode) => (
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />, 
+    element: <Layout />, // Layout stays static so it doesn't unmount/flicker
     children: [
       { index: true, element: withSuspense(<Home />) },
       { path: "about-us", element: withSuspense(<About />) },
@@ -39,9 +39,9 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <HelmetProvider>
+    <>
       <RouterProvider router={router} />
       <ScrollToTop />
-    </HelmetProvider>
+    </>
   );
 }
