@@ -1,157 +1,97 @@
-import React, { useMemo } from "react";
+import React, { lazy, Suspense } from "react";
+// Import Helmet directly to bypass SEO prop type errors
 import { Helmet } from "react-helmet-async";
+import FAQ from "../components/FAQ";
+import MultipleItems from "../components/MultipleItems";
+import LatestPost from "../components/LatestPost";
+import SEO from "../components/SEO";
 
-// --- Interfaces for Structured Data ---
-export interface Breadcrumb {
-  name: string;
-  url: string;
-}
+// ✅ Lazy load CalendarComponent
+const CalendarComponent = lazy(() => import("../components/CalendarComponent"));
 
-export interface FAQItem {
-  question: string;
-  answer: string;
-}
-
-export interface Mentor {
-  name: string;
-  role: string;
-  image?: string;
-  description?: string;
-}
-
-export interface SEOProps {
-  title: string;
-  description: string;
-  canonical?: string;
-  breadcrumbs?: Breadcrumb[];
-  faq?: FAQItem[];
-  mentors?: Mentor[];
-  featuredImage?: string; 
-  type?: string;
-}
-
-const DEFAULT_SITE_URL = "https://kaulbhaskar.com";
-// Optimized Open Graph image standard path (recommended size: 1200x630)
-const DEFAULT_IMAGE = `${DEFAULT_SITE_URL}/img/og-main-fallback.jpg`;
-
-const SEO: React.FC<SEOProps> = ({
-  title,
-  description,
-  canonical,
-  breadcrumbs,
-  faq,
-  mentors,
-  featuredImage = DEFAULT_IMAGE,
-  type = "website",
-}) => {
-  // Resolve current absolute canonical URL string
-  const activeUrl = canonical || DEFAULT_SITE_URL;
-
-  // Validation rules for title & metadata parameters
-  const cleanTitle = title.trim();
-  
-  // Truncate meta description cleanly to prevent arbitrary browser clipping
-  const cleanDescription = useMemo(() => {
-    const trimmed = description.trim().replace(/["']/g, ""); // Stripping quotes prevents snippet injection truncation bugs
-    return trimmed.length > 155 ? `${trimmed.substring(0, 152)}...` : trimmed;
-  }, [description]);
-
-  // 1. Memoize Breadcrumb Schema
-  const breadcrumbString = useMemo(() => {
-    if (!breadcrumbs || breadcrumbs.length === 0) return null;
-    return JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": breadcrumbs.map((crumb, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "name": crumb.name,
-        "item": crumb.url.startsWith("http") ? crumb.url : `${DEFAULT_SITE_URL}${crumb.url}`,
-      })),
-    });
-  }, [breadcrumbs]);
-
-  // 2. FAQ Schema formatted directly into strict string format
-  const faqString = useMemo(() => {
-    if (!faq || faq.length === 0) return null;
-    return JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": faq.map((item) => ({
-        "@type": "Question",
-        "name": item.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": item.answer,
+const Services: React.FC = () => {
+  // ✅ JSON-LD Service & OfferCatalog Schema Definition
+  const servicesSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Tantra Puja, Spiritual Initiation, and Astrology Consultations",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "KAUL TANTRA SADHANA",
+      "url": "https://www.kaulbhaskar.com"
+    },
+    "areaServed": "Worldwide",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Spiritual & Astrological Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Astrology Consultation",
+            "description": "Comprehensive horoscope readings, palmistry assessments, Kerala Jyotish analysis, and effective Vedic planetary remedial solutions."
+          },
+          "price": "5000",
+          "priceCurrency": "INR"
         },
-      })),
-    });
-  }, [faq]);
-
-  // 3. Mentors/Team Schema mapped cleanly
-  const mentorString = useMemo(() => {
-    if (!mentors || mentors.length === 0) return null;
-    return JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "name": "Our Mentors",
-      "itemListElement": mentors.map((mentor, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "item": {
-          "@type": "Person",
-          "name": mentor.name,
-          "jobTitle": mentor.role,
-          "image": mentor.image || undefined,
-          "description": mentor.description || undefined,
-        },
-      })),
-    });
-  }, [mentors]);
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Maha Vidya Havan & Puja Rituals",
+            "description": "Sacred and highly specialized Tantric fire rituals, Yagyas, and Pujas executed by lineage-verified traditional experts."
+          }
+        }
+      ]
+    }
+  };
 
   return (
-    <Helmet>
-      {/* Standard Meta Tags */}
-      <title>{cleanTitle}</title>
-      <meta name="description" content={cleanDescription} />
-      <link rel="canonical" href={activeUrl} />
+    <div className="w-full min-h-screen">
+      {/* ✅ Aligned canonical path to match your exact sitemap routing */}
+      <SEO
+        title="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR"
+        description="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance."
+        canonical="https://www.kaulbhaskar.com/services"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.kaulbhaskar.com" },
+          { name: "Services", url: "https://www.kaulbhaskar.com/services" },
+        ]}
+      />
 
-      {/* Open Graph / Facebook Metadata */}
-      <meta property="og:site_name" content="Kaul Bhaskar" />
-      <meta property="og:type" content={type} />
-      <meta property="og:title" content={cleanTitle} />
-      <meta property="og:description" content={cleanDescription} />
-      <meta property="og:url" content={activeUrl} />
-      
-      {/* Structural Open Graph Image Dimensions */}
-      <meta property="og:image" content={featuredImage} />
-      <meta property="og:image:secure_url" content={featuredImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:image:type" content="image/jpeg" />
-      <meta property="og:image:alt" content={`Preview image for ${cleanTitle}`} />
+      {/* ✅ Direct Helmet injection to add Open Graph tags and JSON-LD */}
+      <Helmet>
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com/services" />
+        <meta property="og:title" content="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR" />
+        <meta property="og:description" content="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance." />
+        <meta property="og:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
-      {/* Twitter Cards Metadata */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={cleanTitle} />
-      <meta name="twitter:description" content={cleanDescription} />
-      <meta name="twitter:image" content={featuredImage} />
-      <meta name="twitter:image:alt" content={`Preview image for ${cleanTitle}`} />
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://www.kaulbhaskar.com/services" />
+        <meta name="twitter:title" content="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR" />
+        <meta name="twitter:description" content="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance." />
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
-      {/* Inject Structured Data Safely using memoized values */}
-      {breadcrumbString && (
-        <script type="application/ld+json">{breadcrumbString}</script>
-      )}
-      
-      {faqString && (
-        <script type="application/ld+json">{faqString}</script>
-      )}
+        {/* Inject JSON-LD Object safely for TypeScript compilation */}
+        <script type="application/ld+json">
+          {JSON.stringify(servicesSchema)}
+        </script>
+      </Helmet>
 
-      {mentorString && (
-        <script type="application/ld+json">{mentorString}</script>
-      )}
-    </Helmet>
+      <MultipleItems />
+      <FAQ />
+      <LatestPost />
+
+      {/* ✅ Lazy loaded calendar wrapped in Suspense */}
+      <Suspense fallback={<div>Loading calendar…</div>}>
+        <CalendarComponent />
+      </Suspense>
+    </div>
   );
 };
 
-export default SEO;
+export default Services;
