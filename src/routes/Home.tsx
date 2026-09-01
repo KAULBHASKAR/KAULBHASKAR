@@ -21,25 +21,7 @@ const Meet = lazy(() => import("../components/Meet"));
 const LatestPost = lazy(() => import("../components/LatestPost"));
 
 const Home: React.FC = () => {
-  // Define the structured data schema object
-  const jsonLdSchema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "KAULBHASKAR",
-    "alternativeName": "KAUL BHASKAR",
-    "url": "https://kaulbhaskar.com",
-    "logo": "https://kaulbhaskar.com/img/logo.svg", // Recommended fallback to explicit image path
-    "image": "https://kaulbhaskar.com/img/satyendra-large.webp", 
-    "description": "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage.",
-    "telephone": "+91-9934418459",
-    "email": "kaultantra@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Patna",
-      "addressRegion": "Bihar",
-      "addressCountry": "IN"
-    }
-  };
+ 
   return (
     <div>
       <SEO 
