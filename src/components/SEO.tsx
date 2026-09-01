@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
-import { useLocation } from "react-router-dom"; // Added for dynamic path extraction
 
 // --- Interfaces for Structured Data ---
 interface Breadcrumb {
@@ -23,7 +22,7 @@ interface Mentor {
 interface SEOProps {
   title: string;
   description: string;
-  canonical?: string; // Kept optional so it can be generated automatically
+  canonical?: string;
   keywords?: string;
   breadcrumbs?: Breadcrumb[];
   faq?: FAQItem[];
@@ -43,20 +42,6 @@ const SEO: React.FC<SEOProps> = ({
   featuredImage = "https://vercel.app",
   type = "website",
 }) => {
-  const location = useLocation();
-
-  // Define your base production domain securely
-  const baseDomain = "https://www.kaulbhaskar.com";
-
-  // Automatically resolve the absolute canonical URL if not explicitly provided
-  const computedCanonical = useMemo(() => {
-    if (canonical) return canonical;
-    
-    // Fallback: Combine base domain with the current route pathname
-    // Strips trailing slashes if present to prevent duplicate content issues
-    const cleanPathname = location.pathname === "/" ? "" : location.pathname.replace(/\/$/, "");
-    return `${baseDomain}${cleanPathname}`;
-  }, [canonical, location.pathname]);
 
   // 1. Memoize Breadcrumb Schema to prevent repetitive parsing passes
   const breadcrumbString = useMemo(() => {
@@ -117,16 +102,14 @@ const SEO: React.FC<SEOProps> = ({
       <title>{title}</title>
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
-      
-      {/* Canonical Link (Always present now) */}
-      <link rel="canonical" href={computedCanonical} />
+      {canonical && <link rel="canonical" href={canonical} />}
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={featuredImage} />
-      <meta property="og:url" content={computedCanonical} />
+      <meta property="og:url" content={canonical || "https://www.kaulbhaskar.com"} />
 
       {/* Twitter Cards */}
       <meta name="twitter:card" content="summary_large_image" />
