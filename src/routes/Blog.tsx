@@ -122,7 +122,7 @@ export default function Blog() {
         title="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji"
         description="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar."
         canonical="https://www.kaulbhaskar.com/blog"
-        keywords="Tantra blog, Astrology articles, Sri Vidya insights, Kaulbhaskar writings, Kulashastra, Tripura Stotra"
+        
         breadcrumbs={[
           { name: "Home", url: "https://www.kaulbhaskar.com" },
           { name: "Blog", url: "https://www.kaulbhaskar.com/blog" },
