@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
-import SEO from "../components/SEO"; 
+
 
 // 1. Keep Hero static to prevent a blank white screen during initial page paint
 import Hero from "../components/Hero";
