@@ -9,8 +9,12 @@ const CalendarComponent = lazy(() => import("../components/CalendarComponent"));
 const About: React.FC = () => {
 
   useEffect(() => {
+    // ✅ Use standard browser window API instead of React Router hook
+    // This works even if the component is outside a Router
     const hash = window.location.hash;
+
     if (hash) {
+      // ✅ 500ms delay helps wait for the 100vh hero image & lazy components to settle
       const timeoutId = setTimeout(() => {
         const id = hash.replace("#", "");
         const element = document.getElementById(id);
@@ -23,13 +27,7 @@ const About: React.FC = () => {
     }
   }, []); // Run once on mount
 
-  // Dedicated metadata constants for cross-component stability
-  const pageTitle = "About Kaulbhaskar Guru Ji | Tantra, Astrology & Spiritual Mentor";
-  const pageDesc = "Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana.";
-  const aboutUrl = "https://kaulbhaskar.com/about-us";
-  const profileImageUrl = "https://kaulbhaskar.com"; // Absolute structural fallback image link
-
-  // ✅ FIXED: JSON-LD Schema now references direct image formats rather than root text loop URLs
+  // ✅ JSON-LD AboutPage & Person Schema Definition (Aligned to /about-us)
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
@@ -37,7 +35,7 @@ const About: React.FC = () => {
       "@type": "Person",
       "name": "KAULBHASKAR GURU Ji",
       "description": "Expert of Kaul Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji.",
-      "image": profileImageUrl, 
+      "image": "https://kaulbhaskar.com",
       "knowsAbout": [
         "Tantra",
         "Astrology",
@@ -55,36 +53,33 @@ const About: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full content-center">
-      {/* 1. Sync properties directly through your custom SEO component wrapper */}
+      {/* 1. Aligned to your /about-us sitemap setup path configuration */}
       <SEO
-        title={pageTitle}
-        description={pageDesc}
-        canonical={aboutUrl}
+        title="About Kaulbhaskar Guru Ji | Tantra, Astrology & Spiritual Mentor"
+        description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
+        canonical="https://kaulbhaskar.com/about-us"
         keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
         breadcrumbs={[
           { name: "Home", url: "https://kaulbhaskar.com" },
-          { name: "About Us", url: aboutUrl },
+          { name: "About Us", url: "https://kaulbhaskar.com/about-us" },
         ]}
       />
 
-      {/* 2. Direct Helmet injection targeting data-rh indices to replace index.html elements cleanly */}
+      {/* 2. Direct Helmet injection to add Open Graph tags and JSON-LD text definitions */}
       <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDesc} />
-
-        {/* Open Graph / Facebook Elements */}
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content={aboutUrl} />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDesc} />
-        <meta property="og:image" content={profileImageUrl} />
+        <meta property="og:url" content="https://kaulbhaskar.com/about-us" />
+        <meta property="og:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
+        <meta property="og:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
+        <meta property="og:image" content="https://kaulbhaskar.com" />
 
-        {/* Twitter Elements */}
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={aboutUrl} />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDesc} />
-        <meta name="twitter:image" content={profileImageUrl} />
+        <meta name="twitter:url" content="https://kaulbhaskar.com/about-us" />
+        <meta name="twitter:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
+        <meta name="twitter:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
+        <meta name="twitter:image" content="https://kaulbhaskar.com" />
 
         {/* Inject JSON-LD Object safely for TypeScript compilation */}
         <script type="application/ld+json">
@@ -171,6 +166,22 @@ const About: React.FC = () => {
           <img 
             src="/mentor/Subhas.webp" 
             alt="Expert Subhas" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
+
+          <img 
+            src="/mentor/Kiran.webp" 
+            alt="Expert Kiran" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
+
+          <img 
+            src="/mentor/YATAN.webp" 
+            alt="Expert Yatan" 
             loading="lazy" 
             decoding="async" 
             className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
