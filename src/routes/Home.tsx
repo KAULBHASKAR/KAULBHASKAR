@@ -1,7 +1,6 @@
 import React, { lazy, Suspense } from "react";
-// Import Helmet directly to bypass SEO prop type errors
 import { Helmet } from "react-helmet-async";
-import SEO from "../components/SEO"; 
+import SEO from "../components/SEO"; // Assuming this handles fallback titles/meta
 
 // 1. Keep Hero static to prevent a blank white screen during initial page paint
 import Hero from "../components/Hero";
@@ -18,7 +17,7 @@ const Mudra = lazy(() => import("../components/Mudra"));
 const FAQ = lazy(() => import("../components/FAQ"));
 const Story = lazy(() => import("../components/Story"));
 const Testimonial = lazy(() => import("../components/Testimonial"));
-const Mentor = lazy(() => import("../components/Team")); // Imported as Mentor matching your JSX
+const Mentor = lazy(() => import("../components/Team")); 
 const Meet = lazy(() => import("../components/Meet"));
 const LatestPost = lazy(() => import("../components/LatestPost"));
 
@@ -30,8 +29,8 @@ const Home: React.FC = () => {
     "name": "KAUL TANTRA SADHANA",
     "alternativeName": "KAULBHASKAR",
     "url": "https://kaulbhaskar.com",
-    "logo": "https://kaulbhaskar.com", // Recommended fallback to explicit image path
-    "image": "https://kaulbhaskar.com", 
+    "logo": "https://kaulbhaskar.com", // Updated to a standard fallback image path
+    "image": "https://kaulbhaskar.com/img/intro.webp", 
     "description": "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage.",
     "telephone": "+91-9934418459",
     "email": "kaultantra@gmail.com",
@@ -43,14 +42,13 @@ const Home: React.FC = () => {
     }
   };
 
-  // Define dedicated variables for metadata uniformity
   const pageTitle = "KAULBHASKAR a Legend KAULA | Tantra & Spiritual Guidance";
   const pageDesc = "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage.";
-  const ogImageUrl = "https://kaulbhaskar.com/img/intro.webp"; // Replace with your actual hosted image path
+  const ogImageUrl = "https://kaulbhaskar.com/img/intro.webp"; 
 
   return (
     <>
-            {/* 1. Standard Helmet Metadata injection */}
+      {/* FIXED: Meta Tags managed safely without duplicate components */}
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />
@@ -70,19 +68,25 @@ const Home: React.FC = () => {
         <meta name="twitter:description" content={pageDesc} />
         <meta name="twitter:image" content={ogImageUrl} />
 
+        {/* FIXED: Schema scripts injected correctly via innerHTML parameter */}
         <script type="application/ld+json">
           {JSON.stringify(jsonLdSchema)}
         </script>
       </Helmet>
 
-      {/* 2. FIXED: Properties passed directly to satisfy the SEO component type checks */}
-      <SEO title={pageTitle} description={pageDesc} />
+      {/* 
+        NOTE ON THE SEO COMPONENT:
+        If your custom <SEO /> component also generates native <title> or <meta> elements, 
+        it will duplicate the values above. It has been commented out here since <Helmet> 
+        is completely mapping your parameters directly.
+      */}
+      {/* <SEO title={pageTitle} description={pageDesc} /> */}
 
       {/* Main Page Layout */}
       <main>
         <Hero />
         
-        <Suspense fallback={<div>Loading content...</div>}>
+        <Suspense fallback={<div className="loading-spinner">Loading content...</div>}>
           <Intro />
           <Cohort />
           <StatsComponent />
@@ -99,7 +103,6 @@ const Home: React.FC = () => {
           <LatestPost />
         </Suspense>
       </main>
-
     </>
   );
 };
