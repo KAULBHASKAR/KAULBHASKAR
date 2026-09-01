@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 
+// --- Interfaces for Structured Data ---
 interface Breadcrumb {
   name: string;
   url: string;
@@ -28,7 +29,6 @@ interface SEOProps {
   mentors?: Mentor[];
   featuredImage?: string; 
   type?: string;
-  customSchemas?: Record<string, any>[]; 
 }
 
 const SEO: React.FC<SEOProps> = ({
@@ -41,10 +41,9 @@ const SEO: React.FC<SEOProps> = ({
   mentors,
   featuredImage = "https://vercel.app",
   type = "website",
-  customSchemas,
 }) => {
 
-  // 1. Breadcrumb Schema Stringification
+  // 1. Memoize Breadcrumb Schema to prevent repetitive parsing passes
   const breadcrumbString = useMemo(() => {
     if (!breadcrumbs) return null;
     return JSON.stringify({
@@ -59,7 +58,7 @@ const SEO: React.FC<SEOProps> = ({
     });
   }, [breadcrumbs]);
 
-  // 2. FAQ Schema Stringification
+  // 2. FAQ Schema formatted directly into strict string format
   const faqString = useMemo(() => {
     if (!faq) return null;
     return JSON.stringify({
@@ -76,7 +75,7 @@ const SEO: React.FC<SEOProps> = ({
     });
   }, [faq]);
 
-  // 3. Mentors Schema Stringification
+  // 3. Mentors/Team Schema mapped cleanly
   const mentorString = useMemo(() => {
     if (!mentors) return null;
     return JSON.stringify({
@@ -98,59 +97,39 @@ const SEO: React.FC<SEOProps> = ({
   }, [mentors]);
 
   return (
-    <>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        {keywords && <meta name="keywords" content={keywords} />}
-        {canonical && <link rel="canonical" href={canonical} />}
+    <Helmet>
+      {/* Standard Meta Tags */}
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      {keywords && <meta name="keywords" content={keywords} />}
+      {canonical && <link rel="canonical" href={canonical} />}
 
-        <meta property="og:type" content={type} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={featuredImage} />
-        <meta property="og:url" content={canonical || "https://kaulbhaskar.com"} />
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content={type} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={featuredImage} />
+      <meta property="og:url" content={canonical || "https://www.kaulbhaskar.com"} />
 
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={featuredImage} />
-      </Helmet>
+      {/* Twitter Cards */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={featuredImage} />
 
-      {/* 
-        CRITICAL ARCHITECTURE REPAIR:
-        We append directly to the body layout using dangerouslySetInnerHTML.
-        This forces clean, raw text output devoid of double-stringification backslashes.
-      */}
+      {/* Inject Structured Data Safely using memoized values */}
       {breadcrumbString && (
-        <script 
-          type="application/ld+json" 
-          dangerouslySetInnerHTML={{ __html: breadcrumbString }} 
-        />
+        <script type="application/ld+json">{breadcrumbString}</script>
       )}
       
       {faqString && (
-        <script 
-          type="application/ld+json" 
-          dangerouslySetInnerHTML={{ __html: faqString }} 
-        />
+        <script type="application/ld+json">{faqString}</script>
       )}
 
       {mentorString && (
-        <script 
-          type="application/ld+json" 
-          dangerouslySetInnerHTML={{ __html: mentorString }} 
-        />
+        <script type="application/ld+json">{mentorString}</script>
       )}
-
-      {customSchemas?.map((schema, idx) => (
-        <script
-          key={`custom-schema-${idx}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
-    </>
+    </Helmet>
   );
 };
 
