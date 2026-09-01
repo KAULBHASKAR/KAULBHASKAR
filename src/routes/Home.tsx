@@ -21,7 +21,72 @@ const Meet = lazy(() => import("../components/Meet"));
 const LatestPost = lazy(() => import("../components/LatestPost"));
 
 const Home: React.FC = () => {
- 
+  // Structured Data Configurations
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://kaulbhaskar.com",
+        "name": "KAULBHASKAR Metaphysical Advisory",
+        "url": "https://www.kaulbhaskar.com",
+        "image": "https://kaulbhaskar.com", // Update with your actual logo path
+        "description": "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji.",
+        "telephone": "+91-9934418459",
+        "email": "kaultantra@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Patna",
+          "addressRegion": "Bihar",
+          "addressCountry": "IN"
+        },
+        "priceRange": "$$$$"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://kaulbhaskar.com",
+        "name": "Sri Kaulbhaskar Ji",
+        "alternateName": "KAULBHASKAR Guru Ji",
+        "jobTitle": "Metaphysical Advisor & Spiritual Guide",
+        "knowsAbout": ["Tantra", "Astrology", "Sri Vidya Upasana", "Kulachar", "KAULA"],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Sri Matsyendra Nath Lineage"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://kaulbhaskar.com",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Who is KAUL BHASKAR?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Metaphysical Advisor to Elite Leaders and high-performers, practicing authentic spiritual systems to safely navigate modern power structures."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the primary services offered?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Data-driven spiritual systems, traditional Tantra rituals, astrology consulting, and Sri Vidya Upasana guidance."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the charges, if any?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Pricing scales by specific ritual and advisory packages. Contact administrative channels for detailed tier assessments."
+            }
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <div>
       <SEO 
@@ -32,71 +97,35 @@ const Home: React.FC = () => {
         faq={[
           { question: "Who is KAUL BHASKAR ?", answer: "Metaphysical Advisor to Elite Leaders" },
           { question: "What are the primary services offered ?", answer: "We provides high-performers with data-driven spiritual systems to safely navigate modern power structures" },
-          { question: "What is the charges, if any ?", answer: "Services range from Astrology Consultation (₹5,000) to specialized rituals like Shat Chandi (₹2,50,000). Contact us for specific details." }
-        ]}
-        mentors={[
-          { 
-            name: "KAULBHASKAR Guru Ji", 
-            role: "Spiritual Mentor & Expert in Tantra", 
-            description: "Belongs to the lineage of famous siddha yogi Sri MATSYENDRA NATH Ji.",
-            image: "https://www.kaulbhaskar.com"
-          }
+          { question: "What is the charges, if any ?", answer: "Services scale by ritual tier package requirements." }
         ]}
       />
 
-      {/* Hero renders instantly without waiting for network scripts to finish chunk downloading */}
+      {/* Inject JSON-LD Script into Page */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+
+      {/* 1. Static Initial Above-the-fold Viewport */}
       <Hero />
 
-      {/* Layer 1: Elements immediately seen below the hero image */}
-      <Suspense 
-        fallback={
-          <div className="flex-center h-[30vh] w-full">
-            <div className="three-body">
-              <div className="three-body__dot"></div>
-              <div className="three-body__dot"></div>
-              <div className="three-body__dot"></div>
-            </div>
-          </div>
-        }
-      >
-        <Cohort />
+      {/* 2. Asynchronous Below-the-fold Sections */}
+      <Suspense fallback={<div className="py-20 text-center text-gray-500">Loading experience...</div>}>
         <Intro />
+        <Cohort />
+        <StatsComponent />
         <Feature />
-      </Suspense>
-
-      {/* Layer 2: Middle interactive items including the calendar */}
-      <Suspense 
-        fallback={
-          <div className="flex-center h-[30vh] w-full">
-            <div className="three-body">
-              <div className="three-body__dot"></div>
-            </div>
-          </div>
-        }
-      >
         <Camp />
         <CalendarComponent />
         <Gallery />
         <Mudra />
-      </Suspense>
-
-      {/* Layer 3: Heavy items deeper down the page loaded entirely asynchronously */}
-      <Suspense 
-        fallback={
-          <div className="flex-center h-[30vh] w-full">
-            <div className="three-body">
-              <div className="three-body__dot"></div>
-            </div>
-          </div>
-        }
-      >
         <FAQ />
-        <StatsComponent />
         <Story />
         <Testimonial />
         <Mentor />
-        <LatestPost />
         <Meet />
+        <LatestPost />
       </Suspense>
     </div>
   );
