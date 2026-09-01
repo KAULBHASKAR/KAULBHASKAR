@@ -4,23 +4,29 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zentry</title>
 
-    <!-- Preload critical custom fonts & images -->
+    <!-- Preload critical fonts & styles -->
     <link rel="preload" href="/fonts/zentry-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/general.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/robert-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/circularweb-book.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" fetchpriority="high" as="image" href="/img/intro.webp" type="image/webp">
 
+    <link rel="preload" href="/assets/index-CZMhnSqO.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/vendor-DITC1bZO.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/index-DmwUxbYT.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/assets/react-big-calendar-BiPGZdAr.css" media="print" onload="this.media='all'">
+
     <style>
       body { margin: 0; font-family: system-ui, sans-serif; }
       header { background: #fff; padding: 0rem; }
     </style>
+    <noscript>
+      <link rel="stylesheet" href="/assets/index-CZMhnSqO.css">
+    </noscript>
   </head>
   <body>
     <div id="root"></div>
-    <!-- Vite handles bundling, chunking, and injection starting from this entry point -->
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx" defer></script>
   </body>
 </html>
