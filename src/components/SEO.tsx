@@ -109,7 +109,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={featuredImage} />
-      <meta property="og:url" content={canonical || "https://www.kaulbhaskar.com/img/intro.webp"} />
+      <meta property="og:url" content={canonical || "https://www.kaulbhaskar.com"} />
 
       {/* Twitter Cards */}
       <meta name="twitter:card" content="summary_large_image" />
