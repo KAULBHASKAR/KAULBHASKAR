@@ -29,7 +29,8 @@ interface SEOProps {
   mentors?: Mentor[];
   featuredImage?: string; 
   type?: string;
-  schemaData?: object; // 🚀 Added: Accept custom graph objects from parent pages
+  // New option to pass custom centralized graph blocks directly
+  customSchemas?: Record<string, any>[]; 
 }
 
 const SEO: React.FC<SEOProps> = ({
@@ -42,10 +43,10 @@ const SEO: React.FC<SEOProps> = ({
   mentors,
   featuredImage = "https://vercel.app",
   type = "website",
-  schemaData, // 🚀 Added
+  customSchemas,
 }) => {
 
-  // 1. Memoize Breadcrumb Schema to prevent repetitive parsing passes
+  // 1. Memoize Breadcrumb Schema
   const breadcrumbString = useMemo(() => {
     if (!breadcrumbs) return null;
     return JSON.stringify({
@@ -60,7 +61,7 @@ const SEO: React.FC<SEOProps> = ({
     });
   }, [breadcrumbs]);
 
-  // 2. FAQ Schema formatted directly into strict string format
+  // 2. FAQ Schema 
   const faqString = useMemo(() => {
     if (!faq) return null;
     return JSON.stringify({
@@ -77,7 +78,7 @@ const SEO: React.FC<SEOProps> = ({
     });
   }, [faq]);
 
-  // 3. Mentors/Team Schema mapped cleanly
+  // 3. Mentors/Team Schema
   const mentorString = useMemo(() => {
     if (!mentors) return null;
     return JSON.stringify({
@@ -98,51 +99,59 @@ const SEO: React.FC<SEOProps> = ({
     });
   }, [mentors]);
 
-  // 4. Custom Component-passed Graph Schema Stringification
-  const customSchemaString = useMemo(() => {
-    if (!schemaData) return null;
-    return JSON.stringify(schemaData);
-  }, [schemaData]);
+  // 4. Clean formatting for custom parent schema elements
+  const customSchemaElements = useMemo(() => {
+    if (!customSchemas) return null;
+    return customSchemas.map((schema, idx) => (
+      <script
+        key={`custom-schema-${idx}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+    ));
+  }, [customSchemas]);
 
   return (
-    <Helmet>
-      {/* Standard Meta Tags */}
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      {keywords && <meta name="keywords" content={keywords} />}
-      {canonical && <link rel="canonical" href={canonical} />}
+    <>
+      <Helmet>
+        {/* Standard Meta Tags */}
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        {keywords && <meta name="keywords" content={keywords} />}
+        {canonical && <link rel="canonical" href={canonical} />}
 
-      {/* Open Graph / Facebook */}
-      <meta property="og:type" content={type} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={featuredImage} />
-      <meta property="og:url" content={canonical || "https://www.kaulbhaskar.com"} />
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content={type} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={featuredImage} />
+        <meta property="og:url" content={canonical || "https://www.kaulbhaskar.com"} />
 
-      {/* Twitter Cards */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={featuredImage} />
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={featuredImage} />
+      </Helmet>
 
-      {/* Inject Structured Data Safely using memoized values */}
+      {/* 
+        CRITICAL SEO FIX: Render structural JSON scripts into the body template layer.
+        This forces synchronous HTML parsing engines to index them flawlessly.
+      */}
       {breadcrumbString && (
-        <script type="application/ld+json">{breadcrumbString}</script>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumbString }} />
       )}
       
       {faqString && (
-        <script type="application/ld+json">{faqString}</script>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqString }} />
       )}
 
       {mentorString && (
-        <script type="application/ld+json">{mentorString}</script>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: mentorString }} />
       )}
 
-      {/* 🚀 New Custom Schema Injected into the Header Document Head */}
-      {customSchemaString && (
-        <script type="application/ld+json">{customSchemaString}</script>
-      )}
-    </Helmet>
+      {customSchemaElements}
+    </>
   );
 };
 
