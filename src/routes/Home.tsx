@@ -1,48 +1,27 @@
 import React, { lazy, Suspense } from "react";
 import SEO from "../components/SEO"; 
+
+// 1. Keep Hero static to prevent a blank white screen during initial page paint
 import Hero from "../components/Hero";
 
-// Lazy components
+// 2. Lazy load lower, below-the-fold component blocks
 const Intro = lazy(() => import("../components/Intro")); 
+const Cohort = lazy(() => import("../components/Cohort")); 
+const StatsComponent = lazy(() => import("../components/StatsComponent"));
+const Feature = lazy(() => import("../components/Feature"));
+const Camp = lazy(() => import("../components/Camp"));
+const CalendarComponent = lazy(() => import("../components/CalendarComponent"));
+const Gallery = lazy(() => import("../components/Gallery"));
+const Mudra = lazy(() => import("../components/Mudra"));
 const FAQ = lazy(() => import("../components/FAQ"));
-// Add other lazy imports identically...
+const Story = lazy(() => import("../components/Story"));
+const Testimonial = lazy(() => import("../components/Testimonial"));
+const Mentor = lazy(() => import("../components/Team")); // Imported as Mentor matching your JSX
+const Meet = lazy(() => import("../components/Meet"));
+const LatestPost = lazy(() => import("../components/LatestPost"));
 
 const Home: React.FC = () => {
-  // Pass specialized definitions directly to the graph payload block array
-  const businessAndGuruSchemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "@id": "https://kaulbhaskar.com",
-      "name": "KAULBHASKAR Metaphysical Advisory",
-      "url": "https://www.kaulbhaskar.com",
-      "image": "https://kaulbhaskar.com",
-      "description": "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana.",
-      "telephone": "+91-9934418459",
-      "email": "kaultantra@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Patna",
-        "addressRegion": "Bihar",
-        "addressCountry": "IN"
-      },
-      "priceRange": "$$$$"
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": "https://kaulbhaskar.com",
-      "name": "Sri Kaulbhaskar Ji",
-      "alternateName": "KAULBHASKAR Guru Ji",
-      "jobTitle": "Metaphysical Advisor & Spiritual Guide",
-      "knowsAbout": ["Tantra", "Astrology", "Sri Vidya Upasana", "Kulachar"],
-      "affiliation": {
-        "@type": "Organization",
-        "name": "Sri Matsyendra Nath Lineage"
-      }
-    }
-  ];
-
+ 
   return (
     <div>
       <SEO 
@@ -50,20 +29,74 @@ const Home: React.FC = () => {
         description="Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage."
         keywords="Kulachar, KAULA, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Tantra Rituals"
         canonical="https://www.kaulbhaskar.com"
-        customSchemas={businessAndGuruSchemas}
         faq={[
           { question: "Who is KAUL BHASKAR ?", answer: "Metaphysical Advisor to Elite Leaders" },
           { question: "What are the primary services offered ?", answer: "We provides high-performers with data-driven spiritual systems to safely navigate modern power structures" },
-          { question: "What is the charges, if any ?", answer: "Services scale by ritual tier package requirements." }
+          { question: "What is the charges, if any ?", answer: "Services range from Astrology Consultation (₹5,000) to specialized rituals like Shat Chandi (₹2,50,000). Contact us for specific details." }
+        ]}
+        mentors={[
+          { 
+            name: "KAULBHASKAR Guru Ji", 
+            role: "Spiritual Mentor & Expert in Tantra", 
+            description: "Belongs to the lineage of famous siddha yogi Sri MATSYENDRA NATH Ji.",
+            image: "https://www.kaulbhaskar.com"
+          }
         ]}
       />
 
+      {/* Hero renders instantly without waiting for network scripts to finish chunk downloading */}
       <Hero />
 
-      <Suspense fallback={<div className="py-20 text-center text-gray-500">Loading...</div>}>
+      {/* Layer 1: Elements immediately seen below the hero image */}
+      <Suspense 
+        fallback={
+          <div className="flex-center h-[30vh] w-full">
+            <div className="three-body">
+              <div className="three-body__dot"></div>
+              <div className="three-body__dot"></div>
+              <div className="three-body__dot"></div>
+            </div>
+          </div>
+        }
+      >
+        <Cohort />
         <Intro />
+        <Feature />
+      </Suspense>
+
+      {/* Layer 2: Middle interactive items including the calendar */}
+      <Suspense 
+        fallback={
+          <div className="flex-center h-[30vh] w-full">
+            <div className="three-body">
+              <div className="three-body__dot"></div>
+            </div>
+          </div>
+        }
+      >
+        <Camp />
+        <CalendarComponent />
+        <Gallery />
+        <Mudra />
+      </Suspense>
+
+      {/* Layer 3: Heavy items deeper down the page loaded entirely asynchronously */}
+      <Suspense 
+        fallback={
+          <div className="flex-center h-[30vh] w-full">
+            <div className="three-body">
+              <div className="three-body__dot"></div>
+            </div>
+          </div>
+        }
+      >
         <FAQ />
-        {/* Additional child nodes rendered safely below */}
+        <StatsComponent />
+        <Story />
+        <Testimonial />
+        <Mentor />
+        <LatestPost />
+        <Meet />
       </Suspense>
     </div>
   );
