@@ -30,7 +30,7 @@ const Home: React.FC = () => {
     "name": "KAUL TANTRA SADHANA",
     "alternativeName": "KAULBHASKAR",
     "url": "https://kaulbhaskar.com",
-    "logo": "https://kaulbhaskar.com", // Explicit fallback path recommended
+    "logo": "https://kaulbhaskar.com", // Recommended fallback to explicit image path
     "image": "https://kaulbhaskar.com", 
     "description": "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage.",
     "telephone": "+91-9934418459",
@@ -46,17 +46,36 @@ const Home: React.FC = () => {
   // Define dedicated variables for metadata uniformity
   const pageTitle = "KAULBHASKAR a Legend KAULA | Tantra & Spiritual Guidance";
   const pageDesc = "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage.";
+  const ogImageUrl = "https://kaulbhaskar.com/img/intro.webp"; // Replace with your actual hosted image path
 
   return (
     <>
-      {/* 1. FIXED: Helmet only manages JSON-LD structured script here to avoid tag collision */}
+            {/* 1. Standard Helmet Metadata injection */}
       <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDesc} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://kaulbhaskar.com" />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDesc} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="KAUL TANTRA SADHANA - Sri Vidya Upasana & Tantric Rituals Banner" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://kaulbhaskar.com" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDesc} />
+        <meta name="twitter:image" content={ogImageUrl} />
+
         <script type="application/ld+json">
           {JSON.stringify(jsonLdSchema)}
         </script>
       </Helmet>
 
-      {/* 2. Your custom SEO wrapper safely deploys the core Title, Open Graph, and Twitter metadata */}
+      {/* 2. FIXED: Properties passed directly to satisfy the SEO component type checks */}
       <SEO title={pageTitle} description={pageDesc} />
 
       {/* Main Page Layout */}
@@ -80,6 +99,7 @@ const Home: React.FC = () => {
           <LatestPost />
         </Suspense>
       </main>
+
     </>
   );
 };
