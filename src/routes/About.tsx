@@ -68,21 +68,19 @@ const About: React.FC = () => {
       {/* 2. Direct Helmet injection to add Open Graph tags and JSON-LD text definitions */}
       <Helmet>
         {/* Open Graph / Facebook */}
-       <meta property="og:type" content="profile" />
+        <meta property="og:type" content="profile" />
         <meta property="og:url" content="https://kaulbhaskar.com/about-us" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        {/* ✅ Fixed: Pointing to a clean physical preview image under 300KB for WhatsApp compatibility */}
+        <meta property="og:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
+        <meta property="og:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
         <meta property="og:image" content="https://kaulbhaskar.com" />
-        <meta property="og:image:width" content="940" />
-        <meta property="og:image:height" content="960" />
 
-        {/* Twitter / X */}
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://kaulbhaskar.com/about-us" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
+        <meta name="twitter:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
         <meta name="twitter:image" content="https://kaulbhaskar.com" />
+
         {/* Inject JSON-LD Object safely for TypeScript compilation */}
         <script type="application/ld+json">
           {JSON.stringify(aboutSchema)}
