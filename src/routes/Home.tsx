@@ -44,7 +44,8 @@ const Home: React.FC = () => {
   };
 
   // Define dedicated variables for metadata uniformity
-  
+  const pageTitle = "KAULBHASKAR a Legend KAULA | Tantra & Spiritual Guidance";
+  const pageDesc = "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage.";
   const ogImageUrl = "https://kaulbhaskar.com/img/intro.webp"; // Replace with your actual hosted image path
 
   return (
