@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 
-
 // --- Interfaces for Structured Data ---
 interface Breadcrumb {
   name: string;
