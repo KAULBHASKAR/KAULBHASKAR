@@ -29,6 +29,7 @@ interface SEOProps {
   mentors?: Mentor[];
   featuredImage?: string; 
   type?: string;
+  schemaData?: object; // 🚀 Added: Accept custom graph objects from parent pages
 }
 
 const SEO: React.FC<SEOProps> = ({
@@ -41,6 +42,7 @@ const SEO: React.FC<SEOProps> = ({
   mentors,
   featuredImage = "https://vercel.app",
   type = "website",
+  schemaData, // 🚀 Added
 }) => {
 
   // 1. Memoize Breadcrumb Schema to prevent repetitive parsing passes
@@ -96,6 +98,12 @@ const SEO: React.FC<SEOProps> = ({
     });
   }, [mentors]);
 
+  // 4. Custom Component-passed Graph Schema Stringification
+  const customSchemaString = useMemo(() => {
+    if (!schemaData) return null;
+    return JSON.stringify(schemaData);
+  }, [schemaData]);
+
   return (
     <Helmet>
       {/* Standard Meta Tags */}
@@ -128,6 +136,11 @@ const SEO: React.FC<SEOProps> = ({
 
       {mentorString && (
         <script type="application/ld+json">{mentorString}</script>
+      )}
+
+      {/* 🚀 New Custom Schema Injected into the Header Document Head */}
+      {customSchemaString && (
+        <script type="application/ld+json">{customSchemaString}</script>
       )}
     </Helmet>
   );
