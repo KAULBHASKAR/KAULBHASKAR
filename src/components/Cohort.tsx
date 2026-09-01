@@ -11,9 +11,9 @@ export default function Cohort() {
         <span className="text-xs font-semibold tracking-widest text-[#c5a880] uppercase bg-[#1a1e26] px-4 py-2 rounded-full border border-[#c5a880]/20 mb-6">
           The Autumn 2026 Accelerator
         </span>
-        <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl max-w-4xl font-serif leading-tight">
+        <h2 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl max-w-4xl font-serif leading-tight">
           The Architecture of <span className="text-[#c5a880]">Absolute Sovereignty</span>.
-        </h1>
+        </h2>
         <p className="max-w-2xl mt-6 text-lg leading-8 text-[#9ca3af]">
           A selective, high-ticket metaphysical accelerator designed exclusively for founders, corporate executives, and wealth-builders who command material power but seek ultimate spiritual mastery.
         </p>
