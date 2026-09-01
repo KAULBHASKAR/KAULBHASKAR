@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 
-// --- Interfaces for Structured Data ---
 interface Breadcrumb {
   name: string;
   url: string;
@@ -29,7 +28,6 @@ interface SEOProps {
   mentors?: Mentor[];
   featuredImage?: string; 
   type?: string;
-  // New option to pass custom centralized graph blocks directly
   customSchemas?: Record<string, any>[]; 
 }
 
@@ -46,7 +44,7 @@ const SEO: React.FC<SEOProps> = ({
   customSchemas,
 }) => {
 
-  // 1. Memoize Breadcrumb Schema
+  // 1. Breadcrumb Schema Stringification
   const breadcrumbString = useMemo(() => {
     if (!breadcrumbs) return null;
     return JSON.stringify({
@@ -61,7 +59,7 @@ const SEO: React.FC<SEOProps> = ({
     });
   }, [breadcrumbs]);
 
-  // 2. FAQ Schema 
+  // 2. FAQ Schema Stringification
   const faqString = useMemo(() => {
     if (!faq) return null;
     return JSON.stringify({
@@ -78,7 +76,7 @@ const SEO: React.FC<SEOProps> = ({
     });
   }, [faq]);
 
-  // 3. Mentors/Team Schema
+  // 3. Mentors Schema Stringification
   const mentorString = useMemo(() => {
     if (!mentors) return null;
     return JSON.stringify({
@@ -99,35 +97,20 @@ const SEO: React.FC<SEOProps> = ({
     });
   }, [mentors]);
 
-  // 4. Clean formatting for custom parent schema elements
-  const customSchemaElements = useMemo(() => {
-    if (!customSchemas) return null;
-    return customSchemas.map((schema, idx) => (
-      <script
-        key={`custom-schema-${idx}`}
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-    ));
-  }, [customSchemas]);
-
   return (
     <>
       <Helmet>
-        {/* Standard Meta Tags */}
         <title>{title}</title>
         <meta name="description" content={description} />
         {keywords && <meta name="keywords" content={keywords} />}
         {canonical && <link rel="canonical" href={canonical} />}
 
-        {/* Open Graph / Facebook */}
         <meta property="og:type" content={type} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={featuredImage} />
-        <meta property="og:url" content={canonical || "https://www.kaulbhaskar.com"} />
+        <meta property="og:url" content={canonical || "https://kaulbhaskar.com"} />
 
-        {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
@@ -135,22 +118,38 @@ const SEO: React.FC<SEOProps> = ({
       </Helmet>
 
       {/* 
-        CRITICAL SEO FIX: Render structural JSON scripts into the body template layer.
-        This forces synchronous HTML parsing engines to index them flawlessly.
+        CRITICAL ARCHITECTURE REPAIR:
+        We append directly to the body layout using dangerouslySetInnerHTML.
+        This forces clean, raw text output devoid of double-stringification backslashes.
       */}
       {breadcrumbString && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumbString }} />
+        <script 
+          type="application/ld+json" 
+          dangerouslySetInnerHTML={{ __html: breadcrumbString }} 
+        />
       )}
       
       {faqString && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqString }} />
+        <script 
+          type="application/ld+json" 
+          dangerouslySetInnerHTML={{ __html: faqString }} 
+        />
       )}
 
       {mentorString && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: mentorString }} />
+        <script 
+          type="application/ld+json" 
+          dangerouslySetInnerHTML={{ __html: mentorString }} 
+        />
       )}
 
-      {customSchemaElements}
+      {customSchemas?.map((schema, idx) => (
+        <script
+          key={`custom-schema-${idx}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
     </>
   );
 };
