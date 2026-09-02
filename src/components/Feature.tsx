@@ -95,29 +95,31 @@ const Feature: FC = () => {
 
         <BentoTilt className="border-hsl relative mb-7 min-h-96 w-full overflow-hidden rounded-md md:h-[65vh]">
           <BentoCard
-            src="img/RESONANCE.webp"
+            src="img/TRIAD.webp"
             altText="Metaphysical resonance overview"
             title={
               <>
-                <b>metaphysical</b> <b>resonance{" & "}</b> <b>energy alignment</b>
+                {"metaphysics-"}<b>{"teaching, "}</b>
+                  <b>{"initiation & "}</b> <b>{"ordination"}</b>
               </>
             }
-            description="Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
+            description="Mass Market Digital Program for breaking subconscious barriers and mastering mental focus."
           />
         </BentoTilt>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
           <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2">
             <BentoCard
-              src="img/TRIAD.webp"
+              src="img/RESONANCE.webp"
               altText="Metaphysics teaching and ordination"
               title={
                 <>
-                  {"metaphysics-"}<b>{"teaching, "}</b>
-                  <b>{"initiation & "}</b> <b>{"ordination"}</b>
+                  
+                  <b>metaphysical</b> <b>resonance{" & "}</b> <b>energy alignment</b>
                 </>
               }
-              description="Mass Market Digital Program for breaking subconscious barriers and mastering mental focus."
+              
+               description="Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
             />
           </BentoTilt>
 
