@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import { HelmetProvider } from 'react-helmet-async';
 import Layout from './components/Layout';
+import ScrollToTop from './components/ScrollToTop'; 
 
 // 1. Lazy load all page components
 const Home = lazy(() => import('./routes/Home'));
@@ -12,7 +13,7 @@ const Blog = lazy(() => import('./routes/Blog'));
 const BlogPost = lazy(() => import('./routes/BlogPost'));
 const Contact = lazy(() => import('./routes/Contact'));
 const Profile = lazy(() => import('./routes/Profile'));
-const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
+
 
 // 2. Helper to wrap elements in Suspense for cleaner code
 const withSuspense = (Component: React.ReactNode) => (
