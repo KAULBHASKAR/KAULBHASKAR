@@ -34,7 +34,7 @@ const About: React.FC = () => {
     "mainEntity": {
       "@type": "Person",
       "name": "KAULBHASKAR GURU Ji",
-      "description": "Expert of Kaul Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji.",
+      "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji.",
       "image": "https://kaulbhaskar.com",
       "knowsAbout": [
         "Tantra",
@@ -44,8 +44,8 @@ const About: React.FC = () => {
         "Dakshinamurti Sampradaya"
       ],
       "affiliation": {
-        "@type": "Organization",
-        "name": "KAUL TANTRA SADHANA",
+        "@type": "Spiritual mentor",
+        "name": "KAULBHASKAR",
         "url": "https://kaulbhaskar.com"
       }
     }
@@ -125,8 +125,8 @@ const About: React.FC = () => {
           </h2>
           <p className="text-lg text-simple text-justify">
             From the High Courts of Material Law to the High Realms of Cosmic Order, <strong>KAULBHASKAR Guru Ji</strong> spent years mastering the laws made by man to fight earthly battles. His KAULAVADHUTA GURU bestow him the MAHA PURN KRAM DIKSHA of all the Amnayas. Guru Ji, popularly known as <strong>KAULBHASKAR</strong>, is from
-            the lineage of Sri <strong>Matsyendra Nath</strong> (also known as Machendra Nath) ji, a legend of Naths and one of{" "} <strong>84 Maha Siddhas</strong>. A direct disciple of esteemed KAUL
-            of Prayag, Sri <strong>KULBHUSHANANAND NATH</strong>, Guru Ji is basically an Urdhvamanayee Upasaka of MAHATRIPURSUNDARI. Sri Kaulbhaskar Ji, an expert of <strong>KAUL MARGA</strong>, has spent
+            the lineage of Sri <strong>Matsyendra Nath</strong> (also known as Machendra Nath) ji, a legend of Naths and one of{" "} <strong>84 Maha Siddhas</strong>. A direct disciple of esteemed KAULA
+            of Prayag, Sri <strong>KULBHUSHANANAND NATH</strong>, Guru Ji is basically an Urdhvamanayee Upasaka of MAHATRIPURSUNDARI. Sri Kaulbhaskar Ji, an expert of <strong>KAULA MARGA</strong>, has spent
             more than 30 years painstakingly perfecting his practice of SRI VIDYA UPASANA of highly mysterious{" "} <strong>DAKSHINAMURTI SAMPRADAYA</strong>.
             <a href="/profile" className="text-red-500 hover:text-black font-semibold ml-4 inline-flex items-center">
             KNOW MORE <span className="ml-1">→</span> </a>
