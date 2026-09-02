@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-// Use type imports for anything used only as a TypeScript definition
 import type { ReactNode, MouseEvent, FC } from "react";
 
 interface BentoTiltProps {
@@ -35,7 +34,6 @@ const BentoTilt: FC<BentoTiltProps> = ({ children, className = "" }) => {
       onMouseLeave={handleMouseLeave}
       style={{ 
         transform: transformStyle,
-        // transition: ensures it glides back smoothly
         transition: "transform 0.5s ease-out" 
       }}
     >
@@ -53,21 +51,26 @@ interface BentoCardProps {
 
 const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", title, description }) => {
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-md">
+    // Changed h-full to min-h-full to prevent layout compression on long text blocks
+    <div className="relative w-full h-full min-h-full overflow-hidden rounded-md flex flex-col justify-end">
       {/* Replaced video with an img element */}
       <img
         src={src}
         alt={altText}
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        // Changed object-center to object-top to protect the top/middle visual data from cropping
+        className="absolute inset-0 w-full h-full object-cover object-top"
       />
 
-      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-white">
+      {/* Added a subtle dark gradient overlay behind text to maintain readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-0" />
+
+      {/* Reduced pb-20 to pb-6 so the text alignment sits perfectly without pushing up artificially */}
+      <div className="relative z-10 flex flex-col justify-end p-5 pb-6 text-white h-full mt-auto">
         <div className="bento-title special-font">
           {title}
           {description && (
-            // Swapped break-words for wrap-break-word as requested
-            <p className="mt-3 wrap-break-word text-xs md:text-base text-white font-robert-regular">
+            <p className="mt-3 wrap-break-word text-xs md:text-base text-white/90 font-robert-regular max-w-xl">
               {description}
             </p>
           )}
@@ -77,7 +80,7 @@ const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", t
   );
 };
 
-const Feature: FC = () => {
+export default function Feature() {
   return (
     <section className="bg-black pb-10">
       <div className="container mx-auto px-3 md:px-10">
@@ -93,37 +96,37 @@ const Feature: FC = () => {
           </p>
         </div>
 
-        <BentoTilt className="border-hsl relative mb-7 min-h-96 w-full overflow-hidden rounded-md md:h-[65vh]">
+        {/* Kept your dimensions intact but ensured height consistency */}
+        <BentoTilt className="border-hsl relative mb-7 min-h-96 w-full overflow-hidden rounded-md h-[50vh] md:h-[65vh]">
           <BentoCard
             src="img/TRIAD.webp"
-            altText="Metaphysical resonance overview"
+            altText="Metaphysics teaching and ordination"
             title={
               <>
                 {"metaphysics-"}<b>{"teaching, "}</b>
-                  <b>{"initiation & "}</b> <b>{"ordination"}</b>
+                <b>{"initiation & "}</b> <b>{"ordination"}</b>
               </>
             }
             description="Mass Market Digital Program for breaking subconscious barriers and mastering mental focus."
           />
         </BentoTilt>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
-          <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2">
+        {/* Adjusted grid system behavior to auto-expand tiles based on content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
+          <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2 min-h-96">
             <BentoCard
               src="img/RESONANCE.webp"
-              altText="Metaphysics teaching and ordination"
+              altText="Metaphysical resonance overview"
               title={
                 <>
-                  
                   <b>metaphysical</b> <b>resonance{" & "}</b> <b>energy alignment</b>
                 </>
               }
-              
-               description="Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
+              description="Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
             />
           </BentoTilt>
 
-          <BentoTilt className="bento-title_1 md:col-span-1">
+          <BentoTilt className="bento-title_1 md:col-span-1 min-h-64">
             <BentoCard
               src="img/ROI.webp"
               altText="Karmic lifepath map"
@@ -136,7 +139,8 @@ const Feature: FC = () => {
             />
           </BentoTilt>
 
-          <BentoTilt className="bento-title_1 md:col-span-1">
+          {/* This block contains massive text. min-h-96 gives it vertical space so the text doesn't squeeze out your image */}
+          <BentoTilt className="bento-title_1 md:col-span-1 min-h-96">
             <BentoCard
               src="img/RITUAL.webp"
               altText="Metaphysical rituals setup"
@@ -152,6 +156,7 @@ const Feature: FC = () => {
       </div>
     </section>
   );
-};
+}
+
 
 export default Feature;
