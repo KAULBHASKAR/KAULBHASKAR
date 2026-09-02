@@ -93,7 +93,7 @@ const Feature: FC = () => {
           </p>
         </div>
 
-       <BentoTilt className="border-hsl relative mb-7 h-[45vh] w-full max-w-full overflow-hidden rounded-md md:h-[90vh]">
+       <BentoTilt className="border-hsl relative mb-7 h-[45vh] w-full overflow-hidden rounded-md md:h-[90vh]">
   <BentoCard
     src="img/TRIAD.webp"
     altText="Metaphysics teaching and ordination"
