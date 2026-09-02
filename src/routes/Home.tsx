@@ -27,7 +27,7 @@ const Home: React.FC = () => {
       <SEO 
         title="KAULBHASKAR a Legend KAULA | Tantra, Astrology & Spiritual Guidance" 
         description="Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage."
-        keywords="Kulachar, KAULA, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Tantra Rituals"
+        keywords="Kulachara, KAULA MARGA, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Kaula tantra sadhana"
         canonical="https://www.kaulbhaskar.com"
         faq={[
           { question: "Who is KAUL BHASKAR ?", answer: "Metaphysical Advisor to Elite Leaders" },
