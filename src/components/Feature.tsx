@@ -93,21 +93,19 @@ const Feature: FC = () => {
           </p>
         </div>
 
-       <BentoTilt className="border-hsl relative mb-7 h-[45vh] w-full overflow-hidden rounded-md md:h-[90vh]">
-  <BentoCard
-    src="img/TRIAD.webp"
-    altText="Metaphysics teaching and ordination"
-    title={
-      <>
-        {"metaphysics-"}<b>{"teaching, "}</b>
-        <b>{"initiation & "}</b> <b>{"ordination"}</b>
-      </>
-    }
-    description="Mass Market Digital Program for breaking subconscious barriers and mastering mental focus."
-  />
-</BentoTilt>
-
-
+        <BentoTilt className="border-hsl relative mb-7 h-[45vh] w-full max-w-full overflow-hidden rounded-md md:h-[90vh]">
+          <BentoCard
+            src="img/TRIAD.webp"
+            altText="Metaphysics teaching and ordination"
+            title={
+              <>
+                {"metaphysics-"}<b>{"teaching, "}</b>
+                <b>{"initiation & "}</b> <b>{"ordination"}</b>
+              </>
+            }
+            description="Mass Market Digital Program for breaking subconscious barriers and mastering mental focus."
+          />
+          </BentoTilt>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
           <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2">
             <BentoCard
