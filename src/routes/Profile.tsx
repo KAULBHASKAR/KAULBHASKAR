@@ -120,7 +120,7 @@ const Profile: React.FC = () => {
             </p>
             
             <p className="text-2xl">
-              For more than three decades, Kaulbhaskar has maintained the strict spiritual protocols of <InteractiveTooltip text="Sri Vidya" tooltipKey="sriVidya" />, descending directly through the venerable, lineage-backed <InteractiveTooltip text="Kaul Marg tradition" tooltipKey="kaulMarg" />. 
+              For more than three decades, Kaulbhaskar has maintained the strict spiritual protocols of <InteractiveTooltip text="Sri Vidya" tooltipKey="sriVidya" />, descending directly through the venerable, lineage-backed <InteractiveTooltip text="Kaula Marga tradition" tooltipKey="kaulMarg" />. 
             </p>
 
             <p className="text-2xl">
@@ -147,7 +147,7 @@ const Profile: React.FC = () => {
                     index === profileData.lineage.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
-                  <div className="md:w-1/3 text-orange-300/80 text-base md:text-lg uppercase font-bold tracking-tight mb-2 md:mb-0 md:pr-4 font-sans">
+                  <div className="md:w-1/3 text-orange-400 text-base md:text-lg uppercase font-bold tracking-tight mb-2 md:mb-0 md:pr-4 font-sans">
                     {item.label}
                   </div>
                   <div className="md:w-2/3 text-lg md:text-xl font-semibold md:pl-4">
