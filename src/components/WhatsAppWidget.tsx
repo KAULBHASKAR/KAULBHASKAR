@@ -7,7 +7,7 @@ interface WhatsAppWidgetProps {
   companyName?: string;
   companyStatus?: string;
   welcomeMessage?: string;
-  brandColor?: string;
+  brandColor?: #00008B;
   autoOpenDelay?: number;
 }
 
