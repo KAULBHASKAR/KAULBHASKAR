@@ -99,7 +99,7 @@ const SEO: React.FC<SEOProps> = ({
   return (
     <Helmet>
       {/* Standard Meta Tags */}
-      <title>{title}</title>
+      <title></title>
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
       {canonical && <link rel="canonical" href={canonical} />}
