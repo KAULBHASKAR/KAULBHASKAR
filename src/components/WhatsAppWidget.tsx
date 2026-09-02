@@ -7,7 +7,7 @@ interface WhatsAppWidgetProps {
   companyName?: string;
   companyStatus?: string;
   welcomeMessage?: string;
-  brandColor?: #00008B;
+  brandColor?: string;
   autoOpenDelay?: number;
 }
 
@@ -18,7 +18,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
   companyName = "Team Support",
   companyStatus = "Online",
   welcomeMessage = "Hi there! 👋 How can we help you today?",
-  brandColor = "#0824F7",
+  brandColor = "#00008B",
   autoOpenDelay = 4000,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
