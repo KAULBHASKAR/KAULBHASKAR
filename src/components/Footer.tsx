@@ -5,7 +5,8 @@ import {
   FaTwitter, 
   FaYoutube, 
   FaLinkedin, 
-  FaWhatsapp 
+  FaWhatsapp,
+  FaTelegram
 } from "react-icons/fa6";
 
 const socialLinks = [
@@ -14,6 +15,7 @@ const socialLinks = [
   { href: "https://youtube.com/@kaulbhaskar/videos", icon: <FaYoutube />, label: "Visit our YouTube channel" },
   { href: "https://linkedin.com/kaul-bhaskar-006a12234/", icon: <FaLinkedin />, label: "Connect with us on LinkedIn" },
   { href: "https://wa.me/919934418459", icon: <FaWhatsapp />, label: "Chat with us on WhatsApp" },
+  { href: "https://t.me/kaulbhaskar", icon: <FaTelegram />, label: "Connect with us on Telegram" },
 ];
 
 const navLinks = [
