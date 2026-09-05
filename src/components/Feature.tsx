@@ -2,48 +2,6 @@ import { useRef, useState } from "react";
 // Use type imports for anything used only as a TypeScript definition
 import type { ReactNode, MouseEvent, FC } from "react";
 
-interface BentoTiltProps {
-  children: ReactNode;
-  className?: string;
-}
-
-const BentoTilt: FC<BentoTiltProps> = ({ children, className = "" }) => {
-  const [transformStyle, setTransformStyle] = useState<string>("");
-  const itemRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!itemRef.current) return;
-
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-
-    const relativeX = (clientX / innerWidth) * -20;
-    const relativeY = (clientY / innerHeight) * 20;
-
-    setTransformStyle(`rotateX(${relativeY}deg) rotateY(${relativeX}deg)`);
-  };
-
-  const handleMouseLeave = () => {
-    setTransformStyle("");
-  };
-
-  return (
-    <div
-      className={className}
-      ref={itemRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ 
-        transform: transformStyle,
-        // transition: ensures it glides back smoothly
-        transition: "transform 0.5s ease-out" 
-      }}
-    >
-      {children}
-    </div>
-  );
-};
-
 interface BentoCardProps {
   src: string;
   altText?: string;
@@ -53,29 +11,31 @@ interface BentoCardProps {
 
 const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", title, description }) => {
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-md group">
-      {/* Background image slightly dimmed to absorb light artifact flares */}
+    <div className="relative w-full h-full overflow-hidden rounded-md group bg-neutral-950">
+      {/* 
+        IMAGE FIX: 
+        Removed the lowering opacity filter. 
+        Set to full standard visibility (opacity-100) so your webp graphics are bright.
+      */}
       <img
         src={src}
         alt={altText}
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover object-center opacity-85 transition-transform duration-700 group-hover:scale-105"
+        className="absolute inset-0 w-full h-full object-cover object-center opacity-100 transition-transform duration-700 group-hover:scale-105"
       />
 
       {/* 
-        CRITICAL ACCESSIBILITY FIX: 
-        A rich dark gradient shield pinned behind the text layer. 
-        Guarantees clear text reading independently of image contents.
+        GRADIENT MASK FIX:
+        Changed from full screen layout to a targeted bottom-up fade.
+        Keeps 75% of the upper graphic completely uninhibited while protecting text.
       */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10 z-[5]" />
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/70 to-transparent z-10" />
 
-      {/* Text block container shifted to sit above the gradient layer */}
-      <div className="relative z-10 flex flex-col justify-between p-5 pb-12 md:pb-20">
-        {/* 
-          Typography Colors Setup:
-          - Regular title text is standard stark neutral-100 white.
-          - Custom CSS / inline styles for your brand's Saffron/Gold accent color applied to <b> tags.
-        */}
+      {/* 
+        CONTENT FIX:
+        Forced z-20 layout execution to remain physically on top of the mask layer.
+      */}
+      <div className="relative z-20 flex flex-col justify-end h-full p-5 pb-12 md:pb-20">
         <div className="bento-title special-font text-neutral-100 [&_b]:text-[#FF9933] [&_b]:font-bold">
           {title}
           {description && (
@@ -88,6 +48,7 @@ const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", t
     </div>
   );
 };
+
 
 const Feature: FC = () => {
   return (
