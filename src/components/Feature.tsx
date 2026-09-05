@@ -53,21 +53,33 @@ interface BentoCardProps {
 
 const BentoCard: FC<BentoCardProps> = ({ src, altText = "Bento Feature Image", title, description }) => {
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-md">
-      {/* Replaced video with an img element */}
+    <div className="relative w-full h-full overflow-hidden rounded-md group">
+      {/* Background image slightly dimmed to absorb light artifact flares */}
       <img
         src={src}
         alt={altText}
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        className="absolute inset-0 w-full h-full object-cover object-center opacity-85 transition-transform duration-700 group-hover:scale-105"
       />
 
-      <div className="relative z-10 flex flex-col justify-between p-5 pb-20 text-white">
-        <div className="bento-title special-font">
+      {/* 
+        CRITICAL ACCESSIBILITY FIX: 
+        A rich dark gradient shield pinned behind the text layer. 
+        Guarantees clear text reading independently of image contents.
+      */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10 z-[5]" />
+
+      {/* Text block container shifted to sit above the gradient layer */}
+      <div className="relative z-10 flex flex-col justify-between p-5 pb-12 md:pb-20">
+        {/* 
+          Typography Colors Setup:
+          - Regular title text is standard stark neutral-100 white.
+          - Custom CSS / inline styles for your brand's Saffron/Gold accent color applied to <b> tags.
+        */}
+        <div className="bento-title special-font text-neutral-100 [&_b]:text-[#FF9933] [&_b]:font-bold">
           {title}
           {description && (
-            // Swapped break-words for wrap-break-word as requested
-            <p className="mt-3 wrap-break-word text-xs md:text-base text-white font-robert-regular">
+            <p className="mt-3 wrap-break-word text-xs md:text-sm text-neutral-300 font-robert-regular max-w-xl leading-relaxed">
               {description}
             </p>
           )}
@@ -105,19 +117,20 @@ const Feature: FC = () => {
             }
             description="Mass Market Digital Program for breaking subconscious barriers and mastering mental focus."
           />
-          </BentoTilt>
+        </BentoTilt>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-min">
           <BentoTilt className="bento-title_1 md:col-span-1 md:row-span-2">
             <BentoCard
               src="img/RESONANCE.webp"
               altText="Metaphysical resonance overview"
               title={
-              <>
-                <b>metaphysical</b> <b>resonance{" & "}</b> <b>energy alignment</b>
-              </>
-            }
-            description="Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
-          />
+                <>
+                  <b>metaphysical</b> <b>resonance{" & "}</b> <b>energy alignment</b>
+                </>
+              }
+              description="Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
+            />
           </BentoTilt>
 
           <BentoTilt className="bento-title_1 md:col-span-1">
