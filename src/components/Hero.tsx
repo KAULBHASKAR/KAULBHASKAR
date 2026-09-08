@@ -70,6 +70,9 @@ const Hero: React.FC = () => {
   // Video Transition Animation
   useGSAP(
     () => {
+      // Guard clause protects compilation loop from running on shell build
+      if (!isClient) return;
+
       if (hasClicked && nextVideoRef.current) {
         gsap.set("#next-video", { visibility: "visible" });
 
@@ -91,7 +94,7 @@ const Hero: React.FC = () => {
         });
       }
     },
-    { dependencies: [currentIndex], enabled: isClient, revertOnUpdate: true }
+    { dependencies: [currentIndex], revertOnUpdate: true } // Removed invalid 'enabled' flag
   );
 
   // Main Intro + Scroll Animation
@@ -210,7 +213,7 @@ const Hero: React.FC = () => {
               leftIcon={<TiLocationArrow />}
               containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
               onClick={() =>
-                window.open("https://www.tantrasadhana.org", "_blank")
+                window.open("https://tantrasadhana.org", "_blank")
               }
             />
           </div>
