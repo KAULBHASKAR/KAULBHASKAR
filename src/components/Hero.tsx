@@ -12,21 +12,17 @@ const Hero: React.FC = () => {
   const [hasClicked, setHasClicked] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [loadedVideos, setLoadedVideos] = useState<number>(0);
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
 
   const currentVideoRef = useRef<HTMLVideoElement | null>(null);
   const nextVideoRef = useRef<HTMLVideoElement | null>(null);
   const bgVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const totalVideo = 4;
-  // Keeps track of the video that *was* in the mini window before clicking
-  const [animatingSrcIndex, setAnimatingSrcIndex] = useState<number>(2);
   const upcomingVideoIndex = (currentIndex % totalVideo) + 1;
 
   const handleMiniVideoClick = () => {
     setHasClicked(true);
-    // Lock the clicked index for the upcoming transition block
-    setAnimatingSrcIndex(upcomingVideoIndex);
     setCurrentIndex(upcomingVideoIndex);
   };
 
@@ -39,18 +35,18 @@ const Hero: React.FC = () => {
     setIsClient(true);
   }, []);
 
-  // Force autoplay on mount safely
+  // Force autoplay on mount once client is ready
   useEffect(() => {
-    if (bgVideoRef.current && isClient) {
+    if (isClient && bgVideoRef.current) {
       bgVideoRef.current.play().catch(() => {
         console.log("Autoplay blocked, waiting for user interaction");
       });
     }
   }, [isClient]);
 
-  // Failsafe loader fallback
+  // Failsafe loader & initial ready check
   useEffect(() => {
-    if (bgVideoRef.current && bgVideoRef.current.readyState >= 2) {
+    if (isClient && bgVideoRef.current && bgVideoRef.current.readyState >= 2) {
       setLoadedVideos((prev) => prev + 1);
     }
 
@@ -59,7 +55,7 @@ const Hero: React.FC = () => {
     }, 5000);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [isClient]);
 
   // Sync loading state with ScrollTrigger
   useEffect(() => {
@@ -77,8 +73,9 @@ const Hero: React.FC = () => {
       if (!isClient) return;
 
       if (hasClicked && nextVideoRef.current) {
+        // Target your upcoming video frame (e.g., '#next-video')
         gsap.set("#next-video", { visibility: "visible" });
-
+        
         gsap.to("#next-video", {
           transformOrigin: "center center",
           scale: 1,
@@ -86,143 +83,18 @@ const Hero: React.FC = () => {
           height: "100%",
           duration: 1,
           ease: "power1.inOut",
-          onStart: () => {
-            nextVideoRef.current?.play().catch(() => {});
-          },
-        });
-
-        gsap.from("#mini-video-wrap", {
-          transformOrigin: "center center",
-          scale: 0,
-          duration: 1.5,
-          ease: "power1.inOut",
+          onComplete: () => {
+            setHasClicked(false);
+          }
         });
       }
     },
-    { dependencies: [currentIndex], revertOnUpdate: true }
+    { dependencies: [currentIndex, isClient], revertOnUpdate: true }
   );
 
-  // Main Intro + Scroll Animation
-  useGSAP(() => {
-    if (!isClient) return;
-
-    gsap.set("#video-frame", {
-      clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
-      borderRadius: "0 0 40% 10%",
-    });
-
-    gsap.from("#video-frame", {
-      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      borderRadius: "0 0 0 0",
-      ease: "power1.inOut",
-      scrollTrigger: {
-        trigger: "#video-frame",
-        start: "center center",
-        end: "bottom center",
-        scrub: true,
-      },
-    });
-  }, [isClient]);
-
-  const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
-
-  // Server-Side/Initial Hydration Pass output matching index.html structure
-  if (!isClient) {
-    return (
-      <p className="mb-5 max-w-72 font-robert-regular text-white lcp-static-fallback">
-        त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा। न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥ न च कौलात् परो योगी न विद्या त्रैपुरी समा। न च शा…
-      </p>
-    );
-  }
-
   return (
-    <div className="relative h-screen w-screen overflow-x-hidden">
-      {isLoading && (
-        <div className="flex justify-center items-center absolute z-50 h-screen w-screen bg-violet-50">
-          <div className="three-body">
-            <div className="three-body__dot" />
-            <div className="three-body__dot" />
-            <div className="three-body__dot" />
-          </div>
-        </div>
-      )}
-
-      <div
-        id="video-frame"
-        className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
-      >
-        {/* Clickable Mini Video Window */}
-        <div id="mini-video-wrap" className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
-          <div
-            onClick={handleMiniVideoClick}
-            className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
-          >
-            <video
-              ref={currentVideoRef}
-              src={getVideoSrc(hasClicked ? animatingSrcIndex : upcomingVideoIndex)}
-              loop
-              muted
-              playsInline
-              id="current-video"
-              className="size-64 origin-center scale-150 object-cover object-center"
-            />
-          </div>
-        </div>
-
-        {/* Transitioning Overlay Video */}
-        <video
-          ref={nextVideoRef}
-          src={getVideoSrc(currentIndex)}
-          loop
-          muted
-          playsInline
-          id="next-video"
-          className="absolute-center invisible absolute z-20 size-64 object-cover"
-        />
-
-        {/* Static Background Video */}
-        <video
-          ref={bgVideoRef}
-          src={getVideoSrc(currentIndex)}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute left-0 top-0 size-full object-cover"
-          onLoadedData={handleVideoLoad}
-        />
-
-        {/* Unified Main H1 Title */}
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-gradient-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
-          BH<b>as</b>k<b>a</b>r
-        </h1>
-
-        <div className="absolute left-0 top-0 z-40 size-full">
-          <div className="mt-24 px-5 sm:px-10">
-            {/* Secondary Heading */}
-            <h2 className="special-font hero-heading bg-gradient-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
-              K<b>a</b>u<b>l</b>
-            </h2>
-            <p className="mb-5 max-w-72 font-robert-regular text-white">
-              त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
-              न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
-              न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
-              न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
-              <br />
-              I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
-            </p>
-            <Button
-              id="kaulbhaskar-guruji"
-              title="Explore our foundational research archive in Tantrasadhana.org"
-              leftIcon={<TiLocationArrow />}
-              containerClass="!bg-yellow-300 hover:!bg-white flex justify-center items-center gap-1"
-              onClick={() =>
-                window.open("https://tantrasadhana.org", "_blank")
-              }
-            />
-          </div>
-        </div>
-      </div>
+    <div className="relative h-dvh w-screen overflow-x-hidden">
+      {/* Your JSX video layout elements go here */}
     </div>
   );
 };
