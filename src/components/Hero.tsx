@@ -19,10 +19,14 @@ const Hero: React.FC = () => {
   const bgVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const totalVideo = 4;
+  // Keeps track of the video that *was* in the mini window before clicking
+  const [animatingSrcIndex, setAnimatingSrcIndex] = useState<number>(2);
   const upcomingVideoIndex = (currentIndex % totalVideo) + 1;
 
   const handleMiniVideoClick = () => {
     setHasClicked(true);
+    // Lock the clicked index for the upcoming transition block
+    setAnimatingSrcIndex(upcomingVideoIndex);
     setCurrentIndex(upcomingVideoIndex);
   };
 
@@ -30,21 +34,21 @@ const Hero: React.FC = () => {
     setLoadedVideos((prev) => prev + 1);
   };
 
-  // Client-only guard
+  // Client-only hydration gate
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Force autoplay on mount
+  // Force autoplay on mount safely
   useEffect(() => {
-    if (bgVideoRef.current) {
+    if (bgVideoRef.current && isClient) {
       bgVideoRef.current.play().catch(() => {
         console.log("Autoplay blocked, waiting for user interaction");
       });
     }
-  }, []);
+  }, [isClient]);
 
-  // Failsafe loader
+  // Failsafe loader fallback
   useEffect(() => {
     if (bgVideoRef.current && bgVideoRef.current.readyState >= 2) {
       setLoadedVideos((prev) => prev + 1);
@@ -70,12 +74,16 @@ const Hero: React.FC = () => {
   // Video Transition Animation
   useGSAP(
     () => {
+      if (!isClient) return;
+
       if (hasClicked && nextVideoRef.current) {
         gsap.set("#next-video", { visibility: "visible" });
 
         gsap.to("#next-video", {
           transformOrigin: "center center",
           scale: 1,
+          width: "100%",
+          height: "100%",
           duration: 1,
           ease: "power1.inOut",
           onStart: () => {
@@ -83,7 +91,7 @@ const Hero: React.FC = () => {
           },
         });
 
-        gsap.from("#current-video", {
+        gsap.from("#mini-video-wrap", {
           transformOrigin: "center center",
           scale: 0,
           duration: 1.5,
@@ -96,6 +104,8 @@ const Hero: React.FC = () => {
 
   // Main Intro + Scroll Animation
   useGSAP(() => {
+    if (!isClient) return;
+
     gsap.set("#video-frame", {
       clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
       borderRadius: "0 0 40% 10%",
@@ -112,14 +122,23 @@ const Hero: React.FC = () => {
         scrub: true,
       },
     });
-  }, []);
+  }, [isClient]);
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
+
+  // Server-Side/Initial Hydration Pass output matching index.html structure
+  if (!isClient) {
+    return (
+      <p className="mb-5 max-w-72 font-robert-regular text-white lcp-static-fallback">
+        त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा। न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥ न च कौलात् परो योगी न विद्या त्रैपुरी समा। न च शा…
+      </p>
+    );
+  }
 
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
       {isLoading && (
-        <div className="flex-center absolute z-100 h-screen w-screen bg-violet-50">
+        <div className="flex justify-center items-center absolute z-50 h-screen w-screen bg-violet-50">
           <div className="three-body">
             <div className="three-body__dot" />
             <div className="three-body__dot" />
@@ -132,14 +151,15 @@ const Hero: React.FC = () => {
         id="video-frame"
         className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
       >
-        <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
+        {/* Clickable Mini Video Window */}
+        <div id="mini-video-wrap" className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
           <div
             onClick={handleMiniVideoClick}
             className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
           >
             <video
               ref={currentVideoRef}
-              src={getVideoSrc(upcomingVideoIndex)}
+              src={getVideoSrc(hasClicked ? animatingSrcIndex : upcomingVideoIndex)}
               loop
               muted
               playsInline
@@ -149,6 +169,7 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
+        {/* Transitioning Overlay Video */}
         <video
           ref={nextVideoRef}
           src={getVideoSrc(currentIndex)}
@@ -159,32 +180,27 @@ const Hero: React.FC = () => {
           className="absolute-center invisible absolute z-20 size-64 object-cover"
         />
 
-        {isClient && (
-          <video
-            ref={bgVideoRef}
-            src={getVideoSrc(currentIndex)}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute left-0 top-0 size-full object-cover"
-            onLoadedData={handleVideoLoad}
-            onCanPlay={() => {
-              setIsLoading(false);
-              bgVideoRef.current?.play();
-            }}
-          />
-        )}
+        {/* Static Background Video */}
+        <video
+          ref={bgVideoRef}
+          src={getVideoSrc(currentIndex)}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute left-0 top-0 size-full object-cover"
+          onLoadedData={handleVideoLoad}
+        />
 
-        {/* Unified Main H1 Title for semantic SEO structure */}
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
+        {/* Unified Main H1 Title */}
+        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-gradient-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
           BH<b>as</b>k<b>a</b>r
         </h1>
 
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
-            {/* Secondary Heading changed to H2 */}
-            <h2 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
+            {/* Secondary Heading */}
+            <h2 className="special-font hero-heading bg-gradient-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
               K<b>a</b>u<b>l</b>
             </h2>
             <p className="mb-5 max-w-72 font-robert-regular text-white">
@@ -196,12 +212,12 @@ const Hero: React.FC = () => {
               I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
             </p>
             <Button
-              id="kaulbhaskar-guruji" // Fixed: Removed whitespace inside ID attribute
-              title="Explore our foundational research archieve in Tantrasadhana.org"
+              id="kaulbhaskar-guruji"
+              title="Explore our foundational research archive in Tantrasadhana.org"
               leftIcon={<TiLocationArrow />}
-              containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
+              containerClass="!bg-yellow-300 hover:!bg-white flex justify-center items-center gap-1"
               onClick={() =>
-                window.open("https://www.tantrasadhana.org", "_blank")
+                window.open("https://tantrasadhana.org", "_blank")
               }
             />
           </div>
