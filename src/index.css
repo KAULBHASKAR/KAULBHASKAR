@@ -55,7 +55,7 @@
     width: 100%; 
     overflow-x: hidden;
     background-color: #dfdff0;
-    font-family: "general", sans-serif; /* Adjusted to match your internal theme definition */
+    font-family: "general", sans-serif;
     color: #1a1a1a;
     margin: 0;
     padding: 0;
@@ -97,6 +97,11 @@
   .sword-man-clip-path { clip-path: polygon(16% 0, 89% 15%, 75% 100%, 0 97%); }
   .contact-clip-path-1 { clip-path: polygon(25% 0%, 74% 0, 69% 64%, 34% 73%); }
   .contact-clip-path-2 { clip-path: polygon(29% 15%, 85% 30%, 50% 100%, 10% 64%); }
+  
+  /* Blends html fallback smoothly once React hydration finishes */
+  .lcp-static-fallback {
+    font-family: var(--font-robert-regular);
+  }
 }
 
 /* 6. ANIMATIONS & LOADER */
