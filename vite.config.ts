@@ -9,45 +9,35 @@ export default defineConfig({
     react(),
     tailwindcss(),
     viteCompression({
-      algorithm: 'gzip',       // enable gzip
-      threshold: 1024,         // only compress files > 1KB
-      ext: '.gz',              // output extension
-      deleteOriginFile: false, // keep original files
+      algorithm: 'gzip',
+      threshold: 1024,
+      ext: '.gz',
     }),
     viteCompression({
-      algorithm: 'brotliCompress', // optional: enable Brotli too
+      algorithm: 'brotliCompress',
       threshold: 1024,
       ext: '.br',
-      deleteOriginFile: false,
     }),
   ],
   build: {
     cssCodeSplit: true,
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 800, // Slightly increased due to unified vendor chunks
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // 1. Isolate the heavy esprima library completely
-            if (id.includes('esprima')) {
-              return 'vendor-esprima';
+            // Isolate core react framework so it caches permanently
+            if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router')) {
+              return 'vendor-core';
             }
-            // 2. Isolate core framework and routing modules
-            if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router') || id.includes('@remix-run/router')) {
-              return 'vendor-framework';
-            }
-            // 3. Keep your existing custom categories
-            if (id.includes('gray-matter') || id.includes('buffer')) {
-              return 'vendor-blog-logic';
-            }
-            if (id.includes('react-big-calendar')) return 'vendor-calendar';
+            
+            // Keep your heavy dynamic vendors categorized cleanly
             if (id.includes('gsap')) return 'vendor-gsap';
+            if (id.includes('react-big-calendar')) return 'vendor-calendar';
             if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
-            if (id.includes('react-markdown') || id.includes('remark-gfm')) return 'vendor-content';
-
-            // 4. Group all remaining smaller modules into one generic bundle 
-            // instead of splitting them into a hundred tiny files
-            return 'vendor-libs';
+            
+            // Group all other remaining small utilities together to prevent chain depth
+            return 'vendor-utils';
           }
         },
       },
