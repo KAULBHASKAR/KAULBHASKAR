@@ -144,7 +144,7 @@ const Hero: React.FC = () => {
 <h1 
   className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent"
 >
-  Bhaskar Kaul
+  Bhaskar
   {/* The animated layout overlays directly on top of the base text */}
   <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
     BH<b>as</b>k<b>a</b>r
