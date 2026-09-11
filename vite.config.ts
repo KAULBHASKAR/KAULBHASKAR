@@ -21,7 +21,7 @@ export default defineConfig({
   ],
   build: {
     cssCodeSplit: true,
-    chunkSizeWarningLimit: 600, // Reduced back down since bundles will shrink
+    chunkSizeWarningLimit: 800, // Slightly increased due to unified vendor chunks
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -36,9 +36,8 @@ export default defineConfig({
             if (id.includes('react-big-calendar')) return 'vendor-calendar';
             if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
             
-            // REMOVED vendor-utils catch-all. 
-            // Vite will now automatically break down smaller utilities or 
-            // merge them only into the page chunks where they are actually imported.
+            // Group all other remaining small utilities together to prevent chain depth
+            return 'vendor-utils';
           }
         },
       },
