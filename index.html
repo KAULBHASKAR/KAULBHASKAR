@@ -22,17 +22,12 @@
     <meta property="twitter:description" content="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
     <meta property="twitter:image" content="https://kaulbhaskar.com/img/ABOUT_BG.webp" />
 
-    <!-- Preload critical fonts & styles -->
+    <!-- Preload critical fonts & images (Properly scoped) -->
     <link rel="preload" href="/fonts/zentry-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/general.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/robert-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/circularweb-book.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" fetchpriority="high" as="image" href="/img/ABOUT_BG.webp" type="image/webp">
-
-    <link rel="preload" href="/assets/index-CZMhnSqO.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/assets/vendor-DITC1bZO.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/assets/index-DmwUxbYT.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="/assets/react-big-calendar-BiPGZdAr.css" media="print" onload="this.media='all'">
 
     <!-- Critical CSS for Immediate Paint -->
     <style>
@@ -45,19 +40,15 @@
         background: #fff; 
         padding: 0rem; 
       }
-      /* Fallback styles to style the text immediately before Tailwind parses */
       .lcp-static-fallback {
         color: #ffffff !important;
-        max-width: 18rem !important; /* matches max-w-72 (72 * 0.25rem) */
-        margin-bottom: 1.25rem !important; /* matches mb-5 */
+        max-width: 18rem !important;
+        margin-bottom: 1.25rem !important;
         font-family: "robert-regular", system-ui, sans-serif;
         opacity: 1;
         transition: opacity 0.3s ease-out;
       }
     </style>
-    <noscript>
-      <link rel="stylesheet" href="/assets/index-CZMhnSqO.css">
-    </noscript>
   </head>
   <body>
     <div id="root">
@@ -66,6 +57,7 @@
         त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा। न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥ न च कौलात् परो योगी न विद्या त्रैपुरी समा। न च शा…
       </p>
     </div>
-    <script type="module" src="/src/main.tsx" defer></script>
+    <!-- Vite automatically manages and injects the bundled JS and CSS references here during build -->
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
