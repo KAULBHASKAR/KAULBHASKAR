@@ -116,7 +116,7 @@ const Hero: React.FC = () => {
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
 
-  return (
+    return (
     <div className="relative h-screen w-screen overflow-x-hidden">
       {isLoading && (
         <div className="flex-center absolute z-100 h-screen w-screen bg-violet-50">
@@ -127,64 +127,30 @@ const Hero: React.FC = () => {
           </div>
         </div>
       )}
-
-      <div
-        id="video-frame"
-        className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
-      >
+      <div id="video-frame" className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75">
         <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
-          <div
-            onClick={handleMiniVideoClick}
-            className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
-          >
-            <video
-              ref={currentVideoRef}
-              src={getVideoSrc(upcomingVideoIndex)}
-              loop
-              muted
-              playsInline
-              id="current-video"
-              className="size-64 origin-center scale-150 object-cover object-center"
-            />
+          <div onClick={handleMiniVideoClick} className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100">
+            <video ref={currentVideoRef} src={getVideoSrc(upcomingVideoIndex)} loop muted playsInline id="current-video" className="size-64 origin-center scale-150 object-cover object-center" />
           </div>
         </div>
-
-        <video
-          ref={nextVideoRef}
-          src={getVideoSrc(currentIndex)}
-          loop
-          muted
-          playsInline
-          id="next-video"
-          className="absolute-center invisible absolute z-20 size-64 object-cover"
-        />
-
+        <video ref={nextVideoRef} src={getVideoSrc(currentIndex)} loop muted playsInline id="next-video" className="absolute-center invisible absolute z-20 size-64 object-cover" />
         {isClient && (
-          <video
-            ref={bgVideoRef}
-            src={getVideoSrc(currentIndex)}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute left-0 top-0 size-full object-cover"
-            onLoadedData={handleVideoLoad}
-            onCanPlay={() => {
-              setIsLoading(false);
-              bgVideoRef.current?.play();
-            }}
-          />
+          <video ref={bgVideoRef} src={getVideoSrc(currentIndex)} autoPlay loop muted playsInline className="absolute left-0 top-0 size-full object-cover" onLoadedData={handleVideoLoad} onCanPlay={() => { setIsLoading(false); bgVideoRef.current?.play(); }} />
         )}
 
-        {/* Unified Main H1 Title for semantic SEO structure */}
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
-          BH<b>as</b>k<b>a</b>r
+        {/* SEO FIX: Standardized H1 with clear aria-label and sr-only helper text */}
+        <h1 
+          aria-label="Bhaskar Kaul" 
+          className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent"
+        >
+          <span className="sr-only">Bhaskar Kaul</span>
+          <span aria-hidden="true">BH<b>as</b>k<b>a</b>r</span>
         </h1>
 
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
             {/* Secondary Heading changed to H2 */}
-            <h2 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
+            <h2 aria-hidden="true" className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
               K<b>a</b>u<b>l</b>
             </h2>
             <p className="mb-5 max-w-72 font-robert-regular text-white">
@@ -195,20 +161,19 @@ const Hero: React.FC = () => {
               <br />
               I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
             </p>
-            <Button
-              id="kaulbhaskar-guruji" // Fixed: Removed whitespace inside ID attribute
-              title="Explore our foundational research archieve in Tantrasadhana.org"
-              leftIcon={<TiLocationArrow />}
-              containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
-              onClick={() =>
-                window.open("https://www.tantrasadhana.org", "_blank")
-              }
+            <Button 
+              id="kaulbhaskar-guruji" 
+              title="Explore our foundational research archieve in Tantrasadhana.org" 
+              leftIcon={<TiLocationArrow />} 
+              containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1" 
+              onClick={() => window.open("https://www.tantrasadhana.org", "_blank")} 
             />
           </div>
         </div>
       </div>
     </div>
   );
+
 };
 
 export default Hero;
