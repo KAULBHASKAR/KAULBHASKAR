@@ -72,10 +72,6 @@
 /* 5. COMPONENTS & ACCESSIBILITY OVERRIDES */
 @layer utilities {
   .text-orange-600 { color: #c2410c !important; }
-  .rbc-calendar { @apply min-w-full overflow-x-auto; }
-  .rbc-off-range-bg { background-color: #e5e7eb !important; }
-  .rbc-off-range .rbc-button-link { color: #4b5563 !important; }
-  .rbc-button-link { color: #111827 !important; font-weight: 600; }
   .nav-hover-btn { @apply relative ms-5 md:ms-10 font-general text-xs uppercase text-blue-900 cursor-pointer; }
   .floating-nav { @apply bg-black rounded-lg border; }
   .mask-clip-path { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
