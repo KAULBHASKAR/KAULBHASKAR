@@ -12,15 +12,20 @@ const HomeStaticFallback = () => (
   </p>
 );
 
+// Fallback spinner for standard pages
+const PageLoadingSpinner = () => <div className="loading-spinner" />;
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />, 
+    // Fix: This configures the default lazy-loading fallback spinner for all interior routes
+    HydrateFallback: PageLoadingSpinner,
     children: [
       { 
         index: true, 
-        // React Router native code-splitting handles Suspense under the hood
         lazy: () => import('./routes/Home').then(module => ({ Component: module.default })),
+        // Keeps the precise custom Sanskrit LCP placeholder pinned just for the home view
         hydrateFallbackElement: <HomeStaticFallback />
       },
       { 
@@ -65,7 +70,8 @@ export default function App() {
 
   return (
     <HelmetProvider>
-      <RouterProvider router={router} fallbackElement={<div className="loading-spinner" />} />
+      {/* Fix: Removed the deprecated fallbackElement prop from here */}
+      <RouterProvider router={router} />
       <ScrollToTop />
     </HelmetProvider>
   );
