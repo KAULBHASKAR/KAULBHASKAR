@@ -140,25 +140,30 @@ const Hero: React.FC = () => {
 
         {/* SEO FIX: Standardized H1 with clear aria-label and sr-only helper text */}
         {/* Unified Main H1 Title for semantic SEO structure */}
-        <h1 
-          aria-label="Bhaskar Kaul" 
-          className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent"
-        >
-        <span className="sr-only">Bhaskar Kaul</span>
-        <span aria-hidden="true">BH<b>as</b>k<b>a</b>r</span>
-        </h1>
+        {/* Unified Main H1 Title: Raw text provided directly for basic bots to read */}
+<h1 
+  className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent"
+>
+  Bhaskar Kaul
+  {/* The animated layout overlays directly on top of the base text */}
+  <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
+    BH<b>as</b>k<b>a</b>r
+  </span>
+</h1>
 
 <div className="absolute left-0 top-0 z-40 size-full">
   <div className="mt-24 px-5 sm:px-10">
     
-    {/* Cleaned up H2 Structure for perfect bot reading */}
+    {/* Secondary H2 Title */}
     <h2 
-      aria-label="Kaul"
-      className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent"
+      className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative"
     >
-      <span className="sr-only">Kaul</span>
-      <span aria-hidden="true">K<b>a</b>u<b>l</b></span>
+      Kaul
+      <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
+        K<b>a</b>u<b>l</b>
+      </span>
     </h2>
+
 
             <p className="mb-5 max-w-72 font-robert-regular text-white">
               त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
