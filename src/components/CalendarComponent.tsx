@@ -27,7 +27,6 @@ const events: Event[] = [
 ];
 
 const CalendarComponent: FC = () => {
-  // Default to the event's start date
   const [currentDate, setCurrentDate] = useState(events[0].start);
   const [currentView, setCurrentView] = useState<View>("month");
 
@@ -40,6 +39,17 @@ const CalendarComponent: FC = () => {
         contain: "layout style",
       }}
     >
+      {/* 
+        Encapsulating custom classes safely inside the lazy chunk. 
+        These styles will never touch or slow down the initial landing page bundle.
+      */}
+      <style>{`
+        .rbc-calendar { min-width: 100%; overflow-x: auto; }
+        .rbc-off-range-bg { background-color: #e5e7eb !important; }
+        .rbc-off-range .rbc-button-link { color: #4b5563 !important; }
+        .rbc-button-link { color: #111827 !important; font-weight: 600; }
+      `}</style>
+
       <h2
         style={{
           textAlign: "center",
@@ -64,9 +74,9 @@ const CalendarComponent: FC = () => {
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500 }}
-          date={currentDate} // defaults to event date
+          date={currentDate}
           onNavigate={(newDate) => setCurrentDate(newDate)}
-          view={currentView} // defaults to month view
+          view={currentView}
           onView={(newView) => setCurrentView(newView)}
         />
       </div>
