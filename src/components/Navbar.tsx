@@ -123,11 +123,10 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile Menu - Reflow Optimized */}
+      {/* Mobile Menu */}
       <div 
-        className={`md:hidden absolute top-20 left-0 w-full transition-all duration-300 origin-top
-          ${isMobileMenuOpen ? "scale-y-100 opacity-100 visible" : "scale-y-95 opacity-0 invisible"}`}
-        inert={!isMobileMenuOpen ? true : undefined}
+        className={`md:hidden absolute top-20 left-0 w-full overflow-hidden transition-all duration-500 ${isMobileMenuOpen ? "max-h-100 opacity-100" : "max-h-0 opacity-0"}`}
+        inert={!isMobileMenuOpen ? true : undefined} // Changed "" to true
       >
         <div className="bg-black/90 backdrop-blur-xl border border-white/10 m-2 p-6 rounded-2xl flex flex-col gap-4">
           {navItems.map((item) => (
