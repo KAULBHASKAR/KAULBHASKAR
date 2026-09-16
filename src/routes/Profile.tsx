@@ -88,7 +88,7 @@ const Profile: React.FC = () => {
             </div>
             {/* Added: Portrait Graphic below Identity Name */}
             <img 
-              src="/img/satyendra-large.webp" 
+              src="/img/satyendra.webp" 
               alt="Kaulbhaskar Profile Portrait" 
               className="mt-6 w-full h-48 object-contain rounded shadow-sm border border-stone-100 bg-stone-50" 
             />
