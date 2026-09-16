@@ -173,19 +173,23 @@ const Hero: React.FC = () => {
               <br />
               I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
             </p>
-            <a 
-              href="https://tantrasadhana.org" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-block"
-            >
-              <Button 
-                id="kaulbhaskar-guruji" 
-                title="Explore our foundational research archieve in Tantrasadhana.org" 
-                leftIcon={<TiLocationArrow />} 
-                containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1" 
-              />
-            </a>
+            <Button 
+  id="kaulbhaskar-guruji" 
+  title="Explore our foundational research archieve in Tantrasadhana.org" 
+  leftIcon={<TiLocationArrow />} 
+  containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1" 
+  onClick={() => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      // Force direct redirection inside the active mobile viewport frame
+      window.location.href = "https://www.tantrasadhana.org";
+    } else {
+      // Standard desktop new-tab window behavior
+      window.open("https://www.tantrasadhana.org", "_blank");
+    }
+  }}
+/>
+
 
 
           </div>
