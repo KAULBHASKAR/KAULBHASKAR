@@ -97,7 +97,7 @@ export default function Cohort() {
           <div className="w-full md:w-1/3 flex justify-center">
             <div className="h-64 w-64 rounded-xl bg-linear-to-tr from-[#c5a880]/20 to-[#141822] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] font-serif text-2xl tracking-widest uppercase">
               <img 
-                src="/img/satyendra-large.webp" 
+                src="/img/satyendra.webp" 
                 alt="Kaulbhaskar Profile" 
                 className="h-full w-full object-cover"
               />
