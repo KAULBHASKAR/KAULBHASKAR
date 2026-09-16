@@ -5,13 +5,20 @@ import AnimatedTitle from "./AnimatedTitle";
 
 const Story: React.FC = () => {
   const frameRef = useRef<HTMLImageElement>(null);
+  // Cache the rect measurements to avoid reading layout on every single pixel shift
+  const rectCacheRef = useRef<DOMRect | null>(null);
 
   const handleMouseMove = (e: MouseEvent<HTMLImageElement>) => {
     const { clientX, clientY } = e;
     const element = frameRef.current;
     if (!element) return;
 
-    const rect = element.getBoundingClientRect();
+    // 🚀 FIXED: Read the rect once and cache it. Bypasses forced reflow entirely on subsequent shifts!
+    if (!rectCacheRef.current) {
+      rectCacheRef.current = element.getBoundingClientRect();
+    }
+    const rect = rectCacheRef.current;
+
     const xPos = clientX - rect.left;
     const yPos = clientY - rect.top;
 
@@ -27,12 +34,16 @@ const Story: React.FC = () => {
       rotateX,
       rotateY,
       transformPerspective: 500,
-      ease: "power2.out", // Upgraded to power2 for cleaner inertia transitions
+      ease: "power2.out",
     });
   };
 
   const handleMouseLeave = () => {
     const element = frameRef.current;
+    
+    // Reset cache when mouse leaves so it recalculates fresh if the viewport sizes change
+    rectCacheRef.current = null;
+
     if (element) {
       gsap.to(element, {
         duration: 0.4,
