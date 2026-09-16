@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -163,22 +162,17 @@ const Hero: React.FC = () => {
               I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
             </p>
             
-            {/* LINK WORKAROUND CONTAINER */}
-            <div className="relative inline-block select-none">
-              <Button 
-                id="kaulbhaskar-guruji" 
-                title="Explore our foundational research archieve in Tantrasadhana.org" 
-                leftIcon={<TiLocationArrow />} 
-                containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1 pointer-events-none" 
-              />
-              <a 
-                href="https://tantrasadhana.org" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="absolute inset-0 z-50 cursor-pointer opacity-0"
-                aria-label="Explore our foundational research archive in Tantrasadhana.org"
-              />
-            </div>
+            {/* Native HTML Link styled identically to the original layout design */}
+            <a 
+              id="kaulbhaskar-guruji"
+              href="https://tantrasadhana.org" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="!bg-yellow-300 hover:!bg-white flex items-center justify-center gap-1 py-3 px-6 rounded-lg text-black font-semibold transition-all duration-300 w-fit cursor-pointer z-50 relative"
+            >
+              <TiLocationArrow />
+              <span>Explore our foundational research archieve in Tantrasadhana.org</span>
+            </a>
 
           </div>
         </div>
