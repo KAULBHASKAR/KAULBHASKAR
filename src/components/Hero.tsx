@@ -169,7 +169,6 @@ const Hero: React.FC = () => {
                 id="kaulbhaskar-guruji" 
                 title="Explore our foundational research archieve in Tantrasadhana.org" 
                 leftIcon={<TiLocationArrow />} 
-                {/* Note: added pointer-events-none to bypass event swallowing */}
                 containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1 pointer-events-none" 
               />
               <a 
