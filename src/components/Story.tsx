@@ -56,7 +56,7 @@ const Story: React.FC = () => {
                   onMouseMove={handleMouseMove}
                   onMouseLeave={handleMouseLeave}
                   onMouseUp={handleMouseLeave}
-                  src="/img/satyendra-large.webp"
+                  src="/img/satyendra.webp"
                   alt="Sri KAULBHASKAR Guru Ji - Lineage of Sri Matsyendra Nath"
                   className="size-full object-cover object-center"
                 />
