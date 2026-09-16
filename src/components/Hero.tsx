@@ -178,8 +178,12 @@ const Hero: React.FC = () => {
               title="Explore our foundational research archieve in Tantrasadhana.org" 
               leftIcon={<TiLocationArrow />} 
               containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1" 
-              onClick={() => window.open("https://www.tantrasadhana.org", "_blank")} 
+              as="a" // Change to anchor tag if your component supports it
+              href="https://www.tantrasadhana.org"
+              target="_blank"
+              rel="noopener noreferrer"
             />
+
           </div>
         </div>
       </div>
