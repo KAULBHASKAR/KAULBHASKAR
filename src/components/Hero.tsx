@@ -116,7 +116,7 @@ const Hero: React.FC = () => {
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
 
   return (
-    <div className="relative h-screen w-screen overflow-x-hidden">
+    <div className="relative h-screen w-screen overflow-x-hidden bg-black">
       {isLoading && (
         <div className="flex-center absolute z-100 h-screen w-screen bg-violet-50">
           <div className="three-body">
@@ -127,11 +127,9 @@ const Hero: React.FC = () => {
         </div>
       )}
       
-      {/* 1. Added pointer-events-none to the animated background wrapper */}
-      <div id="video-frame" className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75 pointer-events-none">
-        
-        {/* 2. Re-enabled pointer events explicitly on the interactive video mask */}
-        <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg pointer-events-auto">
+      {/* LAYER 1: The background animated video layout framework */}
+      <div id="video-frame" className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75">
+        <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
           <div onClick={handleMiniVideoClick} className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100">
             <video ref={currentVideoRef} src={getVideoSrc(upcomingVideoIndex)} loop muted playsInline id="current-video" className="size-64 origin-center scale-150 object-cover object-center" />
           </div>
@@ -148,40 +146,45 @@ const Hero: React.FC = () => {
             BH<b>as</b>k<b>a</b>r
           </span>
         </h1>
+      </div>
 
-        {/* 3. Elevated text layer to z-50 and added pointer-events-none so it doesn't block underlying animations, while assigning pointer-events-auto to items inside */}
-        <div className="absolute left-0 top-0 z-50 size-full pointer-events-none">
-          <div className="mt-24 px-5 sm:px-10 pointer-events-auto">
-            <h2 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative">
-              Kaul
-              <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
-                K<b>a</b>u<b>l</b>
+      {/* LAYER 2: Completely independent Sibling Layer for Text and Links */}
+      <div className="absolute left-0 top-0 z-40 size-full pointer-events-none">
+        <div className="mt-24 px-5 sm:px-10 max-w-xl">
+          <h2 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative pointer-events-auto">
+            Kaul
+            <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
+              K<b>a</b>u<b>l</b>
               </span>
-            </h2>
+          </h2>
 
-            <p className="mb-5 max-w-72 font-robert-regular text-white">
-              त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
-              न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
-              न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
-              न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
-              <br />
-              I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
-            </p>
-            
-            <a 
-              id="kaulbhaskar-guruji"
-              href="https://tantrasadhana.org" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="!bg-yellow-300 hover:!bg-white flex items-center justify-center gap-1 py-3 px-6 rounded-lg text-black font-semibold transition-all duration-300 w-fit cursor-pointer z-50 relative pointer-events-auto"
-            >
-              <TiLocationArrow />
-              <span>Explore our foundational research archieve in Tantrasadhana.org</span>
-            </a>
-
-          </div>
+          <p className="mb-5 max-w-72 font-robert-regular text-white pointer-events-auto">
+            त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
+            न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
+            न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
+            न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
+            <br />
+            I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
+          </p>
+          
+          {/* Native HTML Link component completely unblocked by clip-path context */}
+          <a 
+            id="kaulbhaskar-guruji"
+            href="https://tantrasadhana.org" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="!bg-yellow-300 hover:!bg-white flex items-center justify-center gap-1 py-3 px-6 rounded-lg text-black font-semibold transition-all duration-300 w-fit cursor-pointer z-50 relative pointer-events-auto"
+            onTouchStart={(e) => {
+              // Explicit safe touch handler fallback logic for tricky iOS wrappers
+              window.open("https://tantrasadhana.org", "_blank", "noopener,noreferrer");
+            }}
+          >
+            <TiLocationArrow />
+            <span>Explore our foundational research archieve in Tantrasadhana.org</span>
+          </a>
         </div>
       </div>
+
     </div>
   );
 };
