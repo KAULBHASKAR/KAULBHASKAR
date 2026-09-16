@@ -54,7 +54,7 @@ const Intro: React.FC = () => {
           <img 
             alt="bgImage" 
             className="absolute left-0 top-0 size-full object-cover" 
-            src="/img/intro.webp" 
+            src="/img/INTRO.webp" 
             width="1400"
             height="1800"
             fetchPriority="high" 
