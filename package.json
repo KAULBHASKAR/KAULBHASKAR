@@ -28,7 +28,7 @@
     "react-slick": "^0.31.0",
     "react-use": "^17.6.1",
     "remark-gfm": "^4.0.1",
-    "slick-carousel": "^1.8.1",
+    "slick-carousel": "^2.0.0",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
