@@ -126,12 +126,17 @@ const Hero: React.FC = () => {
           </div>
         </div>
       )}
-      <div id="video-frame" className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75">
-        <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
+      
+      {/* 1. Added pointer-events-none to the animated background wrapper */}
+      <div id="video-frame" className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75 pointer-events-none">
+        
+        {/* 2. Re-enabled pointer events explicitly on the interactive video mask */}
+        <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg pointer-events-auto">
           <div onClick={handleMiniVideoClick} className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100">
             <video ref={currentVideoRef} src={getVideoSrc(upcomingVideoIndex)} loop muted playsInline id="current-video" className="size-64 origin-center scale-150 object-cover object-center" />
           </div>
         </div>
+        
         <video ref={nextVideoRef} src={getVideoSrc(currentIndex)} loop muted playsInline id="next-video" className="absolute-center invisible absolute z-20 size-64 object-cover" />
         {isClient && (
           <video ref={bgVideoRef} src={getVideoSrc(currentIndex)} autoPlay loop muted playsInline className="absolute left-0 top-0 size-full object-cover" onLoadedData={handleVideoLoad} onCanPlay={() => { setIsLoading(false); bgVideoRef.current?.play(); }} />
@@ -144,8 +149,9 @@ const Hero: React.FC = () => {
           </span>
         </h1>
 
-        <div className="absolute left-0 top-0 z-40 size-full">
-          <div className="mt-24 px-5 sm:px-10">
+        {/* 3. Elevated text layer to z-50 and added pointer-events-none so it doesn't block underlying animations, while assigning pointer-events-auto to items inside */}
+        <div className="absolute left-0 top-0 z-50 size-full pointer-events-none">
+          <div className="mt-24 px-5 sm:px-10 pointer-events-auto">
             <h2 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative">
               Kaul
               <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
@@ -162,13 +168,12 @@ const Hero: React.FC = () => {
               I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
             </p>
             
-            {/* Native HTML Link styled identically to the original layout design */}
             <a 
               id="kaulbhaskar-guruji"
               href="https://tantrasadhana.org" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="!bg-yellow-300 hover:!bg-white flex items-center justify-center gap-1 py-3 px-6 rounded-lg text-black font-semibold transition-all duration-300 w-fit cursor-pointer z-50 relative"
+              className="!bg-yellow-300 hover:!bg-white flex items-center justify-center gap-1 py-3 px-6 rounded-lg text-black font-semibold transition-all duration-300 w-fit cursor-pointer z-50 relative pointer-events-auto"
             >
               <TiLocationArrow />
               <span>Explore our foundational research archieve in Tantrasadhana.org</span>
