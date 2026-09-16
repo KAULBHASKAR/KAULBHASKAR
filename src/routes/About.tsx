@@ -89,7 +89,7 @@ const About: React.FC = () => {
 
       <div className="flexCenter max-container relative w-full min-h-screen">
         <img
-          src="/img/ABOUT_US.png"
+          src="/img/ABOUT_US.webp"
           alt="yoga background"
           width={1440}
           height={580}
@@ -110,7 +110,7 @@ const About: React.FC = () => {
       <section className="flex-row md:flex mx-auto items-center w-full bg-gradient-to-r from-green-400 via-indigo-500 to-yellow-400">
         <div id="guru-ji" className="sm:w-1/2 sm:ml-10 sm:mr-10 w-full flex justify-center mt-12 overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
           <img
-            src="/img/satyendra-large.webp"
+            src="/img/satyendra.webp"
             alt="Kaulbhaskar Guru Ji - Tantra Expert"
             width={940}
             height={960}
