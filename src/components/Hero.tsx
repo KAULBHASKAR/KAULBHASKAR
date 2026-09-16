@@ -173,16 +173,20 @@ const Hero: React.FC = () => {
               <br />
               I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
             </p>
-            <Button 
-              id="kaulbhaskar-guruji" 
-              title="Explore our foundational research archieve in Tantrasadhana.org" 
-              leftIcon={<TiLocationArrow />} 
-              containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1" 
-              as="a" // Change to anchor tag if your component supports it
-              href="https://www.tantrasadhana.org"
-              target="_blank"
+            <a 
+              href="https://tantrasadhana.org" 
+              target="_blank" 
               rel="noopener noreferrer"
-            />
+              className="inline-block"
+            >
+              <Button 
+                id="kaulbhaskar-guruji" 
+                title="Explore our foundational research archieve in Tantrasadhana.org" 
+                leftIcon={<TiLocationArrow />} 
+                containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1" 
+              />
+            </a>
+
 
           </div>
         </div>
