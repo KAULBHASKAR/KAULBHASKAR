@@ -168,20 +168,23 @@ const Hero: React.FC = () => {
           </p>
           
           {/* Native HTML Link component completely unblocked by clip-path context */}
-          <a 
-            id="kaulbhaskar-guruji"
-            href="https://tantrasadhana.org" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="!bg-yellow-300 hover:!bg-white flex items-center justify-center gap-1 py-3 px-6 rounded-lg text-black font-semibold transition-all duration-300 w-fit cursor-pointer z-50 relative pointer-events-auto"
-            onTouchStart={(e) => {
-              // Explicit safe touch handler fallback logic for tricky iOS wrappers
-              window.open("https://tantrasadhana.org", "_blank", "noopener,noreferrer");
-            }}
-          >
-            <TiLocationArrow />
-            <span>Explore our foundational research archieve in Tantrasadhana.org</span>
-          </a>
+          {/* Native HTML Link component completely unblocked by clip-path context */}
+<a 
+  id="kaulbhaskar-guruji"
+  href="https://tantrasadhana.org" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="!bg-yellow-300 hover:!bg-white flex items-center justify-center gap-1 py-3 px-6 rounded-lg text-black font-semibold transition-all duration-300 w-fit cursor-pointer z-50 relative pointer-events-auto"
+  onTouchStart={(e) => {
+    // e.preventDefault() stops double-triggering behavior on hybrid touch devices
+    e.preventDefault();
+    window.open("https://tantrasadhana.org", "_blank", "noopener,noreferrer");
+  }}
+>
+  <TiLocationArrow />
+  <span>Explore our foundational research archieve in Tantrasadhana.org</span>
+</a>
+
         </div>
       </div>
 
