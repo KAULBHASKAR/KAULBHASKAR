@@ -41,8 +41,12 @@ export default defineConfig({
             if (id.includes('react-icons') || id.includes('/esm/')) {
               return 'vendor-icons-engine';
             }
+             // 4. TARGET FIX: Catch Esprima explicitly and isolate it into its own async chunk
+             if (id.includes('esprima')) {
+               return 'vendor-esprima-parser';
+            }
 
-            // 4. Safely parse out the distinct package name string 
+            // 5. Safely parse out the distinct package name string 
             const parts = id.toString().split('node_modules/');
             const packagePath = parts[parts.length - 1];
             const packageName = packagePath.split('/')[0]; // Extract the first folder directory string
