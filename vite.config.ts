@@ -22,6 +22,7 @@ export default defineConfig({
   build: {
     cssCodeSplit: true,
     target: 'esnext', // Optimization: Allows efficient tree-shaking for modern devices
+    modulePreload: false, // 💡 FIX: Prevents Vite from forcing async chunks into the initial load
     chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
