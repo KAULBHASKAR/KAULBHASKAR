@@ -21,23 +21,29 @@ export default defineConfig({
   ],
   build: {
     cssCodeSplit: true,
-    chunkSizeWarningLimit: 800, // Slightly increased due to unified vendor chunks
+    target: 'esnext', // Optimization: Allows efficient tree-shaking for modern devices
+    chunkSizeWarningLimit: 500, // Reduced back down to standard to monitor leaks
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Isolate core react framework so it caches permanently
+            // 1. Isolate immutable core framework items
             if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router')) {
               return 'vendor-core';
             }
             
-            // Keep your heavy dynamic vendors categorized cleanly
+            // 2. Heavy components that must remain isolated to their respective pages
             if (id.includes('gsap')) return 'vendor-gsap';
             if (id.includes('react-big-calendar')) return 'vendor-calendar';
             if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
             
-            // Group all other remaining small utilities together to prevent chain depth
-            return 'vendor-utils';
+            // 3. Fix: Instead of generic catch-all grouping, break down by specific package name
+            // This isolates every independent third-party dependency into its own async chunk file.
+            const parts = id.toString().split('node_modules/');
+            const packageName = parts[parts.length - 1].split('/')[0];
+            
+            // Exclude scoped packages prefix if necessary (e.g., @radix-ui/react-slot -> radix-ui)
+            return `vendor-${packageName.replace('@', '')}`;
           }
         },
       },
