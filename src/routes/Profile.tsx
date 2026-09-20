@@ -102,7 +102,7 @@ const Profile: React.FC = () => {
             </div>
             {/* Added: Lineage Graphic below Guru Designation */}
             <img 
-              src="/img/GURU.webp" 
+              src="/img/MY-GURU.webp" 
               alt="Lineage Guru Portrait Illustration" 
               className="mt-6 w-full h-48 object-contain rounded shadow-sm border border-stone-100 bg-stone-50" 
             />
