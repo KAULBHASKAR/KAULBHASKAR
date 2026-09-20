@@ -54,6 +54,7 @@ const Services: React.FC = () => {
         title="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR"
         description="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance."
         canonical="https://www.kaulbhaskar.com/services"
+        keywords="Maha Viprita Pratyangira, Lalita Sahastranama Archanam, Shulini Durga, Khadaga Ravana, Shat Chandi Yagyan, Mahavidya Homam"
         breadcrumbs={[
           { name: "Home", url: "https://www.kaulbhaskar.com" },
           { name: "Services", url: "https://www.kaulbhaskar.com/services" },
