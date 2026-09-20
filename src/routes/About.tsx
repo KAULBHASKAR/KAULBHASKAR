@@ -134,7 +134,7 @@ const About: React.FC = () => {
           {/* ✅ Responsive Call Action Button Placed Cleanly Below/Beside Bio Text */}
           <div className="mt-6 flex justify-start">
             <a 
-              href="/prrofile"
+              href="/profile"
               className="inline-flex items-center gap-2 bg-black hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-md font-bold transition-transform active:scale-95 shadow-md"
             >
               Know More <TiLocationArrow className="text-lg" aria-hidden="true" />
