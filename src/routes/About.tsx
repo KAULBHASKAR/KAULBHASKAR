@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import LatestPost from "../components/LatestPost";
+import { TiLocationArrow } from "react-icons/ti";
 import SEO from "../components/SEO";
 
 // ✅ Lazy load CalendarComponent
@@ -128,9 +129,17 @@ const About: React.FC = () => {
             the lineage of Sri <strong>Matsyendra Nath</strong> (also known as Machendra Nath) ji, a legend of Naths and one of{" "} <strong>84 Maha Siddhas</strong>. A direct disciple of esteemed KAULA
             of Prayag, Sri <strong>KULBHUSHANANAND NATH</strong>, Guru Ji is basically an Urdhvamanayee Upasaka of MAHATRIPURSUNDARI. Sri Kaulbhaskar Ji, an expert of <strong>KAULA MARGA</strong>, has spent
             more than 30 years painstakingly perfecting his practice of SRI VIDYA UPASANA of highly mysterious{" "} <strong>DAKSHINAMURTI SAMPRADAYA</strong>.
-            <a href="/profile" className="text-red-500 hover:text-black font-semibold ml-4 inline-flex items-center">
-            KNOW MORE <span className="ml-1">→</span> </a>
+          
           </p>
+          {/* ✅ Responsive Call Action Button Placed Cleanly Below/Beside Bio Text */}
+          <div className="mt-6 flex justify-start">
+            <a 
+              href="/prrofile"
+              className="inline-flex items-center gap-2 bg-black hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-md font-bold transition-transform active:scale-95 shadow-md"
+            >
+              Know More <TiLocationArrow className="text-lg" aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </section>
             
