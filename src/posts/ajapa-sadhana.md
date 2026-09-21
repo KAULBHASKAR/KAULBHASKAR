@@ -3,6 +3,7 @@ title: "तन्त्र कीं दृष्टि में अजपा-�
 featuredImage: "/blog/ajapa.webp"
 authorName: "KAULBHASKAR GURU JI"
 authorBio: "A SRIVIDYA UPASKA"
+keywords: "Ajapa Sadhana"
 authorAvatar: "/img/KAULBHASKAR.jpg"
 excerpt: "अजपा जप- एक संक्षिप्त विवेचन"
 date: "2022-09-23"
