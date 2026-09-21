@@ -3,6 +3,7 @@ title: "श्रीमद् आपदुद्धारक-बटुक-भै
 featuredImage: "/services/Shatchandi.webp"
 authorName: "KAULBHASKAR GURU JI"
 authorBio: "A SRIVIDYA UPASKA"
+keywords: "Samputita Batuka Bhairva Stotram"
 authorAvatar: "/img/KAULBHASKAR.jpg"
 excerpt: "सम्पूर्ण कामनाओं की यथाशीघ्र सिद्धि के लिए मैथिलों में प्रसिद्ध श्रीमद् आपदुद्धारक-बटुक-भैरव-स्तोत्र घटित चण्डी पाठ"
 date: "2022-10-14"
