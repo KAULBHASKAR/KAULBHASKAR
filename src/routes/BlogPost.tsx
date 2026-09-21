@@ -7,7 +7,7 @@ import CopyProtectedArticle from "../components/CopyProtectedArticle";
 interface PostFrontMatter {
   title: string;
   excerpt?: string;
-  keywords?: string; // ✅ Parsed safely from Markdown frontmatter
+  keywords?: string;
   featuredImage?: string;
   authorName: string;
   authorAvatar: string;
@@ -43,24 +43,19 @@ export default function BlogPost() {
   const postData = data as PostFrontMatter;
   const isProtected = !!postData.password;
 
-  // 📝 Fallback definition string 
-  const defaultKeywords = "Tantra wisdom, Sri Vidya sadhana, Vedic Astrology, Kaulbhaskar";
-  const currentKeywords = postData.keywords || defaultKeywords;
-
-  // ✅ FIXED: Corrected string template interpolation syntax bug (`${slug}`)
+  // ✅ Fixed string interpolation bug & matched routing structure
   const canonicalUrl = `https://kaulbhaskar.com{slug}`;
   const fallbackImage = "https://kaulbhaskar.com";
   const ogImageUrl = postData.featuredImage 
     ? (postData.featuredImage.startsWith('http') ? postData.featuredImage : `https://www.kaulbhaskar.com${postData.featuredImage}`)
     : fallbackImage;
 
-  // ✅ Schema.org updates matching your structural data requirements
+  // ✅ Structured JSON-LD BlogPosting Schema Object
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": postData.title,
     "description": postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji.",
-    "keywords": currentKeywords, // ✅ Added keywords to structured data collection arrays
     "image": ogImageUrl,
     "datePublished": postData.date ? new Date(postData.date).toISOString().split('T')[0] : "2026-08-28",
     "url": canonicalUrl,
@@ -97,7 +92,6 @@ export default function BlogPost() {
         {/* React 19 native hoisting manages these tags automatically without Helmet wrappers */}
         <title>Protected Content | KAULBHASKAR Blog</title>
         <meta name="description" content="This spiritual sadhana layout framework requires authorized password entry credentials to view context details safely." />
-        <meta name="keywords" content="protected sadhana, restricted spiritual texts" /> {/* ✅ Optional protected view keywords */}
         <meta name="robots" content="noindex, follow" />
 
         <div className="max-w-md w-full p-8 border rounded-2xl bg-white shadow-2xl text-center">
@@ -137,7 +131,7 @@ export default function BlogPost() {
       {/* ✅ Native React 19 Document Metadata Hoisting tags */}
       <title>{`${postData.title} | Sri Kaulbhaskar Blog`}</title>
       <meta name="description" content={postData.excerpt || "Read scriptural wisdom entries on classical Tantra, Sri Vidya frameworks, and Vedic Astrology calculation methods by Kaulbhaskar Guru Ji."} />
-      <meta name="keywords" content={currentKeywords} /> {/* ✅ Injected from frontmatter variables */}
+      <meta name="keywords" content={postData.keywords || "Tantra wisdom, Sri Vidya sadhana"} />
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Open Graph / Facebook */}
