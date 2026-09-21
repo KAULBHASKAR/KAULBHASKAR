@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import SliderComponent from "react-slick";
 import type { Settings } from "react-slick";
 
@@ -15,35 +15,33 @@ interface MudraImage {
 }
 
 const Mudra: React.FC = () => {
-  // 1. Dynamic slides state to force correct mobile view
-  const [slidesToShow, setSlidesToShow] = useState(1);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width >= 1024) {
-        setSlidesToShow(3); // Desktop
-      } else if (width >= 640) {
-        setSlidesToShow(2); // Tablet
-      } else {
-        setSlidesToShow(1); // Mobile
-      }
-    };
-
-    // Initialize on mount
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+  // ✅ FIX 1: Native responsive properties eliminate the dynamic window resize event loop
   const settings: Settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: slidesToShow, // Use our dynamic state
+    slidesToShow: 3, // Default for Desktop
     slidesToScroll: 1,
     autoplay: true,
-    arrows: false, // Often helps mobile stability
+    arrows: false,
+    
+    // ✅ FIX 2: Renders only visible image DOM elements, dropping your maximum child nodes count
+    lazyLoad: "ondemand" as const, 
+    
+    responsive: [
+      {
+        breakpoint: 1024, // Tablet
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 640, // Mobile
+        settings: {
+          slidesToShow: 1,
+        }
+      }
+    ]
   };
 
   const images: MudraImage[] = [
@@ -67,35 +65,39 @@ const Mudra: React.FC = () => {
     { src: "/mudra/yoni.png", title: "Yoni Mudra", description: "Gesture of feminine energy and creation." }
   ];
 
-  return (
-    <div className="text-center my-10">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h2 className="special-font hero-heading bg-linear-to-r from-yellow-500 via-red-600 to-indigo-500 bg-clip-text text-transparent text-lg">
-          m<b>ud</b>r<b>a</b>s
-        </h2>
-        
-        {/* Container with min-w-0 helps prevent 'exponential width' bugs */}
-        <div className="px-4 py-10 bg-black mt-6 w-full max-w-full overflow-hidden min-w-0">
-          <Slider {...settings} key={slidesToShow}> 
-            {/* Added 'key' to force re-render when slides change */}
-            {images.map((item, i) => (
-              <div key={i} className="text-white outline-none w-full px-2">
-                <div className="flex flex-col items-center">
-                  <img 
-                    src={item.src} 
-                    alt={item.title} 
-                    className="h-72 w-auto object-contain" 
-                  />
-                  <h3 className="mt-4 text-lg font-bold">{item.title}</h3>
-                  <p className="text-sm px-2 text-gray-400">{item.description}</p>
-                </div>
+ return (
+  <div className="text-center my-10">
+    <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+      <h2 className="special-font hero-heading bg-linear-to-r from-yellow-500 via-red-600 to-indigo-500 bg-clip-text text-transparent text-lg">
+        m<b>ud</b>r<b>a</b>s
+      </h2>
+      
+      <div className="px-4 py-10 bg-black mt-6 w-full max-w-full overflow-hidden min-w-0">
+        <Slider {...settings}> 
+          {images.map((item, i) => (
+            <div key={i} className="text-white outline-none w-full px-2">
+              <div className="flex flex-col items-center">
+                
+                {/* 👇 THIS SINGLE TAG HANDLES ALL IMAGES DYNAMICALLY WITH YOUR TARGET VALUES */}
+                <img 
+                  src={item.src} 
+                  alt={item.title} 
+                  width="100"
+                  height="100"
+                  className="h-72 w-auto object-contain" 
+                />
+                
+                <h3 className="mt-4 text-lg font-bold">{item.title}</h3>
+                <p className="text-sm px-2 text-gray-400">{item.description}</p>
               </div>
-            ))}
-          </Slider>
-        </div>
+            </div>
+          ))}
+        </Slider>
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Mudra;
