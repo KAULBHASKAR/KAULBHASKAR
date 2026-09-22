@@ -1,0 +1,22 @@
+{
+  "$schema": "https://githubusercontent.com",
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "KAULBHASKAR Metaphysical Advisory",
+    "identifier": "kaulbhaskar.com"
+  },
+  "entries": [
+    {
+      "identifier": "urn:ai:kaulbhaskar.com:apps:metaphysical-profile",
+      "displayName": "Kaulbhaskar Guru Profile & Lineage Platform",
+      "type": "application/json",
+      "url": "https://kaulbhaskar.com",
+      "description": "A web application delivering structured profile information, ancient spiritual lineage maps, and precision metaphysical consulting advisory interfaces.",
+      "representativeQueries": [
+        "Find the spiritual lineage and background of Kaulbhaskar",
+        "Access the Tantric and astrological advisory platform profile",
+        "View the metaphysical advisory portfolio"
+      ]
+    }
+  ]
+}
