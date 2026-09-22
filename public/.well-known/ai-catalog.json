@@ -7,9 +7,9 @@
   },
   "entries": [
     {
-      "identifier": "urn:ai:kaulbhaskar.com:apps:metaphysical-profile",
+      "identifier": "urn:air:kaulbhaskar.com:apps:metaphysical-profile",
       "displayName": "Kaulbhaskar Guru Profile & Lineage Platform",
-      "type": "application/json",
+      "type": "application/ai-catalog+json",
       "url": "https://kaulbhaskar.com",
       "description": "A web application delivering structured profile information, ancient spiritual lineage maps, and precision metaphysical consulting advisory interfaces.",
       "representativeQueries": [
