@@ -142,7 +142,7 @@ const Hero: React.FC = () => {
 
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-20 bg-linear-to-r from-pink-500 via-green-400 to-red-500 bg-clip-text text-transparent">
           Bhaskar
-          <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
+          <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="false">
             BH<b>as</b>k<b>a</b>r
           </span>
         </h1>
