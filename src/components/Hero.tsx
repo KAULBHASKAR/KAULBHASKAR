@@ -128,7 +128,7 @@ const Hero: React.FC = () => {
       )}
       
       {/* LAYER 1: Animated Background (Contains the clipPath elements) */}
-      <div id="video-frame" className="absolute top-0 left-0 z-10 h-screen w-screen  rounded-lg bg-blue-75">
+      <div id="video-frame" className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75">
         <div className="mask-clip-path absolute-center absolute z-20 size-64 cursor-pointer overflow-hidden rounded-lg">
           <div onClick={handleMiniVideoClick} className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100">
             <video ref={currentVideoRef} src={getVideoSrc(upcomingVideoIndex)} loop muted playsInline id="current-video" className="size-64 origin-center scale-150 object-cover object-center" />
@@ -150,7 +150,7 @@ const Hero: React.FC = () => {
 
       {/* LAYER 2: Completely independent Interactive Content Layer */}
       {/* Changing pointer-events configuration guarantees mobile taps hit the child link natively */}
-      <div className="absolute left-0 top-0 z-30 size-full pointer-events-none">
+      <div className="absolute left-0 top-0 z-30 size-full overflow-hidden rounded-lg bg-blue-75 ">
         <div className="mt-24 px-5 sm:px-10 max-w-xl pointer-events-auto">
           <h2 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative">
             Kaul
