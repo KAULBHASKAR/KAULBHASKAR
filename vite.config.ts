@@ -21,9 +21,9 @@ export default defineConfig({
   ],
   build: {
     cssCodeSplit: true,
-    target: 'esnext', // Optimization: Allows efficient tree-shaking for modern devices
-    modulePreload: false, // 💡 FIX: Prevents Vite from forcing async chunks into the initial load
-    chunkSizeWarningLimit: 500,
+    target: 'esnext',
+    modulePreload: true, // Prevents sequential evaluation waterfalls
+    chunkSizeWarningLimit: 800, // Balanced threshold for animation/heavy ecosystems
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -33,27 +33,17 @@ export default defineConfig({
               return 'vendor-core';
             }
             
-            // 2. Heavy components that must remain isolated to their respective pages
+            // 2. Isolate heavy operational blockers so they stay out of the core pipeline
             if (id.includes('gsap')) return 'vendor-gsap';
             if (id.includes('react-big-calendar')) return 'vendor-calendar';
             if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
+            if (id.includes('esprima')) return 'vendor-esprima';
             
-            // 3. New Fix: Intercept deep React Icon ESM files to prevent the 'vendor-es...' block
-            if (id.includes('react-icons') || id.includes('/esm/')) {
-              return 'vendor-icons-engine';
-            }
-             // 4. TARGET FIX: Catch Esprima explicitly and isolate it into its own async chunk
-             if (id.includes('esprima')) {
-               return 'vendor-esprima-parser';
-            }
+            // Fixed Icon matching rule to avoid false positives with generic /esm/ paths
+            if (id.includes('react-icons')) return 'vendor-icons';
 
-            // 5. Safely parse out the distinct package name string 
-            const parts = id.toString().split('node_modules/');
-            const packagePath = parts[parts.length - 1];
-            const packageName = packagePath.split('/')[0]; // Extract the first folder directory string
-            
-            // Return clean chunk names without the '@' symbol
-            return `vendor-${packageName.replace('@', '')}`;
+            // 3. Group remaining minor dependencies together to minimize main thread parsing loops
+            return 'vendor-shared';
           }
         },
       },
