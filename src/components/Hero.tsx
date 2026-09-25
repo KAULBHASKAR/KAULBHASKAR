@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-
+import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
@@ -20,9 +20,7 @@ const Hero: React.FC = () => {
   const totalVideo = 4;
   const upcomingVideoIndex = (currentIndex % totalVideo) + 1;
 
-  const handleMiniVideoClick = (e: React.MouseEvent | React.TouchEvent) => {
-    // Prevent accidental double firing on hybrid devices
-    e.stopPropagation();
+  const handleMiniVideoClick = () => {
     setHasClicked(true);
     setCurrentIndex(upcomingVideoIndex);
   };
@@ -162,7 +160,7 @@ const Hero: React.FC = () => {
     <div className="relative h-screen w-screen overflow-x-hidden bg-black select-none">
       {/* Loading Overlay */}
       {isLoading && (
-        <div className="flex items-center justify-center absolute z-[100] h-screen w-screen bg-violet-50">
+        <div className="flex items-center justify-center absolute尊 z-[100] h-screen w-screen bg-violet-50">
           <div className="three-body flex space-x-2">
             <div className="three-body__dot w-3 h-3 bg-indigo-600 rounded-full animate-bounce [animation-delay:-0.3s]" />
             <div className="three-body__dot w-3 h-3 bg-indigo-600 rounded-full animate-bounce [animation-delay:-0.15s]" />
@@ -177,12 +175,10 @@ const Hero: React.FC = () => {
         className="absolute top-0 left-0 z-20 h-screen w-screen overflow-hidden bg-blue-75"
       >
         {/* Interactive Miniature Core Video Switcher Container */}
-        {/* FIX: Increased default mobile visibility and added touch capabilities */}
-        <div className="mask-clip-path absolute-center absolute z-50 size-36 sm:size-64 cursor-pointer overflow-hidden rounded-lg border border-white/20 shadow-2xl">
+        <div className="mask-clip-path absolute-center absolute z-50 size-36 sm:size-64 cursor-pointer overflow-hidden rounded-lg">
           <div 
-            onClick={handleMiniVideoClick}
-            onTouchEnd={handleMiniVideoClick}
-            className="origin-center scale-100 opacity-100 md:scale-50 md:opacity-0 transition-all duration-500 ease-in md:hover:scale-100 md:hover:opacity-100 size-full"
+            onClick={handleMiniVideoClick} 
+            className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100 size-full"
           >
             <video 
               ref={currentVideoRef} 
@@ -243,26 +239,35 @@ const Hero: React.FC = () => {
               K<b>a</b>u<b>l</b>
             </span>
           </h2>
-          <p className="mb-5 max-w-72 font-robert-regular text-white">
-              त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
-              न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
-              न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
-              न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
-              <br />
-              We can help you on an adventure around the world of Tantra in just
-              a simple way.
-            </p>
-            <Button
-              id="kaulbhaskar-guru ji"
-              title="Visit my other WEBSITE"
-              leftIcon={<TiLocationArrow />}
-              containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
-              onClick={() =>
-                window.open("https://www.tantrasadhana.org", "_blank")
-              }
-            />
+
+          <p className="mt-2 mb-6 font-robert-regular text-xs sm:text-sm text-white leading-relaxed select-text">
+            त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
+            न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
+            न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
+            न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
+            <br />
+            <span className="block text-gray-200 antialiased font-medium opacity-95">
+              I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
+            </span>
+          </p>
+          
+          <a 
+            id="kaulbhaskar-guruji"
+            href="https://tantrasadhana.org" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="bg-yellow-300 hover:bg-white text-black font-semibold text-xs sm:text-sm transition-all duration-300 w-full sm:w-fit py-3 px-5 rounded-lg flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-95"
+          >
+            <TiLocationArrow className="text-base flex-shrink-0" />
+            <span>Explore our research archive at Tantrasadhana.org</span>
+          </a>
         </div>
       </div>
+
+      {/* Ambient Text Baseline Shadow Frame */}
+      <h1 className="special-font hero-heading text-4xl sm:text-7xl md:text-9xl absolute bottom-4 right-4 sm:bottom-5 sm:right-5 text-green-400 z-10 select-none pointer-events-none">
+        BH<b>as</b>k<b>a</b>r
+      </h1>
     </div>
   );
 };
