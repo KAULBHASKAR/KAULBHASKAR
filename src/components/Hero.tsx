@@ -67,7 +67,7 @@ const Hero: React.FC = () => {
     }
   }, [loadedVideos]);
 
-  // Video Transition Animation
+  // Video Transition Animation Engine
   useGSAP(
     () => {
       if (hasClicked && nextVideoRef.current) {
@@ -94,17 +94,14 @@ const Hero: React.FC = () => {
     { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
-  // Main Intro + Scroll Animation
+  // Main Intro + Scroll Animation (With Text-to-White Transform Engine)
   useGSAP(() => {
     gsap.set("#video-frame", {
       clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
       borderRadius: "0 0 40% 10%",
     });
 
-    gsap.from("#video-frame", {
-      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      borderRadius: "0 0 0 0",
-      ease: "power1.inOut",
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: "#video-frame",
         start: "center center",
@@ -112,14 +109,30 @@ const Hero: React.FC = () => {
         scrub: true,
       },
     });
+
+    // 1. Morph the clip path layout geometry frame
+    tl.from("#video-frame", {
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      borderRadius: "0 0 0 0",
+      ease: "power1.inOut",
+    }, 0);
+
+    // 2. Animate all text classes cleanly to pure white on page scroll
+    tl.to(".scroll-text-target", {
+      color: "#ffffff",
+      backgroundImage: "none",
+      webkitBackgroundClip: "unset",
+      textFillColor: "#ffffff",
+      ease: "power1.inOut",
+    }, 0);
   }, []);
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
 
   return (
-    <div className="relative h-screen w-screen overflow-x-hidden bg-black">
+    <div className="relative h-screen w-screen overflow-x-hidden bg-black select-none z-0">
       {isLoading && (
-        <div className="flex-center absolute z-100 h-screen w-screen bg-violet-50">
+        <div className="flex items-center justify-center absolute z-100 h-screen w-screen bg-violet-50">
           <div className="three-body">
             <div className="three-body__dot" />
             <div className="three-body__dot" />
@@ -128,11 +141,13 @@ const Hero: React.FC = () => {
         </div>
       )}
 
+      {/* LAYER 1: Background Video Framework Only */}
+      {/* FIXED: Changed from relative z-10 to absolute top-0 left-0 z-10 */}
       <div
         id="video-frame"
-        className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
+        className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
       >
-        <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
+        <div className="mask-clip-path absolute-center absolute z-20 size-64 cursor-pointer overflow-hidden rounded-lg">
           <div
             onClick={handleMiniVideoClick}
             className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
@@ -156,7 +171,7 @@ const Hero: React.FC = () => {
           muted
           playsInline
           id="next-video"
-          className="absolute-center invisible absolute z-20 size-64 object-cover"
+          className="absolute-center invisible absolute z-15 size-64 object-cover"
         />
 
         {isClient && (
@@ -176,38 +191,48 @@ const Hero: React.FC = () => {
           />
         )}
 
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
+        {/* Foreground Tracking Headline inside the video context wrapper */}
+        <h1 className="scroll-text-target special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
           BH<b>as</b>k<b>a</b>r
         </h1>
+      </div>
 
-        <div className="absolute left-0 top-0 z-40 size-full ">
-          <div className="mt-24 px-5 sm:px-10">
-            <h1 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
+      {/* LAYER 2: Master Floating Interactive Typography Overlay Overlay Context */}
+      {/* FIXED: Placed COMPLETELY OUTSIDE the video container at z-30 stack layers */}
+      <div className="absolute left-0 top-0 z-30 size-full overflow-y-auto md:overflow-hidden bg-transparent pointer-events-none flex flex-col justify-start">
+        <div className="mt-20 sm:mt-24 px-5 sm:px-10 max-w-sm sm:max-w-xl pointer-events-auto pb-10">
+          <h1 className="scroll-text-target special-font hero-heading text-5xl sm:text-8xl bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative">
+            Kaul
+            <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
               K<b>a</b>u<b>l</b>
-            </h1>
-            <p className="mb-5 max-w-72 font-robert-regular text-white">
-              त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
-              न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
-              न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
-              न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
-              <br />
-              We can help you on an adventure around the world of Tantra in just
-              a simple way.
-            </p>
-            <Button
-              id="kaulbhaskar-guru ji"
-              title="Explore our research archive at Tantrasadhana.org"
-              leftIcon={<TiLocationArrow />}
-              containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
-              onClick={() =>
-                window.open("https://www.tantrasadhana.org", "_blank")
-              }
-            />
-          </div>
+            </span>
+          </h1>
+
+          <p className="scroll-text-target mt-2 mb-6 font-robert-regular text-xs sm:text-sm text-white leading-relaxed select-text">
+            त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
+            न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
+            न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
+            न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
+            <br />
+            <span className="block text-gray-200 antialiased font-medium opacity-95">
+              I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
+            </span>
+          </p>
+          
+          <Button
+            id="kaulbhaskar-guruji"
+            title="Explore our research archive at Tantrasadhana.org"
+            leftIcon={<TiLocationArrow />}
+            containerClass="!bg-yellow-300 hover:!bg-white text-black font-semibold text-xs sm:text-sm transition-all duration-300 w-full sm:w-fit py-3 px-5 rounded-lg flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-95"
+            onClick={() =>
+              window.open("https://tantrasadhana.org", "_blank")
+            }
+          />
         </div>
       </div>
 
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-pink-400">
+      {/* Root Layer Underlay Shadow Text Layer */}
+      <h1 className="scroll-text-target special-font hero-heading absolute bottom-5 right-5 text-pink-400 z-20 pointer-events-none">
         BH<b>as</b>k<b>a</b>r
       </h1>
     </div>
