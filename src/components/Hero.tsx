@@ -243,6 +243,24 @@ const Hero: React.FC = () => {
               K<b>a</b>u<b>l</b>
             </span>
           </h2>
+          <p className="mb-5 max-w-72 font-robert-regular text-white">
+              त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
+              न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
+              न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
+              न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
+              <br />
+              We can help you on an adventure around the world of Tantra in just
+              a simple way.
+            </p>
+            <Button
+              id="kaulbhaskar-guru ji"
+              title="Visit my other WEBSITE"
+              leftIcon={<TiLocationArrow />}
+              containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
+              onClick={() =>
+                window.open("https://www.tantrasadhana.org", "_blank")
+              }
+            />
         </div>
       </div>
     </div>
