@@ -196,7 +196,7 @@ const Hero: React.FC = () => {
             </p>
             <Button
               id="kaulbhaskar-guru ji"
-              title="Visit my other WEBSITE"
+              title="Explore our research archive at Tantrasadhana.org"
               leftIcon={<TiLocationArrow />}
               containerClass="!bg-yellow-300 hover:!bg-white flex-center gap-1"
               onClick={() =>
