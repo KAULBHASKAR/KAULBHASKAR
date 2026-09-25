@@ -116,7 +116,7 @@ const Hero: React.FC = () => {
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
 
   return (
-    <div className="relative h-screen w-screen overflow-x-hidden bg-black">
+    <div className="relative h-screen w-screen overflow-x-hidden ">
       {isLoading && (
         <div className="flex-center absolute z-100 h-screen w-screen bg-violet-50">
           <div className="three-body">
