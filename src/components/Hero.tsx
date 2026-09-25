@@ -159,7 +159,7 @@ const Hero: React.FC = () => {
             </span>
           </h2>
 
-          <p className="mb-5 max-w-72 font-robert-regular text-linear-to-r from-pink-500 via-green-400 to-red-500">
+          <p className="mb-5 max-w-72 font-robert-regular text-white">
             त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
             न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
             न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
@@ -181,7 +181,7 @@ const Hero: React.FC = () => {
           </a>
         </div>
       </div>
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-white ">
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-linear-to-r from-pink-500 via-green-400 to-red-500 ">
         BH<b>as</b>k<b>a</b>r
       </h1>
     </div>
