@@ -265,7 +265,7 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Ambient Text Baseline Shadow Frame */}
-      <h1 className="special-font hero-heading text-4xl sm:text-7xl md:text-9xl absolute bottom-4 right-4 sm:bottom-5 sm:right-5 text-green-400/20 z-10 select-none pointer-events-none">
+      <h1 className="special-font hero-heading text-4xl sm:text-7xl md:text-9xl absolute bottom-4 right-4 sm:bottom-5 sm:right-5 text-green-400 z-10 select-none pointer-events-none">
         BH<b>as</b>k<b>a</b>r
       </h1>
     </div>
