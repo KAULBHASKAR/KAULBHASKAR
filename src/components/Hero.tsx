@@ -140,7 +140,7 @@ const Hero: React.FC = () => {
           <video ref={bgVideoRef} src={getVideoSrc(currentIndex)} autoPlay loop muted playsInline className="absolute left-0 top-0 size-full object-cover" onLoadedData={handleVideoLoad} onCanPlay={() => { setIsLoading(false); bgVideoRef.current?.play(); }} />
         )}
 
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-20 bg-linear-to-r from-pink-500 via-green-400 to-red-500 bg-clip-text text-transparent absolute">
+        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-20 bg-linear-to-r from-pink-500 via-green-400 to-red-500 bg-clip-text text-transparent">
           Bhaskar
           <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
             BH<b>as</b>k<b>a</b>r
@@ -181,7 +181,7 @@ const Hero: React.FC = () => {
           </a>
         </div>
       </div>
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 ">
         BH<b>as</b>k<b>a</b>r
       </h1>
     </div>
