@@ -94,48 +94,32 @@ const Hero: React.FC = () => {
     { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
-  // Main Intro + Scroll Animation (With White Text Transition Effects)
+  // Main Intro + Scroll Animation
   useGSAP(() => {
     gsap.set("#video-frame", {
       clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
       borderRadius: "0 0 40% 10%",
     });
 
-    // Timeline to handle frame morphing and simultaneous text color transformations
-    const tl = gsap.timeline({
+    gsap.from("#video-frame", {
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      borderRadius: "0 0 0 0",
+      ease: "power1.inOut",
       scrollTrigger: {
         trigger: "#video-frame",
         start: "center center",
         end: "bottom center",
         scrub: true,
-      }
+      },
     });
-
-    // 1. Morph the main video shape framework
-    tl.from("#video-frame", {
-      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      borderRadius: "0 0 0 0",
-      ease: "power1.inOut",
-    }, 0);
-
-    // 2. Animate all headlines and paragraphs to pure white text on scroll
-    tl.to(".scroll-text-target", {
-      color: "#ffffff",
-      backgroundImage: "none", // Removes linear gradients to apply solid white color
-      webkitBackgroundClip: "unset",
-      textFillColor: "#ffffff",
-      ease: "power1.inOut",
-    }, 0);
-
   }, []);
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
 
   return (
-    // FIX: Set the outermost container background explicitly to solid black
-    <div className="relative h-screen w-screen overflow-x-hidden bg-black select-none">
+    <div className="relative h-screen w-screen overflow-x-hidden bg-black">
       {isLoading && (
-        <div className="flex items-center justify-center absolute z-100 h-screen w-screen bg-violet-50">
+        <div className="flex-center absolute z-100 h-screen w-screen bg-violet-50">
           <div className="three-body">
             <div className="three-body__dot" />
             <div className="three-body__dot" />
@@ -192,17 +176,16 @@ const Hero: React.FC = () => {
           />
         )}
 
-        {/* Added 'scroll-text-target' to dynamic text layers */}
-        <h1 className="scroll-text-target special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
+        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent">
           BH<b>as</b>k<b>a</b>r
         </h1>
 
         <div className="absolute left-0 top-0 z-40 size-full ">
           <div className="mt-24 px-5 sm:px-10">
-            <h1 className="scroll-text-target special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
+            <h1 className="special-font hero-heading bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent">
               K<b>a</b>u<b>l</b>
             </h1>
-            <p className="scroll-text-target mb-5 max-w-72 font-robert-regular text-white">
+            <p className="mb-5 max-w-72 font-robert-regular text-white">
               त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
               न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
               न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
@@ -224,8 +207,7 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      {/* Added 'scroll-text-target' to the background shadow text element */}
-      <h1 className="scroll-text-target special-font hero-heading absolute bottom-5 right-5 text-white">
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-pink-400">
         BH<b>as</b>k<b>a</b>r
       </h1>
     </div>
