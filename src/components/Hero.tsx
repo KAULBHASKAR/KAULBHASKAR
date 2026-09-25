@@ -128,7 +128,7 @@ const Hero: React.FC = () => {
       )}
       
       {/* LAYER 1: Animated Background (Contains the clipPath elements) */}
-      <div id="video-frame" className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg ">
+      <div id="video-frame" className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75">
         <div className="mask-clip-path absolute-center absolute z-20 size-64 cursor-pointer overflow-hidden rounded-lg">
           <div onClick={handleMiniVideoClick} className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100">
             <video ref={currentVideoRef} src={getVideoSrc(upcomingVideoIndex)} loop muted playsInline id="current-video" className="size-64 origin-center scale-150 object-cover object-center" />
@@ -140,7 +140,7 @@ const Hero: React.FC = () => {
           <video ref={bgVideoRef} src={getVideoSrc(currentIndex)} autoPlay loop muted playsInline className="absolute left-0 top-0 size-full object-cover" onLoadedData={handleVideoLoad} onCanPlay={() => { setIsLoading(false); bgVideoRef.current?.play(); }} />
         )}
 
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-20 bg-linear-to-r from-pink-500 via-green-400 to-red-500 bg-clip-text text-transparent">
+        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-20 bg-linear-to-r from-pink-500 via-green-400 to-red-500 bg-clip-text text-transparent relative">
           Bhaskar
           <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
             BH<b>as</b>k<b>a</b>r
