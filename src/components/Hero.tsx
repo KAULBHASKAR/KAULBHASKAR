@@ -181,7 +181,7 @@ const Hero: React.FC = () => {
           </a>
         </div>
       </div>
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-pink-500 ">
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-green-400 ">
         BH<b>as</b>k<b>a</b>r
       </h1>
     </div>
