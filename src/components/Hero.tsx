@@ -116,7 +116,7 @@ const Hero: React.FC = () => {
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
 
   return (
-    <div className="relative h-screen w-screen overflow-x-hidden ">
+    <div className="relative h-screen w-screen overflow-x-hidden bg-black ">
       {isLoading && (
         <div className="flex-center absolute z-100 h-screen w-screen bg-violet-50">
           <div className="three-body">
@@ -128,7 +128,7 @@ const Hero: React.FC = () => {
       )}
       
       {/* LAYER 1: Animated Background (Contains the clipPath elements) */}
-      <div id="video-frame" className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75">
+      <div id="video-frame" className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg ">
         <div className="mask-clip-path absolute-center absolute z-20 size-64 cursor-pointer overflow-hidden rounded-lg">
           <div onClick={handleMiniVideoClick} className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100">
             <video ref={currentVideoRef} src={getVideoSrc(upcomingVideoIndex)} loop muted playsInline id="current-video" className="size-64 origin-center scale-150 object-cover object-center" />
