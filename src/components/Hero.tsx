@@ -201,12 +201,12 @@ const Hero: React.FC = () => {
       {/* FIXED: Placed COMPLETELY OUTSIDE the video container at z-30 stack layers */}
       <div className="absolute left-0 top-0 z-30 size-full overflow-y-auto md:overflow-hidden bg-transparent pointer-events-none flex flex-col justify-start">
         <div className="mt-20 sm:mt-24 px-5 sm:px-10 max-w-sm sm:max-w-xl pointer-events-auto pb-10">
-          <h1 className="scroll-text-target special-font hero-heading text-5xl sm:text-8xl bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative">
+          <h2 className="scroll-text-target special-font hero-heading text-5xl sm:text-8xl bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative">
             Kaul
             <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
               K<b>a</b>u<b>l</b>
             </span>
-          </h1>
+          </h2>
 
           <p className="scroll-text-target mt-2 mb-6 font-robert-regular text-xs sm:text-sm text-white leading-relaxed select-text">
             त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
@@ -214,7 +214,7 @@ const Hero: React.FC = () => {
             न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
             न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
             <br />
-            <span className="block text-gray-200 antialiased font-medium opacity-95">
+            <span className="block text-white antialiased font-medium opacity-95">
               I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
             </span>
           </p>
