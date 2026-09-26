@@ -193,12 +193,12 @@ const Hero: React.FC = () => {
       <div className="absolute left-0 top-0 z-30 size-full overflow-y-auto md:overflow-hidden bg-transparent pointer-events-none flex flex-col justify-start">
         <div className="mt-20 sm:mt-24 px-5 sm:px-10 max-w-sm sm:max-w-xl pointer-events-auto pb-10">
           
-          <h1 className="special-font hero-heading text-5xl sm:text-8xl bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative">
+          <h2 className="special-font hero-heading text-5xl sm:text-8xl bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative">
             Kaul
             <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
               K<b>a</b>u<b>l</b>
             </span>
-          </h1>
+          </h2>
 
           <p className="mt-2 mb-6 font-robert-regular text-md sm:text-lg text-white leading-relaxed select-text">
             त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
