@@ -208,7 +208,7 @@ const Hero: React.FC = () => {
             </span>
           </h2>
 
-          <p className="scroll-text-target mt-2 mb-6 font-robert-regular text-xs sm:text-sm text-white leading-relaxed select-text">
+          <p className="scroll-text-target mt-2 mb-6 font-robert-regular text-sm sm:text-md text-white leading-relaxed select-text">
             त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
             न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
             न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
