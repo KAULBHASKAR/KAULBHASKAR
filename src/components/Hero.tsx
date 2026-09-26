@@ -94,7 +94,7 @@ const Hero: React.FC = () => {
     { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
-  // Main Intro + Scroll Animation (With Text-to-White Transform Engine)
+  // Main Intro + Scroll Animation (With Text Colors Untouched)
   useGSAP(() => {
     gsap.set("#video-frame", {
       clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
@@ -110,21 +110,14 @@ const Hero: React.FC = () => {
       },
     });
 
-    // 1. Morph the clip path layout geometry frame
+    // Morph the clip path layout geometry frame smoothly on scroll
     tl.from("#video-frame", {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
       borderRadius: "0 0 0 0",
       ease: "power1.inOut",
     }, 0);
 
-    // 2. Animate all text classes cleanly to pure white on page scroll
-    tl.to(".scroll-text-target", {
-      color: "#ffffff",
-      backgroundImage: "none",
-      webkitBackgroundClip: "unset",
-      textFillColor: "#ffffff",
-      ease: "power1.inOut",
-    }, 0);
+    // FIX: Completely removed the color animation block so your linear gradients remain permanently intact
   }, []);
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
@@ -142,7 +135,6 @@ const Hero: React.FC = () => {
       )}
 
       {/* LAYER 1: Background Video Framework Only */}
-      {/* FIXED: Changed from relative z-10 to absolute top-0 left-0 z-10 */}
       <div
         id="video-frame"
         className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
@@ -191,24 +183,24 @@ const Hero: React.FC = () => {
           />
         )}
 
-        {/* Foreground Tracking Headline inside the video context wrapper */}
-        <h1 className=" special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
+        {/* Foreground Tracking Headline inside the clip mask */}
+        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
           BH<b>as</b>k<b>a</b>r
         </h1>
       </div>
 
-      {/* LAYER 2: Master Floating Interactive Typography Overlay Overlay Context */}
-      {/* FIXED: Placed COMPLETELY OUTSIDE the video container at z-30 stack layers */}
+      {/* LAYER 2: Master Floating Interactive Typography Overlay Context */}
       <div className="absolute left-0 top-0 z-30 size-full overflow-y-auto md:overflow-hidden bg-transparent pointer-events-none flex flex-col justify-start">
         <div className="mt-20 sm:mt-24 px-5 sm:px-10 max-w-sm sm:max-w-xl pointer-events-auto pb-10">
-          <h2 className="special-font hero-heading text-5xl sm:text-8xl bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative">
+          
+          <h1 className="special-font hero-heading text-5xl sm:text-8xl bg-linear-to-r from-red-500 via-green-400 to-pink-500 bg-clip-text text-transparent relative">
             Kaul
             <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
               K<b>a</b>u<b>l</b>
             </span>
-          </h2>
+          </h1>
 
-          <p className="scroll-text-target mt-2 mb-6 font-robert-regular text-md sm:text-lg text-white leading-relaxed select-text">
+          <p className="mt-2 mb-6 font-robert-regular text-md sm:text-lg text-white leading-relaxed select-text">
             त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
             न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
             न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
@@ -224,15 +216,13 @@ const Hero: React.FC = () => {
             title="Explore our research archive at Tantrasadhana.org"
             leftIcon={<TiLocationArrow />}
             containerClass="!bg-yellow-300 hover:!bg-white text-black font-semibold text-md sm:text-lg transition-all duration-300 w-full sm:w-fit py-3 px-5 rounded-lg flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-95"
-            onClick={() =>
-              window.open("https://tantrasadhana.org", "_blank")
-            }
+            onClick={() => window.open("https://tantrasadhana.org", "_blank")}
           />
         </div>
       </div>
 
       {/* Root Layer Underlay Shadow Text Layer */}
-      <h1 className="scroll-text-target special-font hero-heading absolute bottom-5 right-5 text-pink-400 z-20 pointer-events-none">
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent z-20 pointer-events-none">
         BH<b>as</b>k<b>a</b>r
       </h1>
     </div>
