@@ -208,13 +208,13 @@ const Hero: React.FC = () => {
             </span>
           </h2>
 
-          <p className="scroll-text-target mt-2 mb-6 font-robert-regular text-sm sm:text-md text-white leading-relaxed select-text">
+          <p className="scroll-text-target mt-2 mb-6 font-robert-regular text-md sm:text-lg text-white leading-relaxed select-text">
             त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
             न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
             न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
             न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
             <br />
-            <span className="block text-white antialiased font-medium opacity-95">
+            <span className="block text-white antialiased font-large opacity-95">
               I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
             </span>
           </p>
@@ -223,7 +223,7 @@ const Hero: React.FC = () => {
             id="kaulbhaskar-guruji"
             title="Explore our research archive at Tantrasadhana.org"
             leftIcon={<TiLocationArrow />}
-            containerClass="!bg-yellow-300 hover:!bg-white text-black font-semibold text-xs sm:text-sm transition-all duration-300 w-full sm:w-fit py-3 px-5 rounded-lg flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-95"
+            containerClass="!bg-yellow-300 hover:!bg-white text-black font-semibold text-md sm:text-lg transition-all duration-300 w-full sm:w-fit py-3 px-5 rounded-lg flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-95"
             onClick={() =>
               window.open("https://tantrasadhana.org", "_blank")
             }
