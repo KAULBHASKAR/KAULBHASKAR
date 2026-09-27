@@ -24,21 +24,13 @@ export default defineConfig({
     target: 'esnext',
     chunkSizeWarningLimit: 800,
     
-    // ✅ FIX: Using the correct, type-safe function signature for modulePreload.
-    // By returning an empty array for everything except the base entry chunk,
-    // we stop vendor-calendar and vendor-esprima from preloading on initial mobile load.
-    modulePreload: {
-      resolveDependencies(_, deps) {
-        // Only allow dependencies if they belong to the critical runtime path
-        return deps.filter(dep => dep.includes('vendor-core') || dep.includes('index'));
-      }
-    },
+    // ✅ Completely disables aggressive preloading of unvisited route chunks
+    modulePreload: false, 
     
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Core framework layer
             if (
               id.includes('node_modules/react/') || 
               id.includes('node_modules/react-dom/') || 
@@ -47,7 +39,6 @@ export default defineConfig({
               return 'vendor-core';
             }
             
-            // Isolated major ecosystem dependencies
             if (id.includes('gsap')) return 'vendor-gsap';
             if (id.includes('react-big-calendar')) return 'vendor-calendar';
             if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
@@ -55,7 +46,6 @@ export default defineConfig({
             if (id.includes('react-icons')) return 'vendor-icons';
             if (id.includes('react-helmet-async')) return 'vendor-helmet';
 
-            // Utility styling items layer
             if (
               id.includes('clsx') || 
               id.includes('tailwind-merge') || 
