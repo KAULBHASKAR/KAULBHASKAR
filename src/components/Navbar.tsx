@@ -62,7 +62,7 @@ export default function Navbar() {
 
   return (
     <div
-      className={`fixed inset-x-0 top-6 z-50 transition-all duration-700 sm:inset-x-6 
+      className={`fixed inset-x-0 top-2 z-50 transition-all duration-700 sm:inset-x-6 
         ${isScrolled ? "bg-black/40 backdrop-blur-lg border border-white/10 p-4 rounded-2xl w-[95%] md:w-[85%] mx-auto shadow-2xl" : "bg-transparent p-6"} 
         ${isVisible ? "translate-y-0 opacity-100" : "-translate-y-40 opacity-0"}`}
     >
