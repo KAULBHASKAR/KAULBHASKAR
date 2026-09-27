@@ -2,9 +2,8 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router'; 
 import { Helmet } from 'react-helmet-async';
+import Navbar from './Navbar';
 
-
-const Navbar = lazy(() => import('./Navbar'));
 const Footer = lazy(() => import('./Footer'));
 // Split the WhatsApp Widget into its own separate chunk
 const WhatsAppWidget = lazy(() => import('./WhatsAppWidget').then(module => ({ default: module.WhatsAppWidget })));
