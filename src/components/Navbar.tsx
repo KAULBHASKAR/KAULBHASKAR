@@ -1,9 +1,8 @@
 // src/components/Navbar.tsx
 import { useEffect, useState, useRef, Suspense, lazy } from "react";
 import { NavLink, useLocation } from "react-router";
-import { TiLocationArrow } from "react-icons/ti";
-import { FiMenu, FiX } from "react-icons/fi";
-// Optimization: Sub-components that aren't needed for the initial render
+
+// Optimization: Audio player chunk stays decoupled
 const AudioPlayer = lazy(() => import("./AudioPlayer"));
 
 const navItems = [
@@ -27,14 +26,17 @@ export default function Navbar() {
   const rafId = useRef<number | null>(null);
 
   useEffect(() => {
+    // Optimization: Skip processing scroll listeners if we are on a narrow mobile viewport
+    if (window.innerWidth < 768 && location.pathname === "/") {
+      return;
+    }
+
     const handleScroll = () => {
-      // Throttle scroll events using requestAnimationFrame
       if (rafId.current) return;
 
       rafId.current = window.requestAnimationFrame(() => {
         const currentY = window.scrollY;
 
-        // Optimization: Only update state if the value actually changes
         const shouldBeScrolled = currentY > 20 || location.pathname !== "/";
         setIsScrolled((prev) => (prev !== shouldBeScrolled ? shouldBeScrolled : prev));
 
@@ -73,7 +75,11 @@ export default function Navbar() {
             onClick={() => window.location.href='tel:+919934418459'}
             className="hidden md:flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-full text-xs font-bold transition-transform active:scale-95"
           >
-            CALL US <TiLocationArrow className="text-lg" aria-hidden="true" />
+            CALL US 
+            {/* Inline SVG replaces TiLocationArrow */}
+            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" className="text-lg" height="1em" width="1em" xmlns="http://w3.org" aria-hidden="true">
+              <path d="M21 3L3 10.53v.96l6.84 2.83L12.67 21h.96L21 3z"></path>
+            </svg>
           </button>
         </div>
 
@@ -96,7 +102,6 @@ export default function Navbar() {
             onClick={toggleAudio}
             aria-label={isAudioPlaying ? "Pause music" : "Play music"}
           >
-            {/* Optimization: Audio element only loads after first click */}
             {hasInteractedWithAudio && (
               <Suspense fallback={null}>
                 <AudioPlayer isPlaying={isAudioPlaying} />
@@ -114,19 +119,31 @@ export default function Navbar() {
           </button>
         </div>
 
+        {/* Mobile Toggle Trigger Button (Uses pure inline SVGs instead of react-icons) */}
         <button 
-          className="md:hidden text-white text-2xl" 
+          className="md:hidden text-white text-2xl focus:outline-none" 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
         >
-          {isMobileMenuOpen ? <FiX /> : <FiMenu />}
+          {isMobileMenuOpen ? (
+            <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://w3.org">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          ) : (
+            <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://w3.org">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          )}
         </button>
       </nav>
 
       {/* Mobile Menu */}
       <div 
         className={`md:hidden absolute top-20 left-0 w-full overflow-hidden transition-all duration-500 ${isMobileMenuOpen ? "max-h-100 opacity-100" : "max-h-0 opacity-0"}`}
-        inert={!isMobileMenuOpen ? true : undefined} // Changed "" to true
+        inert={!isMobileMenuOpen ? true : undefined}
       >
         <div className="bg-black/90 backdrop-blur-xl border border-white/10 m-2 p-6 rounded-2xl flex flex-col gap-4">
           {navItems.map((item) => (
