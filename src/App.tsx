@@ -1,6 +1,6 @@
 // src/App.tsx
-import { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
+import { HelmetProvider } from 'react-helmet-async';
 import Layout from './components/Layout';
 import ScrollToTop from './components/ScrollToTop'; 
 
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />, 
-    // Fix: This configures the default lazy-loading fallback spinner for all interior routes
+    // Configures the default lazy-loading fallback spinner for all interior routes
     HydrateFallback: PageLoadingSpinner,
     children: [
       { 
@@ -56,22 +56,10 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Before hydration begins, emit raw server structure to maintain the painted visual state
-  if (!isClient) {
-    return <HomeStaticFallback />;
-  }
-
   return (
-
-      {/* Fix: Removed the deprecated fallbackElement prop from here */}
+    <HelmetProvider>
       <RouterProvider router={router} />
       <ScrollToTop />
- 
+    </HelmetProvider>
   );
 }
