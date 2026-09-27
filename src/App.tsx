@@ -1,7 +1,6 @@
 // src/App.tsx
 import { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import { HelmetProvider } from 'react-helmet-async';
 import Layout from './components/Layout';
 import ScrollToTop from './components/ScrollToTop'; 
 
@@ -69,10 +68,10 @@ export default function App() {
   }
 
   return (
-    <HelmetProvider>
+
       {/* Fix: Removed the deprecated fallbackElement prop from here */}
       <RouterProvider router={router} />
       <ScrollToTop />
-    </HelmetProvider>
+ 
   );
 }
