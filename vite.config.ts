@@ -22,13 +22,23 @@ export default defineConfig({
   build: {
     cssCodeSplit: true,
     target: 'esnext',
-    modulePreload: true, // Prevents sequential evaluation waterfalls
-    chunkSizeWarningLimit: 800, // Balanced threshold for animation/heavy ecosystems
+    chunkSizeWarningLimit: 800,
+    
+    // 1. OPTIMIZATION: Fine-tune preloading behavior.
+    // Instead of preloading everything blindly, this only preloads the entry chunk (vendor-core),
+    // stopping vendor-calendar and vendor-esprima from blocking the initial page paint (FCP).
+    modulePreload: {
+      resolveDependencies: (filename, deps, { isEntry }) => {
+        if (isEntry) return deps;
+        return []; // Do not preload deep dependencies of lazy routes
+      }
+    },
+    
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // 1. Isolate immutable core framework items (Absolute bare essentials)
+            // 2. Core framework layer remains isolated for cross-page caching
             if (
               id.includes('node_modules/react/') || 
               id.includes('node_modules/react-dom/') || 
@@ -37,7 +47,7 @@ export default defineConfig({
               return 'vendor-core';
             }
             
-            // 2. Isolate heavy operational blockers so they stay out of the core pipeline
+            // 3. Isolated major ecosystem dependencies
             if (id.includes('gsap')) return 'vendor-gsap';
             if (id.includes('react-big-calendar')) return 'vendor-calendar';
             if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
@@ -45,8 +55,7 @@ export default defineConfig({
             if (id.includes('react-icons')) return 'vendor-icons';
             if (id.includes('react-helmet-async')) return 'vendor-helmet';
 
-            // 3. Fallback: Only group utility items that are universally shared.
-            // If they are specific to a single route, Vite will split them dynamically instead of bloat-loading them.
+            // 4. Utility styling items layer
             if (
               id.includes('clsx') || 
               id.includes('tailwind-merge') || 
