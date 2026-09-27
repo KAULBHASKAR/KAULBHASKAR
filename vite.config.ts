@@ -28,8 +28,12 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // 1. Isolate immutable core framework items
-            if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router')) {
+            // 1. Isolate immutable core framework items (Absolute bare essentials)
+            if (
+              id.includes('node_modules/react/') || 
+              id.includes('node_modules/react-dom/') || 
+              id.includes('node_modules/react-router/')
+            ) {
               return 'vendor-core';
             }
             
@@ -38,12 +42,18 @@ export default defineConfig({
             if (id.includes('react-big-calendar')) return 'vendor-calendar';
             if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
             if (id.includes('esprima')) return 'vendor-esprima';
-            
-            // Fixed Icon matching rule to avoid false positives with generic /esm/ paths
             if (id.includes('react-icons')) return 'vendor-icons';
+            if (id.includes('react-helmet-async')) return 'vendor-helmet';
 
-            // 3. Group remaining minor dependencies together to minimize main thread parsing loops
-            return 'vendor-shared';
+            // 3. Fallback: Only group utility items that are universally shared.
+            // If they are specific to a single route, Vite will split them dynamically instead of bloat-loading them.
+            if (
+              id.includes('clsx') || 
+              id.includes('tailwind-merge') || 
+              id.includes('framer-motion')
+            ) {
+              return 'vendor-shared';
+            }
           }
         },
       },
