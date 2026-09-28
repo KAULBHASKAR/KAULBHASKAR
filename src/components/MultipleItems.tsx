@@ -60,9 +60,9 @@ const postData: ServicePost[] = [
     rating: 4.7, 
   },
   { 
-    heading: "Baglamukhi", 
-    heading2: "Famous Prayoga to abolish enemies!", 
-    name: "To win Elections, Litigations", 
+    heading: "The Baglamukhi Mandate", 
+    heading2: "Adversarial Neutralization & Institutional Litigation Strategy!", 
+    name: "A highly specialized, high-ticket energetic intervention designed for leaders facing existential corporate battles, high-exposure litigation, or major public elections. Combining your legal background with precise metaphysical protocols, this service actively disrupts adversarial momentum, establishes structural dominance in legal disputes, and maximizes influence dynamics during critical voting cycles.", 
     imgSrc: "/services/baglamukhi.png", 
     price: 120000, 
     rating: 4.6, 
