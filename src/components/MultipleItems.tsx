@@ -143,7 +143,7 @@ const MultipleItems: FC = () => {
         <div className="absolute inset-0 bg-black/30" />
 
         <div className="relative z-10 flex flex-col items-center justify-center w-full px-6 text-white text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">Services</h1>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6">Strategic Metaphysical Interventions</h1>
           <h2 className="text-2xl md:text-3xl font-semibold mb-4">
               Metaphysical Strategy for High-Performers
           </h2>
