@@ -136,6 +136,26 @@ export default function Cohort() {
           </button>
         </div>
       </section>
+      {/* Sovereign Counsel for Elite Mandates */}
+      <section className="bg-[#141822] py-20 border-t border-[#c5a880]/10">
+        <h2 className="text-3xl font-bold tracking-tight text-white text-center font-serif sm:text-4xl">
+          Sovereign Counsel for Elite Mandates
+        </h2>
+        <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-[#9ca3af]">
+          Kaulbhaskar does not offer generalized guidance or passive spiritual retreats. His advisory functions as a tailored boardroom asset for leaders who command vast material responsibility but demand total energetic alignment and spiritual mastery.
+        </p>
+        <p className="mt-4 text-xs tracking-wider text-[#7c828d] text-center uppercase font-semibold">
+          Only through Requests  • Exclusively for Elites and Corporate Leaders
+        </p>
+        <div className="mt-10 flex items-center justify-center gap-x-6">
+          <button
+            onClick={handleApplyClick}
+            className="rounded-md bg-[#c5a880] px-8 py-3.5 text-sm font-semibold text-black shadow-sm hover:bg-[#b0936b] transition-colors"
+          >
+            [ Request a Private Consultation Briefing ]
+          </button>
+        </div>
+      </section>
     </div>
   );
 }
