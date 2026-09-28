@@ -141,7 +141,7 @@ export default function Cohort() {
         <h2 className="text-3xl font-bold tracking-tight text-white text-center font-serif sm:text-4xl">
           Sovereign Counsel for Elite Mandates
         </h2>
-        <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-[#9ca3af]">
+        <p className="mx-auto px-4 md:px-8 mt-6 max-w-xl text-base leading-7 text-[#9ca3af]">
           <span className="text-[#c5a880]">KAULBHASKAR</span> does not offer generalized guidance or passive spiritual retreats. His advisory functions as a tailored boardroom asset for leaders who command vast material responsibility but demand total energetic alignment and spiritual mastery.
         </p>
         <p className="mt-4 text-xs tracking-wider text-[#7c828d] text-center uppercase font-semibold">
