@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 // Upgraded copy variables for premium, international branding
 const profileData = {
-  title: "Metaphysical Strategy for High-Performers",
+  title: "Metaphysical Strategist for High-Performers",
   subtitle: "Kaulbhaskar provides high-performers with data-driven spiritual systems to safely navigate modern power structures.",
   knownAs: "KAULBHASKAR",
   discipleOf: "KULBHUSHANANAD NATH",
