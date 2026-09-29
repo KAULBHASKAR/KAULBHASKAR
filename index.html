@@ -5,37 +5,26 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- 1. SEO & Open Graph Meta Tags -->
+    <!-- SEO & Open Graph Meta Tags -->
     <meta name="description" content="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
-    
-    <!-- Facebook / Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://kaulbhaskar.com" />
     <meta property="og:title" content="KAULBHASKAR a Legend KAULA | Tantra, Astrology & Spiritual Guidance" />
     <meta property="og:description" content="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
-    <meta property="og:image" content="https://kaulbhaskar.com/img/ABOUT_BG.webp" />
+    <meta property="og:image" content="https://kaulbhaskar.com" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://kaulbhaskar.com" />
-    <meta property="twitter:title" content="KAULBHASKAR a Legend KAULA | Tantra, Astrology & Spiritual Guidance" />
-    <meta property="twitter:description" content="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
-    <meta property="twitter:image" content="https://kaulbhaskar.com/img/ABOUT_BG.webp" />
-
-    <!-- Preload critical fonts & images (Properly scoped) -->
+    <!-- Preload critical fonts & images -->
     <link rel="preload" href="/fonts/zentry-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/general.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/robert-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/circularweb-book.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" fetchpriority="high" as="image" href="/img/ABOUT_BG.webp" type="image/webp">
 
-    <!-- ADDED: Preload the exact CSS bundles to download them with high priority without blocking render -->
-    <link rel="preload" href="/assets/vendor-ca….css" as="style">
-    <link rel="preload" href="/assets/index-Bj2iucy2.css" as="style">
+    <!-- 1. Preload the fixed CSS filename aggressively -->
+    <link rel="preload" href="/assets/index.css" as="style">
 
-    <!-- ADDED: Asynchronous CSS Loading Strategy (Non-render blocking) -->
-    <link rel="stylesheet" href="/assets/vendor-ca….css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="/assets/index-Bj2iucy2.css" media="print" onload="this.media='all'">
+    <!-- 2. Load the fixed CSS asynchronously so it never blocks the initial render -->
+    <link rel="stylesheet" href="/assets/index.css" media="print" onload="this.media='all'">
 
     <!-- Critical CSS for Immediate Paint -->
     <style>
@@ -60,12 +49,10 @@
   </head>
   <body>
     <div id="root">
-      <!-- Static content injected inside the mounting node to drop Element Render Delay to 0ms -->
       <p class="mb-5 max-w-72 font-robert-regular text-white lcp-static-fallback">
         त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा। न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥ न च कौलात् परो योगी न विद्या त्रैपुरी समा। न च शा…
       </p>
     </div>
-    <!-- Vite automatically manages and injects the bundled JS and CSS references here during build -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
