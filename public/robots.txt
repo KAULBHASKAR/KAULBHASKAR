@@ -7,4 +7,4 @@ Disallow: /admin/
 Disallow: /dashboard/
 
 # Point search engines directly to your sitemap
-Sitemap: https://kaulbhaskar.com
+Sitemap: https://www.kaulbhaskar.com/sitemap.xml
