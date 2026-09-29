@@ -20,7 +20,8 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: true,
+    // ⚡️ Combined into a single file to eliminate multiple tiny css requests
+    cssCodeSplit: false, 
     target: 'esnext',
     chunkSizeWarningLimit: 800,
     
@@ -29,6 +30,13 @@ export default defineConfig({
     
     rollupOptions: {
       output: {
+        // ⚡️ Forces a predictable CSS name for index.html optimization
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'assets/index.[ext]';
+          }
+          return 'assets/[name]-[hash].[ext]';
+        },
         manualChunks(id) {
           if (id.includes('node_modules')) {
             if (
