@@ -29,6 +29,14 @@
     <link rel="preload" href="/fonts/circularweb-book.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" fetchpriority="high" as="image" href="/img/ABOUT_BG.webp" type="image/webp">
 
+    <!-- ADDED: Preload the exact CSS bundles to download them with high priority without blocking render -->
+    <link rel="preload" href="/assets/vendor-ca….css" as="style">
+    <link rel="preload" href="/assets/index-Bj2iucy2.css" as="style">
+
+    <!-- ADDED: Asynchronous CSS Loading Strategy (Non-render blocking) -->
+    <link rel="stylesheet" href="/assets/vendor-ca….css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/assets/index-Bj2iucy2.css" media="print" onload="this.media='all'">
+
     <!-- Critical CSS for Immediate Paint -->
     <style>
       body { 
