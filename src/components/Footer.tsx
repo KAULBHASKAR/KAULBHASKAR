@@ -30,10 +30,6 @@ export default function Footer() {
     // FIX 1: Removed content centering behavior on mobile; isolated layout calculations entirely using contain-intrinsic-size
     <footer 
       className="w-full bg-[#5542ff] py-10 text-white min-h-[290px] md:min-h-[120px] flex items-start md:items-center"
-      style={{
-        contentVisibility: "auto",
-        containIntrinsicSize: "auto 290px"
-      }}
     >
       <div className="container mx-auto flex flex-col items-center justify-between gap-8 px-6 md:flex-row w-full">
         
