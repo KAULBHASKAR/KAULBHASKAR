@@ -35,7 +35,7 @@ const About: React.FC = () => {
     "@type": "AboutPage",
     "mainEntity": {
       "@type": "Person",
-      "@id": "https://kaulbhaskar.com",
+      "@id": "https://www.kaulbhaskar.com",
       "name": "KAULBHASKAR GURU Ji",
       "alternateName": ["कौल भास्कर", "Guru Ji Kaulbhaskar", "Bhaskar Ji"],
       "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji and a direct disciple of Sri Kulbhushananand Nath.",
@@ -69,7 +69,7 @@ const About: React.FC = () => {
       "worksFor": {
         "@type": "Organization",
         "name": "KAULBHASKAR Metaphysical Advisory",
-        "url": "https://kaulbhaskar.com"
+        "url": "https://www.kaulbhaskar.com"
       }
     }
   };
