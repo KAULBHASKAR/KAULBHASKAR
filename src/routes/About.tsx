@@ -39,8 +39,8 @@ const About: React.FC = () => {
       "name": "KAULBHASKAR GURU Ji",
       "alternateName": ["कौल भास्कर", "Guru Ji Kaulbhaskar", "Bhaskar Ji"],
       "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji and a direct disciple of Sri Kulbhushananand Nath.",
-      "url": "https://kaulbhaskar.com",
-      "image": "https://kaulbhaskar.com", // Points to your actual live bio photo path
+      "url": "https://www.kaulbhaskar.com",
+      "image": "https://www.kaulbhaskar.com/img/satyendra.webp", // Points to your actual live bio photo path
       "jobTitle": "Metaphysical Consultant and Spiritual Mentor",
       "knowsAbout": [
         "Tantra Shastra",
