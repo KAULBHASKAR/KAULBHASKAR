@@ -29,28 +29,51 @@ const About: React.FC = () => {
   }, []); // Run once on mount
 
   // ✅ JSON-LD AboutPage & Person Schema Definition (Aligned to /about-us)
+    // ✅ Upgraded JSON-LD AboutPage & Person Schema Definition (Bilingual & Lineage-Optimized)
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
     "mainEntity": {
       "@type": "Person",
+      "@id": "https://kaulbhaskar.com",
       "name": "KAULBHASKAR GURU Ji",
-      "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji.",
-      "image": "https://kaulbhaskar.com",
+      "alternateName": ["कौल भास्कर", "Guru Ji Kaulbhaskar", "Bhaskar Ji"],
+      "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji and a direct disciple of Sri Kulbhushananand Nath.",
+      "url": "https://kaulbhaskar.com",
+      "image": "https://kaulbhaskar.com", // Points to your actual live bio photo path
+      "jobTitle": "Metaphysical Consultant and Spiritual Mentor",
       "knowsAbout": [
-        "Tantra",
+        "Tantra Shastra",
         "Astrology",
-        "Sri Vidya Upasana",
-        "Kaula Marga",
-        "Dakshinamurti Sampradaya"
+        "श्रीविद्या (Sri Vidya Upasana)",
+        "कौल मार्ग (Kaula Marga)",
+        "Dakshinamurti Sampradaya",
+        "Urdhvamnaya Upasaka",
+        "Maha Viprita Pratyangira Prayoga",
+        "Metaphysical Risk Management"
       ],
-      "affiliation": {
-        "@type": "Spiritual mentor",
-        "name": "KAULBHASKAR",
+      "knowsLanguage": [
+        {
+          "@type": "Language",
+          "name": "English"
+        },
+        {
+          "@type": "Language",
+          "name": "Hindi"
+        },
+        {
+          "@type": "Language",
+          "name": "Sanskrit"
+        }
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "KAULBHASKAR Metaphysical Advisory",
         "url": "https://kaulbhaskar.com"
       }
     }
   };
+
 
   return (
     <div className="flex flex-col w-full content-center">
