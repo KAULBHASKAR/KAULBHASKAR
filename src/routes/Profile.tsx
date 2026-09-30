@@ -66,7 +66,8 @@ const Profile: React.FC = () => {
         "Krishnamurthi Astrology",
         "श्रीविद्या (Sri Vidya Upasana)",
         "कौल मार्ग (Kaula Marga)",
-        "Dakshinamurti Sampradaya"
+        "Dakshinamurti Sampradaya",
+        "Matsyendra Nath Lineage"
       ],
       "knowsLanguage": [
         { "@type": "Language", "name": "English" },
