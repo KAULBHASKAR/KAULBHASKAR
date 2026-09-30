@@ -81,11 +81,11 @@ const About: React.FC = () => {
       <SEO
         title="About Kaulbhaskar Guru Ji | Tantra, Astrology & Spiritual Mentor"
         description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
-        canonical="https://kaulbhaskar.com/about-us"
+        canonical="https://www.kaulbhaskar.com/about-us"
         keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
         breadcrumbs={[
-          { name: "Home", url: "https://kaulbhaskar.com" },
-          { name: "About Us", url: "https://kaulbhaskar.com/about-us" },
+          { name: "Home", url: "https://www.kaulbhaskar.com" },
+          { name: "About Us", url: "https://www.kaulbhaskar.com/about-us" },
         ]}
       />
 
@@ -93,17 +93,17 @@ const About: React.FC = () => {
       <Helmet>
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://kaulbhaskar.com/about-us" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com/about-us" />
         <meta property="og:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
         <meta property="og:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
-        <meta property="og:image" content="https://kaulbhaskar.com" />
+        <meta property="og:image" content="https://www.kaulbhaskar.com" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://kaulbhaskar.com/about-us" />
+        <meta name="twitter:url" content="https://www.kaulbhaskar.com/about-us" />
         <meta name="twitter:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
         <meta name="twitter:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
-        <meta name="twitter:image" content="https://kaulbhaskar.com" />
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com" />
 
         {/* Inject JSON-LD Object safely for TypeScript compilation */}
         <script type="application/ld+json">
