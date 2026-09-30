@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { Helmet } from "react-helmet-async";
 import SEO from "../components/SEO";
-// 1. Import pre-compiled static metadata safely bypassing gray-matter/buffer runtime requirements
 import allPosts from "../posts-meta.json";
 
 interface PostData {
@@ -20,7 +19,6 @@ export default function Blog() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const postsPerPage = 9;
 
-  // Typings coercion for safety alignment
   const typedPosts = allPosts as PostData[];
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -28,13 +26,12 @@ export default function Blog() {
   const currentPosts = typedPosts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(typedPosts.length / postsPerPage) || 1;
 
-  // ✅ FIXED: Template literal parsing issue inside JSON-LD structured schema engine
   const blogListSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
     "name": "Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji",
     "description": "Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar.",
-    "url": "https://www.kaulbhaskar.com/blog",
+    "url": "https://kaulbhaskar.com",
     "publisher": {
       "@type": "Organization",
       "name": "KAUL TANTRA SADHANA",
@@ -48,8 +45,8 @@ export default function Blog() {
       "headline": post.title,
       "description": post.excerpt,
       "datePublished": post.date,
-      "url": `https://kaulbhaskar.com{post.slug}`, // Fixed syntax bug template extraction 
-      "image": post.featuredImage || "https://www.kaulbhaskar.com/img/intro.webp",
+      "url": `https://kaulbhaskar.com{post.slug}`,
+      "image": post.featuredImage || "https://kaulbhaskar.com",
       "author": {
         "@type": "Person",
         "name": post.authorName
@@ -62,27 +59,15 @@ export default function Blog() {
       <SEO
         title="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji"
         description="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar."
-        canonical="https://www.kaulbhaskar.com/blog"
+        canonical="https://kaulbhaskar.com"
         keywords="Tantra blog, Astrology articles, Sri Vidya insights, Kaulbhaskar writings, Kulashastra, Tripura Stotra"
         breadcrumbs={[
-          { name: "Home", url: "https://www.kaulbhaskar.com" },
-          { name: "Blog", url: "https://www.kaulbhaskar.com/blog" },
+          { name: "Home", url: "https://kaulbhaskar.com" },
+          { name: "Blog", url: "https://kaulbhaskar.com" },
         ]}
       />
 
       <Helmet>
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.kaulbhaskar.com/blog" />
-        <meta property="og:title" content="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji" />
-        <meta property="og:description" content="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar." />
-        <meta property="og:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://www.kaulbhaskar.com/blog" />
-        <meta name="twitter:title" content="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji" />
-        <meta name="twitter:description" content="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar." />
-        <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
-
         <script type="application/ld+json">
           {JSON.stringify(blogListSchema)}
         </script>
@@ -99,28 +84,32 @@ export default function Blog() {
           {currentPosts.map((post) => (
             <li 
               key={post.slug} 
-              className="border rounded-xl bg-white overflow-hidden shadow-sm transition-shadow duration-300 hover:shadow-2xl"
+              className="border rounded-xl bg-white overflow-hidden shadow-sm transition-shadow duration-300 hover:shadow-2xl flex flex-col"
             >
-              <Link to={`/${post.slug}`}>
-                {/* FIXED: Strict aspect ratio footprint box prevents layout shifting inside the list grid blocks */}
-                <div className="w-full aspect-video overflow-hidden bg-gray-100">
+              <Link to={`/${post.slug}`} className="flex flex-col h-full">
+                {/* FIXED: Keeps layout dimensions stable without cropping original images */}
+                <div className="w-full h-fit overflow-hidden bg-gray-50 flex items-center justify-center">
                   <img 
                     src={post.featuredImage} 
                     alt={post.title} 
-                    className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500" 
+                    width="800"
+                    height="500"
+                    className="w-full h-auto object-contain transform hover:scale-102 transition-transform duration-500" 
                     loading="lazy"
                   />
                 </div>
-                <div className="p-5">
-                  <p className="text-sm text-orange-600 font-semibold mb-1">{post.date}</p>
-                  <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 hover:text-blue-600 transition-colors">
-                    {post.title}
-                  </h2>
-                  <p className="text-gray-600 text-sm line-clamp-3">{post.excerpt}</p>
+                <div className="p-5 flex-grow flex flex-col justify-between">
+                  <div>
+                    <p className="text-sm text-orange-600 font-semibold mb-1">{post.date}</p>
+                    <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 hover:text-blue-600 transition-colors">
+                      {post.title}
+                    </h2>
+                    <p className="text-gray-600 text-sm line-clamp-3">{post.excerpt}</p>
+                  </div>
                   
-                  <div className="mt-4 flex items-center gap-2 border-t pt-3 border-gray-50">
+                  <div className="mt-5 flex items-center gap-2 border-t pt-3 border-gray-50">
                     <img
-                      src={post.authorAvatar || "https://kaulbhaskar.com"}
+                      src={post.authorAvatar || "https://kaulbhaskar.com/img/avatar-fallback.webp"}
                       className="w-7 h-7 rounded-full object-cover bg-gray-50"
                       alt={post.authorName}
                     />
@@ -141,7 +130,7 @@ export default function Blog() {
           <button 
             disabled={currentPage === 1} 
             onClick={() => setCurrentPage(p => p - 1)}
-            className="px-5 py-2 bg-white rounded-full disabled:opacity-30 font-medium text-sm text-gray-800 transition-opacity cursor-pointer hover:bg-gray-50"
+            className="px-5 py-2 bg-white rounded-full disabled:opacity-30 font-medium text-sm text-gray-800 transition-opacity cursor-pointer"
           >
             ← Previous
           </button>
@@ -149,7 +138,7 @@ export default function Blog() {
           <button 
             disabled={currentPage === totalPages} 
             onClick={() => setCurrentPage(p => p + 1)}
-            className="px-5 py-2 bg-white rounded-full disabled:opacity-30 font-medium text-sm text-gray-800 transition-opacity cursor-pointer hover:bg-gray-50"
+            className="px-5 py-2 bg-white rounded-full disabled:opacity-30 font-medium text-sm text-gray-800 transition-opacity cursor-pointer"
           >
             Next →
           </button>
