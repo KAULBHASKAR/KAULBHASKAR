@@ -14,7 +14,7 @@ interface Post {
 }
 
 const LatestPost: React.FC = () => {
-  // 2. No hooks or runtime parsing needed. If no posts exist, render empty.
+  // 2. No hooks or runtime parsing needed. If no posts exist, render empty fallback layout.
   if (!latestPosts || latestPosts.length === 0) {
     return <div className="min-h-screen bg-indigo-500" />;
   }
@@ -30,12 +30,16 @@ const LatestPost: React.FC = () => {
             className="border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white"
           >
             <Link to={`/${post.slug}`}>
-              <img
-                src={post.featuredImage}
-                alt={post.title}
-                className="w-full h-auto object-cover object-center"
-                loading="lazy" /* Browser native optimization */
-              />
+              {/* FIXED: Enforced an explicit aspect ratio box container shell layer to preserve image footprint boundaries prior to file delivery */}
+              <div className="w-full aspect-video md:aspect-[16/10] overflow-hidden bg-gray-100">
+                <img
+                  src={post.featuredImage}
+                  alt={post.title}
+                  className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500"
+                  loading="lazy" /* Browser native optimization */
+                />
+              </div>
+              
               <div className="p-5">
                 <p className="text-sm text-orange-600 font-semibold mb-2">
                   {post.date}
@@ -49,7 +53,7 @@ const LatestPost: React.FC = () => {
                 <div className="mt-4 flex items-center gap-2">
                   <img
                     src={post.authorAvatar}
-                    className="w-8 h-8 rounded-full"
+                    className="w-8 h-8 rounded-full object-cover bg-gray-50"
                     alt={post.authorName}
                   />
                   <span className="text-xs text-gray-500 font-medium">
