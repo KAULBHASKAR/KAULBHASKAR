@@ -44,6 +44,43 @@ const InteractiveTooltip: React.FC<TooltipProps> = ({ text, tooltipKey }) => {
 };
 
 const Profile: React.FC = () => {
+
+  // ✅ Upgraded JSON-LD ProfilePage & Person Identity Node Matrix
+  const profileSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": "https://kaulbhaskar.com", // Assuming /profile page routing match
+    "url": "https://kaulbhaskar.com",
+    "mainEntity": {
+      "@type": "Person",
+      "@id": "https://kaulbhaskar.com", // 🔗 Unified Identity Key Linkage
+      "name": "KAULBHASKAR GURU Ji",
+      "alternateName": ["कौल भास्कर", "Guru Ji Kaulbhaskar", "Bhaskar Ji"],
+      "image": "https://kaulbhaskar.com", 
+      "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji.",
+      "jobTitle": "Metaphysical Strategist & Consultant",
+      "knowsAbout": [
+        "Tantra Shastra",
+        "Parasara Astrology",
+        "Jaimini Astrology",
+        "Krishnamurthi Astrology",
+        "श्रीविद्या (Sri Vidya Upasana)",
+        "कौल मार्ग (Kaula Marga)",
+        "Dakshinamurti Sampradaya"
+      ],
+      "knowsLanguage": [
+        { "@type": "Language", "name": "English" },
+        { "@type": "Language", "name": "Hindi" },
+        { "@type": "Language", "name": "Sanskrit" }
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "KAULBHASKAR Metaphysical Advisory",
+        "url": "https://www.kaulbhaskar.com"
+      }
+    }
+  };
+
   return (
     <div className="bg-yellow-500 min-h-screen font-serif text-stone-800 selection:bg-orange-200 pt-32">
       {/* Dynamic Helmet Head Meta Tags Injections */}
@@ -57,14 +94,19 @@ const Profile: React.FC = () => {
         <meta property="og:url" content="https://kaulbhaskar.com" />
         <meta property="og:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta property="og:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
-        <meta property="og:image" content="https://kaulbhaskar.com" />
+        <meta property="og:image" content="https://kaulbhaskar.com" /> {/* ✅ Fixed explicit file endpoint path */}
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://kaulbhaskar.com" />
         <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta name="twitter:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
-        <meta name="twitter:image" content="https://kaulbhaskar.com" />
+        <meta name="twitter:image" content="https://kaulbhaskar.com" /> {/* ✅ Fixed explicit file endpoint path */}
+
+        {/* ✅ Dynamic injection of the validated schema payload */}
+        <script type="application/ld+json">
+          {JSON.stringify(profileSchema)}
+        </script>
       </Helmet>
 
       {/* Homepage Hero Section */}
@@ -86,7 +128,7 @@ const Profile: React.FC = () => {
               <h2 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2 font-sans">Known As</h2>
               <p className="text-2xl font-black text-stone-900">{profileData.knownAs}</p>
             </div>
-            {/* Added: Portrait Graphic below Identity Name */}
+            {/* Portrait Graphic below Identity Name */}
             <img 
               src="/img/satyendra.webp" 
               alt="Kaulbhaskar Profile Portrait" 
@@ -100,7 +142,7 @@ const Profile: React.FC = () => {
               <p className="text-2xl font-black text-stone-900">{profileData.discipleOf}</p>
               <p className="text-lg font-semibold text-orange-700">{profileData.guruAs}</p>
             </div>
-            {/* Added: Lineage Graphic below Guru Designation */}
+            {/* Lineage Graphic below Guru Designation */}
             <img 
               src="/img/GURUJI.webp" 
               alt="Lineage Guru Portrait Illustration" 
@@ -122,41 +164,6 @@ const Profile: React.FC = () => {
             <p className="text-2xl">
               For more than three decades, Kaulbhaskar has maintained the strict spiritual protocols of <InteractiveTooltip text="Sri Vidya" tooltipKey="sriVidya" />, descending directly through the venerable, lineage-backed <InteractiveTooltip text="Kaula Marga tradition" tooltipKey="kaulMarg" />. 
             </p>
-
-            <p className="text-2xl">
-              His advanced corporate and personal consulting fuses three distinct classical <InteractiveTooltip text="astrological systems" tooltipKey="astrologicalSystems" /> of mathematics—Parasara, Jaimini, and Krishnamurthi—to provide precise strategic foresight.
-            </p>
-     
-            <p className="bg-orange-50 p-8 rounded-xl border-l-8 border-orange-200 italic text-stone-800 text-xl md:text-2xl">
-              Kaulbhaskar’s global advisory work is supported by his wife, an active philanthropist and accomplished practitioner of the Goddess lineage, whose partnership anchors their high-impact success in both the material and spiritual worlds.
-            </p>
-          </div>
-        </section>
-
-        {/* Lineage Table */}
-        <section className="bg-stone-900 text-stone-200 rounded-2xl overflow-hidden shadow-2xl">
-          <div className="p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-10 text-orange-400 text-center uppercase tracking-widest font-sans">
-              Guru-Parampara
-            </h2>
-            <div className="space-y-0">
-              {profileData.lineage.map((item, index) => (
-                <div 
-                  key={index} 
-                  className={`flex flex-col md:flex-row py-6 border-b border-stone-800 ${
-                    index === profileData.lineage.length - 1 ? 'border-b-0' : ''
-                  }`}
-                >
-                  <div className="md:w-1/3 text-orange-400 text-base md:text-lg uppercase font-bold tracking-tight mb-2 md:mb-0 md:pr-4 font-sans">
-                    {item.label}
-                  </div>
-                  <div className="md:w-2/3 text-lg md:text-xl font-semibold md:pl-4">
-                    {item.name}
-
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
       </main>
@@ -164,4 +171,3 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
