@@ -1,6 +1,7 @@
-// src/components/LatestPost.tsx
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router";
+// 1. Directly import the static pre-compiled JSON file
+import latestPosts from "../posts-meta.json";
 
 interface Post {
   slug: string;
@@ -13,56 +14,8 @@ interface Post {
 }
 
 const LatestPost: React.FC = () => {
-  const [latestPosts, setLatestPosts] = useState<Post[]>([]);
-
-  useEffect(() => {
-    const loadPosts = async () => {
-      // 1. Dynamic imports for heavy libraries
-      const matterModule = await import("gray-matter");
-      const matter = matterModule.default;
-      const { Buffer } = await import("buffer");
-      
-      if (typeof window !== "undefined") {
-        (window as any).Buffer = Buffer;
-      }
-
-      // 2. Async glob import (eager: false)
-      const modules = import.meta.glob("../posts/*.md", {
-        query: "?raw",
-        import: "default",
-      });
-
-      const postPromises = Object.entries(modules).map(async ([path, resolver]) => {
-        const content = (await resolver()) as string;
-        const slug = path.split("/").pop()?.replace(".md", "") || "";
-        const { data } = matter(content);
-
-        return {
-          slug,
-          title: data.title || "Untitled",
-          date: data.date || "",
-          featuredImage: data.featuredImage || "",
-          excerpt: data.excerpt || "",
-          authorName: data.authorName || "Anonymous",
-          authorAvatar: data.authorAvatar || "",
-        } as Post;
-      });
-
-      const allPosts = await Promise.all(postPromises);
-      
-      // 3. Sort and Slice
-      const sorted = allPosts.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
-      
-      setLatestPosts(sorted.slice(0, 3));
-    };
-
-    loadPosts();
-  }, []);
-
-  // Return a skeleton or empty div while loading to satisfy Lighthouse
-  if (latestPosts.length === 0) {
+  // 2. No hooks or runtime parsing needed. If no posts exist, render empty.
+  if (!latestPosts || latestPosts.length === 0) {
     return <div className="min-h-screen bg-indigo-500" />;
   }
 
@@ -71,7 +24,7 @@ const LatestPost: React.FC = () => {
       <h2 className="text-black text-center text-4xl font-bold mb-10">Latest Posts</h2>
 
       <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {latestPosts.map((post) => (
+        {(latestPosts as Post[]).map((post) => (
           <li
             key={post.slug}
             className="border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white"
@@ -81,6 +34,7 @@ const LatestPost: React.FC = () => {
                 src={post.featuredImage}
                 alt={post.title}
                 className="w-full h-auto object-cover object-center"
+                loading="lazy" /* Browser native optimization */
               />
               <div className="p-5">
                 <p className="text-sm text-orange-600 font-semibold mb-2">
