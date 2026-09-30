@@ -166,6 +166,32 @@ const Profile: React.FC = () => {
             </p>
           </div>
         </section>
+        {/* Lineage Table */}
+        <section className="bg-stone-900 text-stone-200 rounded-2xl overflow-hidden shadow-2xl">
+          <div className="p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold mb-10 text-orange-400 text-center uppercase tracking-widest font-sans">
+              Guru-Parampara
+            </h2>
+            <div className="space-y-0">
+              {profileData.lineage.map((item, index) => (
+                <div 
+                  key={index} 
+                  className={`flex flex-col md:flex-row py-6 border-b border-stone-800 ${
+                    index === profileData.lineage.length - 1 ? 'border-b-0' : ''
+                  }`}
+                >
+                  <div className="md:w-1/3 text-orange-400 text-base md:text-lg uppercase font-bold tracking-tight mb-2 md:mb-0 md:pr-4 font-sans">
+                    {item.label}
+                  </div>
+                  <div className="md:w-2/3 text-lg md:text-xl font-semibold md:pl-4">
+                    {item.name}
+
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
