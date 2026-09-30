@@ -13,37 +13,45 @@ const Services: React.FC = () => {
   // ✅ JSON-LD Service & OfferCatalog Schema Definition
   const servicesSchema = {
     "@context": "https://schema.org",
-    "@type": "Service",
-    "serviceType": "Tantra Puja, Spiritual Initiation, and Astrology Consultations",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "KAUL TANTRA SADHANA",
-      "url": "https://www.kaulbhaskar.com"
-    },
-    "areaServed": "Worldwide",
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Spiritual & Astrological Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Astrology Consultation",
-            "description": "Comprehensive horoscope readings, palmistry assessments, Kerala Jyotish analysis, and effective Vedic planetary remedial solutions."
+    "@type": "ItemPage",
+    "@id": "https://www.kaulbhaskar.com",
+    "url": "https://www.kaulbhaskar.com/services",
+    "mainEntity": {
+      "@type": "Service",
+      "serviceType": "Tantra Puja, Spiritual Initiation, and Astrology Consultations",
+      "name": "KAULBHASKAR Metaphysical Advisory Services",
+      "provider": {
+        "@type": "Person",
+        "@id": "https://www.kaulbhaskar.com" // 🔗 Perfect Linkage: Connects directly back to your primary profile identity node
+      },
+      "areaServed": "Worldwide",
+      "availableLanguage": ["English", "Hindi", "Sanskrit"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Spiritual & Astrological Diagnostic Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Astrology Consultation",
+              "description": "Comprehensive horoscope readings, palmistry assessments, Kerala Jyotish analysis, and effective Vedic planetary remedial solutions."
+            },
+            "price": "5000",
+            "priceCurrency": "INR"
           },
-          "price": "5000",
-          "priceCurrency": "INR"
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Maha Vidya Havan & Puja Rituals",
-            "description": "Sacred and highly specialized Tantric fire rituals, Yagyas, and Pujas executed by lineage-verified traditional experts."
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Maha Vidya Havan, Puja Rituals & Litigation Support",
+              "description": "Sacred and highly specialized Tantric fire rituals, Yagyas, and Pujas executed by lineage-verified traditional experts for resolving executive bottlenecks."
+            },
+            "price": "250000", // Placed your target price point natively inside the array structure
+            "priceCurrency": "INR"
           }
-        }
-      ]
+        ]
+      }
     }
   };
 
