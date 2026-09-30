@@ -102,6 +102,10 @@ const Profile: React.FC = () => {
         <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta name="twitter:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
         <meta name="twitter:image" content="https://kaulbhaskar.com" />
+
+        <script type="application/ld+json">
+          {JSON.stringify(profileSchema)}
+        </script>
       </Helmet>
 
       {/* Homepage Hero Section */}
