@@ -3,7 +3,7 @@ import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
+import { ScrollTrigger } from "gsap/ScrollTrigger"; // Changed from 'gsap/all' for cleaner tree-shaking
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -44,7 +44,7 @@ const Hero: React.FC = () => {
     }
   }, []);
 
-  // Failsafe loader
+  // Failsafe loader timeout
   useEffect(() => {
     if (bgVideoRef.current && bgVideoRef.current.readyState >= 2) {
       setLoadedVideos((prev) => prev + 1);
@@ -57,13 +57,10 @@ const Hero: React.FC = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  // Sync loading state with ScrollTrigger
+  // FIXED: Consolidated loading state assignment without triggering immediate ScrollTrigger calculations
   useEffect(() => {
     if (loadedVideos >= 1) {
       setIsLoading(false);
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh(true);
-      });
     }
   }, [loadedVideos]);
 
@@ -94,7 +91,7 @@ const Hero: React.FC = () => {
     { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
-  // Main Intro + Scroll Animation (With Text Colors Untouched)
+  // FIXED: Main Intro + Scroll Animation (With Safe Layout Calculation Batching)
   useGSAP(() => {
     gsap.set("#video-frame", {
       clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
@@ -107,17 +104,24 @@ const Hero: React.FC = () => {
         start: "center center",
         end: "bottom center",
         scrub: true,
+        invalidateOnRefresh: true, // Forces layout re-reads only when global windows refresh occurs safely
       },
     });
 
-    // Morph the clip path layout geometry frame smoothly on scroll
     tl.from("#video-frame", {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
       borderRadius: "0 0 0 0",
       ease: "power1.inOut",
     }, 0);
 
-    // FIX: Completely removed the color animation block so your linear gradients remain permanently intact
+    // FIXED: Defer ScrollTrigger refresh safely inside requestAnimationFrame once components drop down cleanly
+    const refreshTimeout = setTimeout(() => {
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    }, 200);
+
+    return () => clearTimeout(refreshTimeout);
   }, []);
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
@@ -178,7 +182,7 @@ const Hero: React.FC = () => {
             onLoadedData={handleVideoLoad}
             onCanPlay={() => {
               setIsLoading(false);
-              bgVideoRef.current?.play();
+              bgVideoRef.current?.play().catch(() => {});
             }}
           />
         )}
