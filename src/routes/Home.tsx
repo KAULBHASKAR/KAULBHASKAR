@@ -67,6 +67,11 @@ const Home: React.FC = () => {
           }
         ]}
       />
+      <Helmet>
+        <script type="application/ld+json">
+        {JSON.stringify(homeSchema)}
+        </script>
+      </Helmet>
 
       {/* Hero renders instantly without waiting for network scripts to finish chunk downloading */}
       <Hero />
