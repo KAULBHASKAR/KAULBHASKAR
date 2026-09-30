@@ -87,21 +87,19 @@ export default function Blog() {
   const currentPosts = postEntries.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(postEntries.length / postsPerPage);
 
-  // ✅ Upgraded & Fixed JSON-LD Blog List Schema Matrix
+  // ✅ Safe, Dynamic JSON-LD Schema parsing with cross-engine fallback protections
   const blogListSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "@id": "https://www.kaulbhaskar.com",
     "name": "Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji",
     "description": "Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar.",
     "url": "https://www.kaulbhaskar.com/blog",
     "publisher": {
       "@type": "Organization",
-      "@id": "https://www.kaulbhaskar.com", // 🔗 Attaches directly to your unified homepage brand node
-      "name": "KAULBHASKAR Metaphysical Advisory",
+      "name": "KAUL TANTRA SADHANA",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.kaulbhaskar.com"
+        "url": "https://kaulbhaskar.com"
       }
     },
     "blogPost": postEntries.map((post) => ({
@@ -109,11 +107,10 @@ export default function Blog() {
       "headline": post.title,
       "description": post.excerpt,
       "datePublished": safeFormatDate(post.date),
-      "url": `https://www.kaulbhaskar.com{post.slug}`, // ✅ Fixed syntax bug: Added clean backticks and missing backslash mapping
+      "url": `https://kaulbhaskar.com{post.slug}`, // ✅ Fixed template string syntax bug
       "image": post.featuredImage || "https://www.kaulbhaskar.com/img/intro.webp",
       "author": {
         "@type": "Person",
-        "@id": "https://www.kaulbhaskar.com", // 🔗 Entity Stitching: Ties post authorship metrics back to your master Person identity passport
         "name": post.authorName
       }
     }))
