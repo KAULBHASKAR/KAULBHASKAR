@@ -49,14 +49,14 @@ const Profile: React.FC = () => {
   const profileSchema = {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
-    "@id": "https://kaulbhaskar.com", // Assuming /profile page routing match
-    "url": "https://kaulbhaskar.com",
+    "@id": "https://www.kaulbhaskar.com", // Assuming /profile page routing match
+    "url": "https://www.kaulbhaskar.com",
     "mainEntity": {
       "@type": "Person",
-      "@id": "https://kaulbhaskar.com", // 🔗 Unified Identity Key Linkage
+      "@id": "https://www.kaulbhaskar.com", // 🔗 Unified Identity Key Linkage
       "name": "KAULBHASKAR GURU Ji",
       "alternateName": ["कौल भास्कर", "Guru Ji Kaulbhaskar", "Bhaskar Ji"],
-      "image": "https://kaulbhaskar.com", 
+      "image": "https://www.kaulbhaskar.com", 
       "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji.",
       "jobTitle": "Metaphysical Strategist & Consultant",
       "knowsAbout": [
@@ -67,6 +67,7 @@ const Profile: React.FC = () => {
         "श्रीविद्या (Sri Vidya Upasana)",
         "कौल मार्ग (Kaula Marga)",
         "Dakshinamurti Sampradaya"
+        "Matsyendra Nath Lineage"
       ],
       "knowsLanguage": [
         { "@type": "Language", "name": "English" },
@@ -87,21 +88,21 @@ const Profile: React.FC = () => {
       <Helmet>
         <title>Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory</title>
         <meta name="description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
-        <link rel="canonical" href="https://kaulbhaskar.com" />
+        <link rel="canonical" href="https://www.kaulbhaskar.com" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://kaulbhaskar.com" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com" />
         <meta property="og:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta property="og:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
-        <meta property="og:image" content="https://kaulbhaskar.com" /> {/* ✅ Fixed explicit file endpoint path */}
+        <meta property="og:image" content="https://www.kaulbhaskar.com" /> {/* ✅ Fixed explicit file endpoint path */}
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://kaulbhaskar.com" />
+        <meta name="twitter:url" content="https://www.kaulbhaskar.com" />
         <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta name="twitter:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
-        <meta name="twitter:image" content="https://kaulbhaskar.com" /> {/* ✅ Fixed explicit file endpoint path */}
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com" /> {/* ✅ Fixed explicit file endpoint path */}
 
         {/* ✅ Dynamic injection of the validated schema payload */}
         <script type="application/ld+json">
