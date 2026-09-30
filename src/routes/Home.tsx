@@ -21,7 +21,31 @@ const Meet = lazy(() => import("../components/Meet"));
 const LatestPost = lazy(() => import("../components/LatestPost"));
 
 const Home: React.FC = () => {
- 
+  const homeSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://www.kaulbhaskar.com",
+        "url": "https://www.kaulbhaskar.com",
+        "name": "KAULBHASKAR",
+        "description": "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana.",
+        "publisher": {
+          "@id": "https://www.kaulbhaskar.com" // ✅ Links homepage straight to your official Person entity profile
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://www.kaulbhaskar.com",
+        "name": "KAULBHASKAR Metaphysical Advisory",
+        "url": "https://www.kaulbhaskar.com",
+        "logo": "https://kaulbhaskar.com", // Replace with your exact square logo layout asset path if available
+        "sameAs": [
+          "https://www.tantrasadhana.org"
+        ]
+      }
+    ]
+  };
   return (
     <div>
       <SEO 
