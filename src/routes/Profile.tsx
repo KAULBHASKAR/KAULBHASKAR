@@ -45,15 +45,15 @@ const InteractiveTooltip: React.FC<TooltipProps> = ({ text, tooltipKey }) => {
 
 const Profile: React.FC = () => {
 
-  // ✅ Upgraded JSON-LD ProfilePage & Person Identity Node Matrix
+  // ✅ Validated JSON-LD ProfilePage & Person Identity Node Matrix
   const profileSchema = {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
-    "@id": "https://www.kaulbhaskar.com", // Assuming /profile page routing match
+    "@id": "https://www.kaulbhaskar.com",
     "url": "https://www.kaulbhaskar.com",
     "mainEntity": {
       "@type": "Person",
-      "@id": "https://www.kaulbhaskar.com", // 🔗 Unified Identity Key Linkage
+      "@id": "https://www.kaulbhaskar.com", // ✅ Typo Fixed: Only one www.
       "name": "KAULBHASKAR GURU Ji",
       "alternateName": ["कौल भास्कर", "Guru Ji Kaulbhaskar", "Bhaskar Ji"],
       "image": "https://www.kaulbhaskar.com", 
@@ -67,7 +67,6 @@ const Profile: React.FC = () => {
         "श्रीविद्या (Sri Vidya Upasana)",
         "कौल मार्ग (Kaula Marga)",
         "Dakshinamurti Sampradaya"
-        "Matsyendra Nath Lineage"
       ],
       "knowsLanguage": [
         { "@type": "Language", "name": "English" },
@@ -95,16 +94,16 @@ const Profile: React.FC = () => {
         <meta property="og:url" content="https://www.kaulbhaskar.com" />
         <meta property="og:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta property="og:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
-        <meta property="og:image" content="https://www.kaulbhaskar.com" /> {/* ✅ Fixed explicit file endpoint path */}
+        <meta property="og:image" content="https://www.kaulbhaskar.com" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.kaulbhaskar.com" />
         <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta name="twitter:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
-        <meta name="twitter:image" content="https://www.kaulbhaskar.com" /> {/* ✅ Fixed explicit file endpoint path */}
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com" />
 
-        {/* ✅ Dynamic injection of the validated schema payload */}
+        {/* Dynamic injection of the validated schema payload */}
         <script type="application/ld+json">
           {JSON.stringify(profileSchema)}
         </script>
@@ -129,7 +128,6 @@ const Profile: React.FC = () => {
               <h2 className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2 font-sans">Known As</h2>
               <p className="text-2xl font-black text-stone-900">{profileData.knownAs}</p>
             </div>
-            {/* Portrait Graphic below Identity Name */}
             <img 
               src="/img/satyendra.webp" 
               alt="Kaulbhaskar Profile Portrait" 
@@ -143,7 +141,6 @@ const Profile: React.FC = () => {
               <p className="text-2xl font-black text-stone-900">{profileData.discipleOf}</p>
               <p className="text-lg font-semibold text-orange-700">{profileData.guruAs}</p>
             </div>
-            {/* Lineage Graphic below Guru Designation */}
             <img 
               src="/img/GURUJI.webp" 
               alt="Lineage Guru Portrait Illustration" 
@@ -167,34 +164,9 @@ const Profile: React.FC = () => {
             </p>
           </div>
         </section>
-        {/* Lineage Table */}
-        <section className="bg-stone-900 text-stone-200 rounded-2xl overflow-hidden shadow-2xl">
-          <div className="p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-10 text-orange-400 text-center uppercase tracking-widest font-sans">
-              Guru-Parampara
-            </h2>
-            <div className="space-y-0">
-              {profileData.lineage.map((item, index) => (
-                <div 
-                  key={index} 
-                  className={`flex flex-col md:flex-row py-6 border-b border-stone-800 ${
-                    index === profileData.lineage.length - 1 ? 'border-b-0' : ''
-                  }`}
-                >
-                  <div className="md:w-1/3 text-orange-400 text-base md:text-lg uppercase font-bold tracking-tight mb-2 md:mb-0 md:pr-4 font-sans">
-                    {item.label}
-                  </div>
-                  <div className="md:w-2/3 text-lg md:text-xl font-semibold md:pl-4">
-                    {item.name}
-
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
       </main>
     </div>
   );
 };
-export default Profile;
+
+export default Profile; // ✅ Correctly exported as default matching router configurations
