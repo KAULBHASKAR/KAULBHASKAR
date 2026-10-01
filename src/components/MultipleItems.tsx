@@ -1,4 +1,4 @@
-import { useState, useEffect, type FC } from "react"; // Removed 'React' to fix Vercel TS6133
+import { type FC } from "react"; 
 import SliderComponent from "react-slick";
 import type { Settings } from "react-slick";
 import { HiStar } from "react-icons/hi";
@@ -6,8 +6,10 @@ import { HiStar } from "react-icons/hi";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// @ts-ignore - Critical for Vite Production builds to avoid Error #130
-const Slider = (SliderComponent as any).default || SliderComponent;
+// ✅ CLEAN FIX: Resolves the Slider runtime module scope safely for Vite 
+const Slider = typeof SliderComponent === 'function' 
+  ? SliderComponent 
+  : (SliderComponent as any).default;
 
 interface ServicePost {
   heading: string;
