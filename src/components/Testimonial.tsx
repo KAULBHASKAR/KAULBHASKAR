@@ -1,4 +1,4 @@
-import { useState, useEffect, type FC } from "react"; // Removed 'React' here
+import { useState, useEffect, type FC } from "react";
 import SliderComponent from "react-slick";
 import type { Settings } from "react-slick";
 import { FaStar } from "react-icons/fa";
@@ -6,8 +6,10 @@ import { FaStar } from "react-icons/fa";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-// @ts-ignore - Critical for Vite Production builds to avoid Error #130
-const Slider = (SliderComponent as any).default || SliderComponent;
+// ✅ CLEAN FIX: Statically extracts the React slider component context cleanly for Vite
+const Slider = typeof SliderComponent === 'function' 
+  ? SliderComponent 
+  : (SliderComponent as any).default;
 
 interface TestimonialData {
   name: string;
