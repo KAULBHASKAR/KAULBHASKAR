@@ -1,12 +1,15 @@
-import { useState, useEffect, type FC } from "react"; // Removed 'React' to fix Vercel TS6133
+import { useState, useEffect, type FC } from "react";
 import SliderComponent from "react-slick";
 import type { Settings } from "react-slick";
 
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-// @ts-ignore - Critical for Vite Production builds to avoid Error #130
-const Slider = (SliderComponent as any).default || SliderComponent;
+// ✅ The Clean Interop Solution for Vite:
+// Statically extracts the React Component safely without breaking Rollup's chunk analyzer
+const Slider = typeof SliderComponent === 'function' 
+  ? SliderComponent 
+  : (SliderComponent as any).default;
 
 interface MentorData {
   src: string;
