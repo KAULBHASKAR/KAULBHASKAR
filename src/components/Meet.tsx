@@ -1,10 +1,8 @@
 import type { FC } from "react";
-import React from 'react'; 
+import AnimatedTitle from "./AnimatedTitle";
 import Button from "./Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useNavigate } from "react-router"; // import from react-router
-
-const AnimatedTitle = React.lazy(() => import('../components/AnimatedTitle'));
 
 interface ImageClipBoxProps {
   src: string;
