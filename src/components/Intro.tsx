@@ -2,7 +2,8 @@ import React from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import AnimatedTitle from "../components/AnimatedTitle";
+
+const AnimatedTitle = React.lazy(() => import('../components/AnimatedTitle'));
 
 // Register GSAP Plugin
 gsap.registerPlugin(ScrollTrigger);
