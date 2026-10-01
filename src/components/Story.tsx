@@ -1,7 +1,8 @@
 import gsap from "gsap";
 import { useRef } from "react";
 import type { MouseEvent } from "react";
-import AnimatedTitle from "./AnimatedTitle";
+
+const AnimatedTitle = React.lazy(() => import('../components/AnimatedTitle'));
 
 const Story: React.FC = () => {
   const frameRef = useRef<HTMLImageElement>(null);
