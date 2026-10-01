@@ -1,4 +1,4 @@
-import { type FC } from "react"; 
+import { useState, useEffect, type FC } from "react";  
 import SliderComponent from "react-slick";
 import type { Settings } from "react-slick";
 import { HiStar } from "react-icons/hi";
