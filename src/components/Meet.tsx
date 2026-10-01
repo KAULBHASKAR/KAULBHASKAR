@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import React from 'react'; 
 import Button from "./Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useNavigate } from "react-router"; // import from react-router
