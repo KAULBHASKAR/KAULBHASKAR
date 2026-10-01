@@ -5,15 +5,16 @@ import type { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-// @ts-ignore - Critical for Vite Production builds to avoid Error #130
-const Slider = (SliderComponent as any).default || SliderComponent;
+// ✅ CLEAN FIX: Statically resolves the Slider component context safely for Vite
+const Slider = typeof SliderComponent === 'function' 
+  ? SliderComponent 
+  : (SliderComponent as any).default;
 
 interface MudraImage {
   src: string;
   title: string;
   description: string;
 }
-
 const Mudra: React.FC = () => {
   // ✅ FIX 1: Native responsive properties eliminate the dynamic window resize event loop
   const settings: Settings = {
