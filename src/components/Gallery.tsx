@@ -187,13 +187,13 @@ const Gallery: FC = () => {
 
         {/* Clear layout shifting warnings by fixing core structure spacing grids */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-20">
-          {mediaItems.map((src, i) => (
+          {mediaItems.map((src) => (
             <BentoTilt
-              key={src} // Better practice than using array index keys
+              key={src} 
               className="relative w-full overflow-hidden rounded-md border border-white/10"
-            >
-              <BentoCard src={src} />
-            </BentoTilt>
+             >
+             <BentoCard src={src} />
+             </BentoTilt>
           ))}
         </div>
       </div>
