@@ -16,7 +16,6 @@ const BentoTilt: FC<BentoTiltProps> = ({ children, className = "" }) => {
     const { current: el } = itemRef;
     const rect = el.getBoundingClientRect();
 
-    // Map tilt relative to bounding box boundaries instead of the global window frame
     const x = clientX - rect.left;
     const y = clientY - rect.top;
     const rotateX = ((y / rect.height) - 0.5) * 15;
@@ -36,7 +35,7 @@ const BentoTilt: FC<BentoTiltProps> = ({ children, className = "" }) => {
       style={{
         transform: transformStyle,
         transition: "transform 0.3s ease-out",
-        willChange: "transform", // Informs browser to optimize compositing layers
+        willChange: "transform",
       }}
     >
       {children}
@@ -58,16 +57,15 @@ const BentoCard: FC<BentoCardProps> = ({ src, title, description }) => {
   const isYouTube = src.includes("youtube.com") || src.includes("youtu.be");
   const isImage = /\.(jpeg|jpg|png|gif|webp)\$/i.test(src);
 
-  // Lazy load assets using Intersection Observer to eliminate rendering bloat
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsIntersected(true);
-          observer.disconnect(); // Disconnect once loaded
+          observer.disconnect();
         }
       },
-      { rootMargin: "200px" } // Start pulling assets 200px before arriving in viewport
+      { rootMargin: "200px" }
     );
 
     if (containerRef.current) {
@@ -78,14 +76,14 @@ const BentoCard: FC<BentoCardProps> = ({ src, title, description }) => {
   }, []);
 
   const getYouTubeEmbedUrl = (url: string): string => {
-    let cleanUrl = url;
+    let videoId = "";
     if (url.includes("watch?v=")) {
-      cleanUrl = url.replace("watch?v=", "embed/");
+      videoId = url.split("watch?v=")[1].split("&")[0];
     } else if (url.includes("youtu.be")) {
-      const videoId = url.split("youtu.be/")[1];
-      cleanUrl = `https://www.youtube.com/embed/${videoId}`;
+      videoId = url.split("youtu.be/")[1];
     }
-    return `${cleanUrl}?autoplay=1`;
+    // Added 'modestbranding=1', 'rel=0', and 'iv_load_policy=3' to clean out YouTube interface blocks
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3`;
   };
 
   const getYouTubeThumbnail = (url: string): string => {
@@ -99,8 +97,7 @@ const BentoCard: FC<BentoCardProps> = ({ src, title, description }) => {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full aspect-video bg-black overflow-hidden">
-      {/* Do not evaluate DOM nodes until parent container crosses root viewport range */}
+    <div ref={containerRef} className="relative w-full aspect-video bg-black overflow-hidden flex items-center justify-center">
       {isIntersected && (
         <>
           {isYouTube ? (
@@ -110,7 +107,7 @@ const BentoCard: FC<BentoCardProps> = ({ src, title, description }) => {
                 title={typeof title === "string" ? title : "YouTube video"}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                className="w-full h-full absolute inset-0 object-cover"
+                className="w-full h-full absolute inset-0 object-cover border-0"
               />
             ) : (
               <img
@@ -140,26 +137,31 @@ const BentoCard: FC<BentoCardProps> = ({ src, title, description }) => {
         </>
       )}
 
-      {/* Overlay markup context */}
-      <div className="absolute inset-0 z-10 flex flex-col justify-between p-5 pointer-events-none">
-        <div className="bento-title special-font text-red-500">
-          {title}
-          {description && (
-            <p className="mt-3 max-w-64 wrap-break-word text-xs md:text-base text-yellow-400">
-              {description}
-            </p>
+      {/* 
+        ✅ FIXED: Only render layout padding frames if matching title contextual strings are provided.
+        This prevents empty block components from generating invisible padding flags underneath video margins.
+      */}
+      {(title || description || isYouTube) && (
+        <div className="absolute inset-0 z-10 flex flex-col justify-between p-5 pointer-events-none">
+          <div className="bento-title special-font text-red-500">
+            {title && title}
+            {description && (
+              <p className="mt-3 max-w-64 wrap-break-word text-xs md:text-base text-yellow-400">
+                {description}
+              </p>
+            )}
+          </div>
+
+          {isYouTube && isIntersected && (
+            <button
+              onClick={() => setIsPlaying((prev) => !prev)}
+              className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-md text-sm transition-colors hover:bg-black/90 pointer-events-auto z-20"
+            >
+              {isPlaying ? "⏸ Pause" : "▶ Play"}
+            </button>
           )}
         </div>
-
-        {isYouTube && isIntersected && (
-          <button
-            onClick={() => setIsPlaying((prev) => !prev)}
-            className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-md text-sm transition-colors hover:bg-black/90 pointer-events-auto"
-          >
-            {isPlaying ? "⏸ Pause" : "▶ Play"}
-          </button>
-        )}
-      </div>
+      )}
     </div>
   );
 };
@@ -185,15 +187,14 @@ const Gallery: FC = () => {
           </p>
         </div>
 
-        {/* Clear layout shifting warnings by fixing core structure spacing grids */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-20">
           {mediaItems.map((src) => (
             <BentoTilt
               key={src} 
               className="relative w-full overflow-hidden rounded-md border border-white/10"
-             >
-             <BentoCard src={src} />
-             </BentoTilt>
+            >
+              <BentoCard src={src} />
+            </BentoTilt>
           ))}
         </div>
       </div>
