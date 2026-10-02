@@ -40,7 +40,7 @@ const Home: React.FC = () => {
         "@id": "https://www.kaulbhaskar.com",
         "name": "KAULBHASKAR Metaphysical Advisory",
         "url": "https://www.kaulbhaskar.com",
-        "logo": "https://kaulbhaskar.com", // Replace with your exact square logo layout asset path if available
+        "logo": "https://kaulbhaskar.com/img/logo.webp", // Replace with your exact square logo layout asset path if available
         "sameAs": [
           "https://www.tantrasadhana.org"
         ]
