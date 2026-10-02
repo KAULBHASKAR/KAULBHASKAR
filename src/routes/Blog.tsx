@@ -99,7 +99,7 @@ export default function Blog() {
       "name": "KAUL TANTRA SADHANA",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://kaulbhaskar.com"
+        "url": "https://kaulbhaskar.com/img/logo.webp"
       }
     },
     "blogPost": postEntries.map((post) => ({
