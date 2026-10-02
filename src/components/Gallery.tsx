@@ -30,7 +30,7 @@ const Intro: React.FC = () => {
   });
 
   return (
-    <div id="about" className=" w-screen">
+    <div id="about" className="min-h-screen w-screen">
       <div className="relative mb-8 mt-36 flex flex-col items-center gap-5">
         <h2 className="font-general text-sm text-center uppercase md:text-[30px]">
           Under Mentorship Of KAULBHASKAR Guru Ji
