@@ -92,14 +92,14 @@ const Profile: React.FC = () => {
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com/profile" />
         <meta property="og:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta property="og:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
         <meta property="og:image" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
+        <meta name="twitter:url" content="https://www.kaulbhaskar.com/profile" />
         <meta name="twitter:title" content="Guru Profile & Lineage | KAULBHASKAR Metaphysical Advisory" />
         <meta name="twitter:description" content="Discover the analytical background & ancient spiritual lineage of Kaulbhaskar—bridging traditional roots with precision Tantric & astrological advisory." />
         <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
