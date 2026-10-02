@@ -14,7 +14,7 @@ const Services: React.FC = () => {
   const servicesSchema = {
     "@context": "https://schema.org",
     "@type": "ItemPage",
-    "@id": "https://www.kaulbhaskar.com",
+    "@id": "https://www.kaulbhaskar.com/services",
     "url": "https://www.kaulbhaskar.com/services",
     "mainEntity": {
       "@type": "Service",
@@ -22,7 +22,7 @@ const Services: React.FC = () => {
       "name": "KAULBHASKAR Metaphysical Advisory Services",
       "provider": {
         "@type": "Person",
-        "@id": "https://www.kaulbhaskar.com" // 🔗 Perfect Linkage: Connects directly back to your primary profile identity node
+        "@id": "https://www.kaulbhaskar.com/services" // 🔗 Perfect Linkage: Connects directly back to your primary profile identity node
       },
       "areaServed": "Worldwide",
       "availableLanguage": ["English", "Hindi", "Sanskrit"],
