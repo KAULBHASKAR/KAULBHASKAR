@@ -93,7 +93,7 @@ const About: React.FC = () => {
       <Helmet>
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://www.kaulbhaskar.com/about-us" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
         <meta property="og:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
         <meta property="og:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
         <meta property="og:image" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
