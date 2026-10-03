@@ -14,7 +14,10 @@ const navItems = [
 ];
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+
+  // FIX: Pre-evaluate path right away so it renders perfectly on frame one without shifting
+  const [isScrolled, setIsScrolled] = useState(location.pathname !== "/");
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,8 +25,12 @@ export default function Navbar() {
   const [hasInteractedWithAudio, setHasInteractedWithAudio] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
-  const location = useLocation();
   const rafId = useRef<number | null>(null);
+
+  // Sync scroll state instantly if the user changes pages programmatically
+  useEffect(() => {
+    setIsScrolled(window.scrollY > 20 || location.pathname !== "/");
+  }, [location.pathname]);
 
   useEffect(() => {
     // Optimization: Skip processing scroll listeners if we are on a narrow mobile viewport
@@ -119,7 +126,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Toggle Trigger Button (Uses pure inline SVGs instead of react-icons) */}
+        {/* Mobile Toggle Trigger Button */}
         <button 
           className="md:hidden text-white text-2xl focus:outline-none" 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
