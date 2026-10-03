@@ -110,6 +110,7 @@ const About: React.FC = () => {
           {JSON.stringify(aboutSchema)}
         </script>
       </Helmet>
+
       <div className="flexCenter max-container relative w-full min-h-screen">
         <img
           src="/img/ABOUT_US.webp"
@@ -151,7 +152,6 @@ const About: React.FC = () => {
             the lineage of Sri <strong>Matsyendra Nath</strong> (also known as Machendra Nath) ji, a legend of Naths and one of{" "} <strong>84 Maha Siddhas</strong>. A direct disciple of esteemed KAULA
             of Prayag, Sri <strong>KULBHUSHANANAND NATH</strong>, Guru Ji is basically an Urdhvamanayee Upasaka of MAHATRIPURSUNDARI. Sri Kaulbhaskar Ji, an expert of <strong>KAULA MARGA</strong>, has spent
             more than 30 years painstakingly perfecting his practice of SRI VIDYA UPASANA of highly mysterious{" "} <strong>DAKSHINAMURTI SAMPRADAYA</strong>.
-          
           </p>
           {/* ✅ Responsive Call Action Button Placed Cleanly Below/Beside Bio Text */}
           <div className="mt-6 flex justify-start">
