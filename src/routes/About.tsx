@@ -1,10 +1,10 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import LatestPost from "../components/LatestPost";
 import { TiLocationArrow } from "react-icons/ti";
 import SEO from "../components/SEO";
-import LatestPost from "../components/LatestPost";
 
-// ✅ Lazy load CalendarComponent properly
+// ✅ Lazy load CalendarComponent
 const CalendarComponent = lazy(() => import("../components/CalendarComponent"));
 
 const About: React.FC = () => {
@@ -29,17 +29,18 @@ const About: React.FC = () => {
   }, []); // Run once on mount
 
   // ✅ JSON-LD AboutPage & Person Schema Definition (Aligned to /about-us)
+    // ✅ Upgraded JSON-LD AboutPage & Person Schema Definition (Bilingual & Lineage-Optimized)
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
     "mainEntity": {
       "@type": "Person",
-      "@id": "https://kaulbhaskar.com",
+      "@id": "https://www.kaulbhaskar.com",
       "name": "KAULBHASKAR GURU Ji",
       "alternateName": ["कौल भास्कर", "Guru Ji Kaulbhaskar", "Bhaskar Ji"],
       "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji and a direct disciple of Sri Kulbhushananand Nath.",
-      "url": "https://kaulbhaskar.com/about-us",
-      "image": "https://kaulbhaskar.com/img/satyendra.webp", // Points to your actual live bio photo path
+      "url": "https://www.kaulbhaskar.com/img/satyendra.webp",
+      "image": "https://www.kaulbhaskar.com/img/satyendra.webp", // Points to your actual live bio photo path
       "jobTitle": "Metaphysical Consultant and Spiritual Mentor",
       "knowsAbout": [
         "Tantra Shastra",
@@ -68,10 +69,11 @@ const About: React.FC = () => {
       "worksFor": {
         "@type": "Organization",
         "name": "KAULBHASKAR Metaphysical Advisory",
-        "url": "https://kaulbhaskar.com"
+        "url": "https://www.kaulbhaskar.com"
       }
     }
   };
+
 
   return (
     <div className="flex flex-col w-full content-center">
@@ -79,35 +81,29 @@ const About: React.FC = () => {
       <SEO
         title="About Kaulbhaskar Guru Ji | Tantra, Astrology & Spiritual Mentor"
         description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
-        canonical="https://kaulbhaskar.com/about-us"
+        canonical="https://www.kaulbhaskar.com/about-us"
         keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
         breadcrumbs={[
-          { name: "Home", url: "https://kaulbhaskar.com" },
-          { name: "About Us", url: "https://kaulbhaskar.com/about-us" },
+          { name: "Home", url: "https://www.kaulbhaskar.com" },
+          { name: "About Us", url: "https://www.kaulbhaskar.com/about-us" },
         ]}
       />
 
       {/* 2. Direct Helmet injection to add Open Graph tags and JSON-LD text definitions */}
       <Helmet>
-        {/* Open Graph / Facebook Meta Customizations */}
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://kaulbhaskar.com/about-us" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
         <meta property="og:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
         <meta property="og:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
-        
-        {/* Target Profile Specific Images */}
-        <meta property="og:image" content="https://kaulbhaskar.com/img/satyendra.webp" />
-        <meta property="og:image:secure_url" content="https://kaulbhaskar.com/img/satyendra.webp" />
-        <meta property="og:image:width" content="940" />
-        <meta property="og:image:height" content="960" />
-        <meta property="og:image:type" content="image/webp" />
+        <meta property="og:image" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
 
-        {/* Twitter Card Layout Engine Definitions */}
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://kaulbhaskar.com/about-us" />
+        <meta name="twitter:url" content="https://www.kaulbhaskar.com/about-us" />
         <meta name="twitter:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
         <meta name="twitter:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
-        <meta name="twitter:image" content="https://kaulbhaskar.com/img/satyendra.webp" />
+        <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
 
         {/* Inject JSON-LD Object safely for TypeScript compilation */}
         <script type="application/ld+json">
@@ -156,6 +152,7 @@ const About: React.FC = () => {
             the lineage of Sri <strong>Matsyendra Nath</strong> (also known as Machendra Nath) ji, a legend of Naths and one of{" "} <strong>84 Maha Siddhas</strong>. A direct disciple of esteemed KAULA
             of Prayag, Sri <strong>KULBHUSHANANAND NATH</strong>, Guru Ji is basically an Urdhvamanayee Upasaka of MAHATRIPURSUNDARI. Sri Kaulbhaskar Ji, an expert of <strong>KAULA MARGA</strong>, has spent
             more than 30 years painstakingly perfecting his practice of SRI VIDYA UPASANA of highly mysterious{" "} <strong>DAKSHINAMURTI SAMPRADAYA</strong>.
+          
           </p>
           {/* ✅ Responsive Call Action Button Placed Cleanly Below/Beside Bio Text */}
           <div className="mt-6 flex justify-start">
@@ -168,17 +165,14 @@ const About: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* ✅ Correctly structured bottom block with dynamic fallback dependencies intact */}
-      <div className="bg-yellow-400 p-6 flex flex-col items-center">
-        <Suspense fallback={<div className="text-center py-4 font-bold">Loading calendar…</div>}>
+            
+      <div className="bg-yellow-400">
+        <Suspense fallback={<div>Loading calendar…</div>}>
           <CalendarComponent />
         </Suspense>
-        
-        <div className="w-full mt-8">
-          <LatestPost />
-        </div>
+        <LatestPost />
       </div>
+
       <section className="w-full text-black text-4xl font-bold text-center justify-center p-10 h-full mt-5 ">
         <p>We are some of the experts in Tantra & Astrology</p>
       </section>
