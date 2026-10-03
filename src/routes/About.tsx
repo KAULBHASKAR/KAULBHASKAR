@@ -1,11 +1,7 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import LatestPost from "../components/LatestPost";
 import { TiLocationArrow } from "react-icons/ti";
 import SEO from "../components/SEO";
-
-// ✅ Lazy load CalendarComponent
-const CalendarComponent = lazy(() => import("../components/CalendarComponent"));
 
 const About: React.FC = () => {
 
@@ -15,7 +11,7 @@ const About: React.FC = () => {
     const hash = window.location.hash;
 
     if (hash) {
-      // ✅ 500ms delay helps wait for the 100vh hero image & lazy components to settle
+      // ✅ 500ms delay helps wait for the 100vh hero image to settle
       const timeoutId = setTimeout(() => {
         const id = hash.replace("#", "");
         const element = document.getElementById(id);
@@ -29,7 +25,6 @@ const About: React.FC = () => {
   }, []); // Run once on mount
 
   // ✅ JSON-LD AboutPage & Person Schema Definition (Aligned to /about-us)
-    // ✅ Upgraded JSON-LD AboutPage & Person Schema Definition (Bilingual & Lineage-Optimized)
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
@@ -39,7 +34,7 @@ const About: React.FC = () => {
       "name": "KAULBHASKAR GURU Ji",
       "alternateName": ["कौल भास्कर", "Guru Ji Kaulbhaskar", "Bhaskar Ji"],
       "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji and a direct disciple of Sri Kulbhushananand Nath.",
-      "url": "https://www.kaulbhaskar.com/img/satyendra.webp",
+      "url": "https://www.kaulbhaskar.com/about-us",
       "image": "https://www.kaulbhaskar.com/img/satyendra.webp", // Points to your actual live bio photo path
       "jobTitle": "Metaphysical Consultant and Spiritual Mentor",
       "knowsAbout": [
@@ -74,7 +69,6 @@ const About: React.FC = () => {
     }
   };
 
-
   return (
     <div className="flex flex-col w-full content-center">
       {/* 1. Aligned to your /about-us sitemap setup path configuration */}
@@ -91,14 +85,20 @@ const About: React.FC = () => {
 
       {/* 2. Direct Helmet injection to add Open Graph tags and JSON-LD text definitions */}
       <Helmet>
-        {/* Open Graph / Facebook */}
+        {/* Open Graph / Facebook Meta Customizations */}
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
+        <meta property="og:url" content="https://www.kaulbhaskar.com/about-us" />
         <meta property="og:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
         <meta property="og:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
+        
+        {/* Target Profile Specific Images */}
         <meta property="og:image" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
+        <meta property="og:image:secure_url" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
+        <meta property="og:image:width" content="940" />
+        <meta property="og:image:height" content="960" />
+        <meta property="og:image:type" content="image/webp" />
 
-        {/* Twitter */}
+        {/* Twitter Card Layout Engine Definitions */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.kaulbhaskar.com/about-us" />
         <meta name="twitter:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
@@ -110,7 +110,6 @@ const About: React.FC = () => {
           {JSON.stringify(aboutSchema)}
         </script>
       </Helmet>
-
       <div className="flexCenter max-container relative w-full min-h-screen">
         <img
           src="/img/ABOUT_US.webp"
