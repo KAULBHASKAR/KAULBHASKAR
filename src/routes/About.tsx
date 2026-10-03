@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { TiLocationArrow } from "react-icons/ti";
 import SEO from "../components/SEO";
+import LatestPost from "../components/LatestPost";
+
+// ✅ Lazy load CalendarComponent properly
+const CalendarComponent = lazy(() => import("../components/CalendarComponent"));
 
 const About: React.FC = () => {
 
@@ -11,7 +15,7 @@ const About: React.FC = () => {
     const hash = window.location.hash;
 
     if (hash) {
-      // ✅ 500ms delay helps wait for the 100vh hero image to settle
+      // ✅ 500ms delay helps wait for the 100vh hero image & lazy components to settle
       const timeoutId = setTimeout(() => {
         const id = hash.replace("#", "");
         const element = document.getElementById(id);
@@ -30,12 +34,12 @@ const About: React.FC = () => {
     "@type": "AboutPage",
     "mainEntity": {
       "@type": "Person",
-      "@id": "https://www.kaulbhaskar.com",
+      "@id": "https://kaulbhaskar.com",
       "name": "KAULBHASKAR GURU Ji",
       "alternateName": ["कौल भास्कर", "Guru Ji Kaulbhaskar", "Bhaskar Ji"],
       "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji and a direct disciple of Sri Kulbhushananand Nath.",
-      "url": "https://www.kaulbhaskar.com/about-us",
-      "image": "https://www.kaulbhaskar.com/img/satyendra.webp", // Points to your actual live bio photo path
+      "url": "https://kaulbhaskar.com/about-us",
+      "image": "https://kaulbhaskar.com/img/satyendra.webp", // Points to your actual live bio photo path
       "jobTitle": "Metaphysical Consultant and Spiritual Mentor",
       "knowsAbout": [
         "Tantra Shastra",
@@ -64,7 +68,7 @@ const About: React.FC = () => {
       "worksFor": {
         "@type": "Organization",
         "name": "KAULBHASKAR Metaphysical Advisory",
-        "url": "https://www.kaulbhaskar.com"
+        "url": "https://kaulbhaskar.com"
       }
     }
   };
@@ -75,11 +79,11 @@ const About: React.FC = () => {
       <SEO
         title="About Kaulbhaskar Guru Ji | Tantra, Astrology & Spiritual Mentor"
         description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
-        canonical="https://www.kaulbhaskar.com/about-us"
+        canonical="https://kaulbhaskar.com/about-us"
         keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
         breadcrumbs={[
-          { name: "Home", url: "https://www.kaulbhaskar.com" },
-          { name: "About Us", url: "https://www.kaulbhaskar.com/about-us" },
+          { name: "Home", url: "https://kaulbhaskar.com" },
+          { name: "About Us", url: "https://kaulbhaskar.com/about-us" },
         ]}
       />
 
@@ -87,23 +91,23 @@ const About: React.FC = () => {
       <Helmet>
         {/* Open Graph / Facebook Meta Customizations */}
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://www.kaulbhaskar.com/about-us" />
+        <meta property="og:url" content="https://kaulbhaskar.com/about-us" />
         <meta property="og:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
         <meta property="og:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
         
         {/* Target Profile Specific Images */}
-        <meta property="og:image" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
-        <meta property="og:image:secure_url" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
+        <meta property="og:image" content="https://kaulbhaskar.com/img/satyendra.webp" />
+        <meta property="og:image:secure_url" content="https://kaulbhaskar.com/img/satyendra.webp" />
         <meta property="og:image:width" content="940" />
         <meta property="og:image:height" content="960" />
         <meta property="og:image:type" content="image/webp" />
 
         {/* Twitter Card Layout Engine Definitions */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://www.kaulbhaskar.com/about-us" />
+        <meta name="twitter:url" content="https://kaulbhaskar.com/about-us" />
         <meta name="twitter:title" content="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts" />
         <meta name="twitter:description" content="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana." />
-        <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/satyendra.webp" />
+        <meta name="twitter:image" content="https://kaulbhaskar.com/img/satyendra.webp" />
 
         {/* Inject JSON-LD Object safely for TypeScript compilation */}
         <script type="application/ld+json">
@@ -164,61 +168,17 @@ const About: React.FC = () => {
           </div>
         </div>
       </section>
-            
-      <div className="bg-yellow-400">
-        <Suspense fallback={<div>Loading calendar…</div>}>
+
+      {/* ✅ Correctly structured bottom block with dynamic fallback dependencies intact */}
+      <div className="bg-yellow-400 p-6 flex flex-col items-center">
+        <Suspense fallback={<div className="text-center py-4 font-bold">Loading calendar…</div>}>
           <CalendarComponent />
         </Suspense>
-        <LatestPost />
-      </div>
-
-      <section className="w-full text-black text-4xl font-bold text-center justify-center p-10 h-full mt-5 ">
-        <p>We are some of the experts in Tantra & Astrology</p>
-      </section>
-
-      <section className="mx-auto w-full h-auto px-4 lg:px-8 pb-10">
-        <div className="flex flex-col lg:flex-row w-full h-auto gap-5 justify-center items-center">
-          <img 
-            src="/mentor/S.Bakshi.webp" 
-            alt="Expert S. Bakshi" 
-            loading="lazy" 
-            decoding="async" 
-            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
-          />
-
-          <img 
-            src="/mentor/Aradhya.webp" 
-            alt="Expert Aradhya" 
-            loading="lazy" 
-            decoding="async" 
-            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
-          />
-
-          <img 
-            src="/mentor/Subhas.webp" 
-            alt="Expert Subhas" 
-            loading="lazy" 
-            decoding="async" 
-            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
-          />
-
-          <img 
-            src="/mentor/Kiran.webp" 
-            alt="Expert Kiran" 
-            loading="lazy" 
-            decoding="async" 
-            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
-          />
-
-          <img 
-            src="/mentor/YATAN.webp" 
-            alt="Expert Yatan" 
-            loading="lazy" 
-            decoding="async" 
-            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
-          />
+        
+        <div className="w-full mt-8">
+          <LatestPost />
         </div>
-      </section>
+      </div>
     </div>
   );
 };
