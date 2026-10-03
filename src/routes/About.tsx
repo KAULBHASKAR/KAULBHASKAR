@@ -179,6 +179,53 @@ const About: React.FC = () => {
           <LatestPost />
         </div>
       </div>
+      <section className="w-full text-black text-4xl font-bold text-center justify-center p-10 h-full mt-5 ">
+        <p>We are some of the experts in Tantra & Astrology</p>
+      </section>
+
+      <section className="mx-auto w-full h-auto px-4 lg:px-8 pb-10">
+        <div className="flex flex-col lg:flex-row w-full h-auto gap-5 justify-center items-center">
+          <img 
+            src="/mentor/S.Bakshi.webp" 
+            alt="Expert S. Bakshi" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
+
+          <img 
+            src="/mentor/Aradhya.webp" 
+            alt="Expert Aradhya" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
+
+          <img 
+            src="/mentor/Subhas.webp" 
+            alt="Expert Subhas" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
+
+          <img 
+            src="/mentor/Kiran.webp" 
+            alt="Expert Kiran" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
+
+          <img 
+            src="/mentor/YATAN.webp" 
+            alt="Expert Yatan" 
+            loading="lazy" 
+            decoding="async" 
+            className="w-full max-w-md lg:w-1/5 h-auto object-cover rounded-lg transition-all duration-300 hover:scale-105 hover:brightness-110 hover:shadow-xl cursor-pointer mx-auto" 
+          />
+        </div>
+      </section>
     </div>
   );
 };
