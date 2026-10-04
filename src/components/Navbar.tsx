@@ -16,7 +16,6 @@ const navItems = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const [hasInteractedWithAudio, setHasInteractedWithAudio] = useState(false);
@@ -24,12 +23,15 @@ export default function Navbar() {
 
   const location = useLocation();
   const rafId = useRef<number | null>(null);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    // Optimization: Skip processing scroll listeners if we are on a narrow mobile viewport
-    if (window.innerWidth < 768 && location.pathname === "/") {
-      return;
-    }
+    // Reset positions and clear menu states on route changes
+    lastScrollY.current = window.scrollY;
+    setIsMobileMenuOpen(false);
+    setIsVisible(true);
+
+    const threshold = 15; // 🚀 Minimum distance pixel check to filter mobile viewport jitter noise
 
     const handleScroll = () => {
       if (rafId.current) return;
@@ -37,13 +39,35 @@ export default function Navbar() {
       rafId.current = window.requestAnimationFrame(() => {
         const currentY = window.scrollY;
 
+        // 1. Manage layout wrapper background states
         const shouldBeScrolled = currentY > 20 || location.pathname !== "/";
         setIsScrolled((prev) => (prev !== shouldBeScrolled ? shouldBeScrolled : prev));
 
-        const shouldBeVisible = currentY <= lastScrollY || currentY <= 100;
+        // 2. Keep header pinned wide open if the viewport is near the top edge
+        if (currentY <= 100) {
+          setIsVisible(true);
+          lastScrollY.current = currentY;
+          rafId.current = null;
+          return;
+        }
+
+        // 3. Prevent layout shifting updates from misinterpreting small scroll movements
+        const scrollDifference = Math.abs(currentY - lastScrollY.current);
+        if (scrollDifference < threshold) {
+          rafId.current = null;
+          return; 
+        }
+
+        // 4. Toggle visibility: Hide on downward scroll, reveal on upward scroll
+        const shouldBeVisible = currentY < lastScrollY.current;
         setIsVisible((prev) => (prev !== shouldBeVisible ? shouldBeVisible : prev));
 
-        setLastScrollY(currentY);
+        // 5. Automatically shut mobile drawer container when scrolling down
+        if (currentY > lastScrollY.current) {
+          setIsMobileMenuOpen(false);
+        }
+
+        lastScrollY.current = currentY;
         rafId.current = null;
       });
     };
@@ -53,7 +77,7 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
       if (rafId.current) window.cancelAnimationFrame(rafId.current);
     };
-  }, [lastScrollY, location.pathname]);
+  }, [location.pathname]);
 
   const toggleAudio = () => {
     if (!hasInteractedWithAudio) setHasInteractedWithAudio(true);
@@ -76,7 +100,6 @@ export default function Navbar() {
             className="hidden md:flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-full text-xs font-bold transition-transform active:scale-95"
           >
             CALL US 
-            {/* Inline SVG replaces TiLocationArrow */}
             <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" className="text-lg" height="1em" width="1em" xmlns="http://w3.org" aria-hidden="true">
               <path d="M21 3L3 10.53v.96l6.84 2.83L12.67 21h.96L21 3z"></path>
             </svg>
@@ -119,7 +142,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Toggle Trigger Button (Uses pure inline SVGs instead of react-icons) */}
+        {/* Mobile Toggle Trigger Button */}
         <button 
           className="md:hidden text-white text-2xl focus:outline-none" 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
