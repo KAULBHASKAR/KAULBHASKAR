@@ -3,10 +3,9 @@ import { lazy, Suspense } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router'; 
 import { Helmet } from 'react-helmet-async';
 
-
+// Keep lazy loading items
 const Navbar = lazy(() => import('./Navbar'));
 const Footer = lazy(() => import('./Footer'));
-// Split the WhatsApp Widget into its own separate chunk
 const WhatsAppWidget = lazy(() => import('./WhatsAppWidget').then(module => ({ default: module.WhatsAppWidget })));
 
 export default function Layout() {
@@ -20,7 +19,10 @@ export default function Layout() {
       <ScrollRestoration /> 
 
       <header className="layout-header">
-        <Navbar /> 
+        {/* Wrap Navbar in Suspense so layout shifts don't disrupt mobile scroll positioning */}
+        <Suspense fallback={<div className="h-16" />}> 
+          <Navbar /> 
+        </Suspense>
       </header>
 
       <main className="flex-1">
@@ -31,7 +33,6 @@ export default function Layout() {
         <Footer />
       </Suspense>
 
-      {/* Wrap with Suspense so it loads in the background */}
       <Suspense fallback={null}>
         <WhatsAppWidget 
           phoneNumber="919934418459" 
