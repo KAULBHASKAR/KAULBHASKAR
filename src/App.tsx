@@ -1,6 +1,5 @@
 // src/App.tsx
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import { HelmetProvider } from 'react-helmet-async';
 import Layout from './components/Layout';
 import ScrollToTop from './components/ScrollToTop'; 
 
@@ -57,9 +56,9 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <HelmetProvider>
+    <>
       <RouterProvider router={router} />
       <ScrollToTop />
-    </HelmetProvider>
+    </>
   );
 }
