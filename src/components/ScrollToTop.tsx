@@ -35,7 +35,7 @@ const ScrollToTop: React.FC = (): React.JSX.Element => {
           aria-label="scroll to top"
           className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-red-700 text-white shadow-md transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-lg"
         >
-            <span className="mt-1 h-2.5 w-2.5 rotate-45 border-l-[3px] border-t-[3px] border-white"></span>
+          <span className="mt-1.5 h-3 w-3 rotate-45 border-l border-t border-white"></span>
         </button>
       )}
     </div>
