@@ -31,7 +31,7 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
     setIsVisible(true);
 
-    const threshold = 15; // 🚀 Minimum distance pixel check to filter mobile viewport jitter noise
+    const threshold = 15; // Minimum distance pixel check to filter mobile viewport jitter noise
 
     const handleScroll = () => {
       if (rafId.current) return;
@@ -58,8 +58,12 @@ export default function Navbar() {
           return; 
         }
 
-        // 4. Toggle visibility: Hide on downward scroll, reveal on upward scroll
-        const shouldBeVisible = currentY < lastScrollY.current;
+        // 4. Toggle visibility: Hide on downward scroll.
+        // 🚀 ONLY reappear if scrolling up AND the user has scrolled near the top (e.g., within 300px)
+        const isScrollingUp = currentY < lastScrollY.current;
+        const isNearTop = currentY < 300; 
+        const shouldBeVisible = isScrollingUp && isNearTop;
+        
         setIsVisible((prev) => (prev !== shouldBeVisible ? shouldBeVisible : prev));
 
         // 5. Automatically shut mobile drawer container when scrolling down
