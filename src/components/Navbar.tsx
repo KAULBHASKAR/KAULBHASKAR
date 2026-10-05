@@ -125,7 +125,7 @@ export default function Navbar() {
           ))}
           
           <button 
-            className="ml-4 flex items-center gap-1 min-w-10" 
+            className="ml-4 flex items-center justify-center text-blue-400 hover:text-blue-500 transition-colors duration-200" 
             onClick={toggleAudio}
             aria-label={isAudioPlaying ? "Pause music" : "Play music"}
           >
@@ -135,14 +135,21 @@ export default function Navbar() {
               </Suspense>
             )}
             
-            {[1, 2, 3, 4].map((bar) => (
-              <div
-                key={bar}
-                className={`w-0.75 h-4 bg-blue-400 transition-all duration-300 ${isAudioPlaying ? "animate-bounce" : "h-1"}`}
-                style={{ animationDelay: `${bar * 0.1}s` }}
-                aria-hidden="true" 
-              />
-            ))}
+            {isAudioPlaying ? (
+              /* Speaker Playing Icon */
+              <svg xmlns="http://w3.org" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              </svg>
+            ) : (
+              /* Speaker Muted Icon */
+              <svg xmlns="http://w3.org" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="22" y1="9" x2="16" y2="15"></line>
+                <line x1="16" y1="9" x2="22" y2="15"></line>
+              </svg>
+            )}
           </button>
         </div>
 
