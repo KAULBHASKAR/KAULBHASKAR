@@ -125,7 +125,7 @@ export default function Navbar() {
           ))}
           
           <button 
-            className="ml-4 flex items-center justify-center text-blue-400 hover:text-blue-500 transition-colors duration-200" 
+            className="ml-4 flex items-center justify-center text-white hover:text-blue-600 transition-colors duration-200" 
             onClick={toggleAudio}
             aria-label={isAudioPlaying ? "Pause music" : "Play music"}
           >
