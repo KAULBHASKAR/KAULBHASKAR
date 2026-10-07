@@ -22,7 +22,7 @@ const Services: React.FC = () => {
       "name": "KAULBHASKAR Metaphysical Advisory Services",
       "provider": {
         "@type": "Person",
-        "@id": "https://www.kaulbhaskar.com/services" // 🔗 Perfect Linkage: Connects directly back to your primary profile identity node
+        "@id": "https://www.kaulbhaskar.com/" // 🔗 Perfect Linkage: Connects directly back to your primary profile identity node
       },
       "areaServed": "Worldwide",
       "availableLanguage": ["English", "Hindi", "Sanskrit"],
@@ -59,8 +59,8 @@ const Services: React.FC = () => {
     <div className="w-full min-h-screen">
       {/* ✅ Aligned canonical path to match your exact sitemap routing */}
       <SEO
-        title="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR"
-        description="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance."
+        title="Metaphysical Consultation & Sri Vidya Mentorship | Services"
+        description="Explore professional spiritual consultation. Authentic Tantric rituals, multi-layered astrological risk mapping, and private Sri Vidya Upasana mentorship."
         canonical="https://www.kaulbhaskar.com/services"
         keywords="Maha Viprita Pratyangira, Lalita Sahastranama Archanam, Shulini Durga, Khadaga Ravana, Shat Chandi Yagyan, Mahavidya Homam"
         breadcrumbs={[
