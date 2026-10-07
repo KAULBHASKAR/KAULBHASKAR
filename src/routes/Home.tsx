@@ -50,7 +50,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <SEO 
-        title="KAULBHASKAR a Legend KAULA | Tantra, Astrology & Spiritual Guidance" 
+        title="KAULBHASKAR a Legend KAULA | Metaphysical Advisory & Tantra Strategy for Leaders" 
         description="Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana; guided by Sri Kaulbhaskar Ji of the Sri Matsyendra Nath lineage."
         keywords="Kulachara, KAULA MARGA, KAULBHASKAR Guru Ji, Sri MATSYENDRA NATH lineage, Kaula tantra sadhana"
         canonical="https://www.kaulbhaskar.com"
