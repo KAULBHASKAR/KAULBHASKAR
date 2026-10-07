@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router";
+import { useParams, Link, useLocation } from "react-router"; // Added useLocation
 import { useState } from "react"; // Added for password state
 import matter from "gray-matter";
 import { Buffer } from "buffer";
@@ -29,6 +29,7 @@ const posts = import.meta.glob<string>("../posts/*.md", {
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
+  const location = useLocation(); // Dynamic browser state reader hook
   const [inputPassword, setInputPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState(false);
@@ -43,6 +44,10 @@ export default function BlogPost() {
   const { data, content } = matter(rawContent);
   const postData = data as PostFrontMatter;
   const isProtected = !!postData.password;
+
+  // Compute target dynamic pagination back URL route
+  const backPageNumber = location.state?.fromPage;
+  const backUrl = backPageNumber ? `/blog?page=${backPageNumber}` : "/blog";
 
   // Handle password submission
   const handleVerify = (e: React.FormEvent) => {
@@ -81,7 +86,8 @@ export default function BlogPost() {
               Unlock Content
             </button>
             
-            <Link to="/blog" className="text-gray-500 hover:text-indigo-600 transition-colors text-sm mt-2">
+            {/* Target URL changed to backUrl state route */}
+            <Link to={backUrl} className="text-gray-500 hover:text-indigo-600 transition-colors text-sm mt-2">
               ← Back to Blog
             </Link>
           </form>
@@ -107,7 +113,8 @@ export default function BlogPost() {
       />
 
       <div className="max-w-5xl mx-auto">
-        <Link to="/blog" className="mt-20 text-sm text-black hover:text-orange-200 mb-8 inline-block">
+        {/* Target URL changed to backUrl state route */}
+        <Link to={backUrl} className="mt-20 text-sm text-black hover:text-orange-200 mb-8 inline-block">
           ← Back to Blog
         </Link>
 
