@@ -73,8 +73,8 @@ export default function Contact(): React.JSX.Element {
     <div className="flex flex-col w-full min-h-screen">
       {/* ✅ Aligned domain mappings to target your live production endpoint paths */}
       <SEO
-        title="Contact Kaulbhaskar | Tantra & Astrology Guidance"
-        description="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra and Astrology consultations in Patna, Bihar."
+        title="Book a Private Metaphysical Consultation | Contact Kaulbhaskar"
+        description="Schedule a secure metaphysical consultation with Guru Ji Kaulbhaskar. Contact our advisory office in Patna, India, for elite lifepath and business mapping."
         canonical="https://kaulbhaskar.com"
         breadcrumbs={[
           { name: "Home", url: "https://kaulbhaskar.com" },
@@ -88,15 +88,15 @@ export default function Contact(): React.JSX.Element {
         {/* Open Graph / Facebook Metadata */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://kaulbhaskar.com/contact" />
-        <meta property="og:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
-        <meta property="og:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra, Astrology & Spiritual consultations in Patna, Bihar." />
+        <meta property="og:title" content="Book a Private Metaphysical Consultation | Contact Kaulbhaskar" />
+        <meta property="og:description" content="Schedule a secure metaphysical consultation with Guru Ji Kaulbhaskar. Contact our advisory office in Patna, India, for elite lifepath and business mapping." />
         <meta property="og:image" content="https://kaulbhaskar.com/img/phone-image.jpeg" />
 
         {/* Twitter Metadata */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://kaulbhaskar.com/contact" />
-        <meta name="twitter:title" content="Contact Kaulbhaskar | Tantra & Astrology Guidance" />
-        <meta name="twitter:description" content="Get in touch with Kaulbhaskar Guru Ji for specialized Tantra, Astrology & Spiritual consultations in Patna, Bihar." />
+        <meta name="twitter:title" content="Book a Private Metaphysical Consultation | Contact Kaulbhaskar" />
+        <meta name="twitter:description" content="Schedule a secure metaphysical consultation with Guru Ji Kaulbhaskar. Contact our advisory office in Patna, India, for elite lifepath and business mapping." />
 
         {/* JSON-LD ContactPage Schema Markups */}
         <script type="application/ld+json">
