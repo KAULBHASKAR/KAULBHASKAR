@@ -178,7 +178,6 @@ const Profile: React.FC = () => {
         </section>
 
         {/* Lineage Table */}
-                {/* Lineage Table */}
         <section className="bg-stone-900 text-stone-200 rounded-2xl overflow-hidden shadow-2xl">
           <div className="p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-10 text-orange-400 text-center uppercase tracking-widest font-sans">
@@ -205,7 +204,7 @@ const Profile: React.FC = () => {
                           src={item.image} 
                           alt={item.name} 
                           className="w-full h-44 object-contain rounded-xl border border-stone-800 bg-stone-950 p-1.5 shadow-md"
-                          onError={(e) => {
+                          onError={() => {
                             console.warn(`Asset failed to resolve path: ${item.image}`);
                           }}
                         />
@@ -223,4 +222,3 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
-
