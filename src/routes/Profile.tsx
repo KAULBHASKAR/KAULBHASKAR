@@ -9,7 +9,9 @@ const profileData = {
   discipleOf: "KULBHUSHANANAD NATH",
   guruAs: "- An Esteemed KAULA of Prayagraj",
   lineage: [
-    { label: "Sri Guru", name: "Sri KULBHUSHANANAND NATH Ji, image: "/img/GURUJI.webp" },
+    { label: "Sri Guru", 
+      name: "Sri KULBHUSHANANAND NATH Ji",
+      image: "/img/GURUJI.webp"},
     { label: "Grand Guru (Param Guru)", name: "Sri GUPTAVATAR BABA SRI" },
     { label: "Great Grand Guru (Paratpara Guru)", name: "Sri MATSYENDRA NATH" },
     { label: "Great-Great Grand Guru (Par-Paratpara Guru)", name: "Lord ISHANA" },
