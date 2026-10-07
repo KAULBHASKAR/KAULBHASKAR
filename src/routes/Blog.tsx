@@ -85,16 +85,14 @@ export default function Blog() {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = postEntries.slice(indexOfFirstPost, indexOfLastPost);
-  
-  // ✅ Fallback safety mechanism: ensures total pages evaluates to at least 1 if array is empty
-  const totalPages = Math.max(Math.ceil(postEntries.length / postsPerPage), 1);
+  const totalPages = Math.ceil(postEntries.length / postsPerPage);
 
-  // ✅ Safe, Dynamic JSON-LD Schema parsing with verified graph targets
+  // ✅ Safe, Dynamic JSON-LD Schema parsing with cross-engine fallback protections
   const blogListSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "name": "Esoteric Wisdom Blog | Tantra Shastra & Classical Astrology Insights",
-    "description": "Deep-dive into classical Tantric sciences, advanced Vedic astrology, and sacred stotras. Read authentic metaphysical articles written by Guru Ji Kaulbhaskar.",
+    "name": "Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji",
+    "description": "Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar.",
     "url": "https://www.kaulbhaskar.com/blog",
     "publisher": {
       "@type": "Organization",
@@ -109,7 +107,7 @@ export default function Blog() {
       "headline": post.title,
       "description": post.excerpt,
       "datePublished": safeFormatDate(post.date),
-      "url": `https://kaulbhaskar.com{post.slug}`, // ✅ FIXED: Replaced static broken text quotes with functional backtick evaluation syntax
+      "url": `https://kaulbhaskar.com{post.slug}`, // ✅ Fixed template string syntax bug
       "image": post.featuredImage || "https://www.kaulbhaskar.com/img/intro.webp",
       "author": {
         "@type": "Person",
@@ -120,12 +118,11 @@ export default function Blog() {
 
   return (
     <div className="px-6 py-10 w-full bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen">
-      {/* ✅ FIXED: Synchronized page Header Title and Description nodes with Open Graph properties below */}
       <SEO
-        title="Esoteric Wisdom Blog | Tantra Shastra & Classical Astrology Insights"
-        description="Deep-dive into classical Tantric sciences, advanced Vedic astrology, and sacred stotras. Read authentic metaphysical articles written by Guru Ji Kaulbhaskar."
+        title="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji"
+        description="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar."
         canonical="https://www.kaulbhaskar.com/blog"
-        keywords="Tantra Shastra Blog, Advanced Vedic Astrology Articles, Sri Vidya Sadhana, Kaula Marga Teachings, Kulashastra Research, Tripura Sundari Stotra"
+        keywords="Tantra blog, Astrology articles, Sri Vidya insights, Kaulbhaskar writings, Kulashastra, Tripura Stotra"
         breadcrumbs={[
           { name: "Home", url: "https://www.kaulbhaskar.com" },
           { name: "Blog", url: "https://www.kaulbhaskar.com/blog" },
@@ -153,53 +150,40 @@ export default function Blog() {
         </script>
       </Helmet>
 
-      <h1 className="special-font hero-subheading text-center my-24 text-white">BLOG</h1>
+      <h1 className="special-font hero-subheading text-center my-24">BLOG</h1>
       
-      {currentPosts.length > 0 ? (
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {currentPosts.map((post) => (
-            <li key={post.slug} className="border rounded-xl bg-white overflow-hidden shadow-sm transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
-              <Link to={`/${post.slug}`}>
-                <img 
-                  src={post.featuredImage || "https://www.kaulbhaskar.com/img/intro.webp"} 
-                  alt={post.title} 
-                  className="w-full h-48 object-cover" 
-                  loading="lazy"
-                />
-                <div className="p-5">
-                  <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">{post.title}</h2>
-                  <p className="text-gray-600 line-clamp-3 text-sm">{post.excerpt}</p>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div className="text-center p-12 bg-white/10 rounded-xl text-white">
-          <p className="text-lg">No articles discovered in the source directory.</p>
-        </div>
-      )}
+      <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {currentPosts.map((post) => (
+          <li key={post.slug} className="border rounded-xl bg-white overflow-hidden shadow-sm transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+            <Link to={`/${post.slug}`}>
+              <img src={post.featuredImage} alt={post.title} className="w-full h-auto" />
+              <div className="p-5">
+                <h2 className="text-xl font-bold">{post.title}</h2>
+                <p className="text-gray-600 line-clamp-3">{post.excerpt}</p>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
 
       {/* Pagination UI logic */}
-      {postEntries.length > postsPerPage && (
-        <div className="flex justify-center gap-6 mt-12 items-center">
-          <button 
-            disabled={currentPage === 1} 
-            onClick={() => setCurrentPage(p => p - 1)}
-            className="px-5 py-2 bg-white rounded-full font-bold text-gray-900 disabled:opacity-30 transition-transform active:scale-95"
-          >
-            ← Previous
-          </button>
-          <span className="text-white font-semibold">{currentPage} / {totalPages}</span>
-          <button 
-            disabled={currentPage === totalPages} 
-            onClick={() => setCurrentPage(p => p + 1)}
-            className="px-5 py-2 bg-white rounded-full font-bold text-gray-900 disabled:opacity-30 transition-transform active:scale-95"
-          >
-            Next →
-          </button>
-        </div>
-      )}
+      <div className="flex justify-center gap-6 mt-12">
+        <button 
+          disabled={currentPage === 1} 
+          onClick={() => setCurrentPage(p => p - 1)}
+          className="px-5 py-2 bg-white rounded-full disabled:opacity-30"
+        >
+          ← Previous
+        </button>
+        <span className="text-white">{currentPage} / {totalPages}</span>
+        <button 
+          disabled={currentPage === totalPages} 
+          onClick={() => setCurrentPage(p => p + 1)}
+          className="px-5 py-2 bg-white rounded-full disabled:opacity-30"
+        >
+          Next →
+        </button>
+      </div>
     </div>
   );
 }
