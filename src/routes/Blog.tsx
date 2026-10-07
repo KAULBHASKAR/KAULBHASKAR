@@ -133,15 +133,15 @@ export default function Blog() {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.kaulbhaskar.com/blog" />
-        <meta property="og:title" content="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji" />
-        <meta property="og:description" content="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar." />
+        <meta property="og:title" content="Esoteric Wisdom Blog | Tantra Shastra & Classical Astrology Insights" />
+        <meta property="og:description" content="Deep-dive into classical Tantric sciences, advanced Vedic astrology, and sacred stotras. Read authentic metaphysical articles written by Guru Ji Kaulbhaskar." />
         <meta property="og:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.kaulbhaskar.com/blog" />
-        <meta name="twitter:title" content="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji" />
-        <meta name="twitter:description" content="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar." />
+        <meta name="twitter:title" content="Esoteric Wisdom Blog | Tantra Shastra & Classical Astrology Insights" />
+        <meta name="twitter:description" content="Deep-dive into classical Tantric sciences, advanced Vedic astrology, and sacred stotras. Read authentic metaphysical articles written by Guru Ji Kaulbhaskar." />
         <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
         {/* Dynamic JSON-LD Integration */}
