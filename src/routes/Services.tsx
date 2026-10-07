@@ -74,15 +74,15 @@ const Services: React.FC = () => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.kaulbhaskar.com/services" />
-        <meta property="og:title" content="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR" />
-        <meta property="og:description" content="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance." />
+        <meta property="og:title" content="Metaphysical Consultation & Sri Vidya Mentorship | Services" />
+        <meta property="og:description" content="Explore professional spiritual consultation. Authentic Tantric rituals, multi-layered astrological risk mapping, and private Sri Vidya Upasana mentorship." />
         <meta property="og:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://www.kaulbhaskar.com/services" />
-        <meta name="twitter:title" content="Spiritual Services | Astrology, Tantra & Sri Vidya | KAULBHASKAR" />
-        <meta name="twitter:description" content="Explore our range of professional spiritual services including authentic Tantric rituals, Vedic astrology consultations, and Sri Vidya guidance." />
+        <meta name="twitter:title" content="Metaphysical Consultation & Sri Vidya Mentorship | Services" />
+        <meta name="twitter:description" content="Explore professional spiritual consultation. Authentic Tantric rituals, multi-layered astrological risk mapping, and private Sri Vidya Upasana mentorship." />
         <meta name="twitter:image" content="https://www.kaulbhaskar.com/img/intro.webp" />
 
         {/* Inject JSON-LD Object safely for TypeScript compilation */}
