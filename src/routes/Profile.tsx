@@ -11,7 +11,7 @@ const profileData = {
   lineage: [
     { label: "Sri Guru", 
       name: "Sri KULBHUSHANANAND NATH Ji",
-      image: "/img/GURUJI.webp"},
+      image: "https://www.kaulbhaskar.com/img/GURUJI.webp"},
     { label: "Grand Guru (Param Guru)", name: "Sri GUPTAVATAR BABA SRI" },
     { label: "Great Grand Guru (Paratpara Guru)", name: "Sri MATSYENDRA NATH" },
     { label: "Great-Great Grand Guru (Par-Paratpara Guru)", name: "Lord ISHANA" },
