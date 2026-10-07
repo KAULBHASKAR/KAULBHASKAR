@@ -38,7 +38,7 @@ const About: React.FC = () => {
       "@id": "https://www.kaulbhaskar.com",
       "name": "KAULBHASKAR GURU Ji",
       "alternateName": ["कौल भास्कर", "Guru Ji Kaulbhaskar", "Bhaskar Ji"],
-      "description": "Expert of Kaula Marga with over 30 years of practice in Sri Vidya Upasana, belonging to the lineage of legendary siddha yogi Sri Matsyendra Nath Ji and a direct disciple of Sri Kulbhushananand Nath.",
+      "description": "From the high court of material law to cosmic order. Learn about Guru Ji Kaulbhaskar’s 30+ year lineage in Sri Vidya Upasana and Kaula Marga traditions.",
       "url": "https://www.kaulbhaskar.com/img/satyendra.webp",
       "image": "https://www.kaulbhaskar.com/img/satyendra.webp", // Points to your actual live bio photo path
       "jobTitle": "Metaphysical Consultant and Spiritual Mentor",
@@ -79,7 +79,7 @@ const About: React.FC = () => {
     <div className="flex flex-col w-full content-center">
       {/* 1. Aligned to your /about-us sitemap setup path configuration */}
       <SEO
-        title="About Kaulbhaskar Guru Ji | Tantra, Astrology & Spiritual Mentor"
+        title="About Kaulbhaskar Guru Ji | Tantra & Strategic lifepath mapping Experts"
         description=" From the high court of material law to cosmic order. Learn about Guru Ji Kaulbhaskar’s 30+ year lineage in Sri Vidya Upasana and Kaula Marga traditions."
         canonical="https://www.kaulbhaskar.com/about-us"
         keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
