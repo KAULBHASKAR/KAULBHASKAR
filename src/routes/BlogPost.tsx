@@ -88,7 +88,7 @@ export default function BlogPost() {
             
             {/* Target URL changed to backUrl state route */}
             <Link to={backUrl} className="text-gray-500 hover:text-indigo-600 transition-colors text-sm mt-2">
-              ← Back to Blog
+              ← Back to Page
             </Link>
           </form>
         </div>
