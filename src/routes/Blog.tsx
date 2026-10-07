@@ -91,8 +91,8 @@ export default function Blog() {
   const blogListSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "name": "Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji",
-    "description": "Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar.",
+    "name": "Esoteric Wisdom Blog | Tantra Shastra & Classical Astrology Insights",
+    "description": "Deep-dive into classical Tantric sciences, advanced Vedic astrology, and sacred stotras. Read authentic metaphysical articles written by Guru Ji Kaulbhaskar.",
     "url": "https://www.kaulbhaskar.com/blog",
     "publisher": {
       "@type": "Organization",
@@ -119,8 +119,8 @@ export default function Blog() {
   return (
     <div className="px-6 py-10 w-full bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen">
       <SEO
-        title="Spiritual Blog | Wisdom of Sri Kaulbhaskar Guru Ji"
-        description="Explore spiritual insights, authentic Tantric sadhanas, Vedic astrology articles, and sacred scriptural guidance written by Guru Ji Kaulbhaskar."
+        title="Esoteric Wisdom Blog | Tantra Shastra & Classical Astrology Insights"
+        description="Deep-dive into classical Tantric sciences, advanced Vedic astrology, and sacred stotras. Read authentic metaphysical articles written by Guru Ji Kaulbhaskar."
         canonical="https://www.kaulbhaskar.com/blog"
         keywords="Tantra blog, Astrology articles, Sri Vidya insights, Kaulbhaskar writings, Kulashastra, Tripura Stotra"
         breadcrumbs={[
