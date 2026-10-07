@@ -80,7 +80,7 @@ const About: React.FC = () => {
       {/* 1. Aligned to your /about-us sitemap setup path configuration */}
       <SEO
         title="About Kaulbhaskar Guru Ji | Tantra, Astrology & Spiritual Mentor"
-        description="Learn about Kaulbhaskar Guru Ji, a direct disciple of Sri Kulbhushananand Nath, and our team of experts in Tantra, Astrology, and Sri Vidya Upasana."
+        description=" From the high court of material law to cosmic order. Learn about Guru Ji Kaulbhaskar’s 30+ year lineage in Sri Vidya Upasana and Kaula Marga traditions."
         canonical="https://www.kaulbhaskar.com/about-us"
         keywords="Tantra, Astrology, Sri Vidya, Kaulbhaskar Guru Ji"
         breadcrumbs={[
