@@ -11,7 +11,7 @@ const profileData = {
   lineage: [
     { label: "Sri Guru", 
       name: "Sri KULBHUSHANANAND NATH Ji",
-      image: "https://www.kaulbhaskar.com/img/GURUJI.webp"},
+      image: "/img/GURUJI.webp"},
     { label: "Grand Guru (Param Guru)", name: "Sri GUPTAVATAR BABA SRI" },
     { label: "Great Grand Guru (Paratpara Guru)", name: "Sri MATSYENDRA NATH" },
     { label: "Great-Great Grand Guru (Par-Paratpara Guru)", name: "Lord ISHANA" },
@@ -178,6 +178,7 @@ const Profile: React.FC = () => {
         </section>
 
         {/* Lineage Table */}
+                {/* Lineage Table */}
         <section className="bg-stone-900 text-stone-200 rounded-2xl overflow-hidden shadow-2xl">
           <div className="p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-10 text-orange-400 text-center uppercase tracking-widest font-sans">
@@ -194,9 +195,22 @@ const Profile: React.FC = () => {
                   <div className="md:w-1/3 text-orange-400 text-base md:text-lg uppercase font-bold tracking-tight mb-2 md:mb-0 md:pr-4 font-sans">
                     {item.label}
                   </div>
-                  <div className="md:w-2/3 text-lg md:text-xl font-semibold md:pl-4">
-                    {item.name}
-
+                  <div className="md:w-2/3 text-lg md:text-xl font-semibold md:pl-4 flex flex-col gap-4">
+                    <span>{item.name}</span>
+                    
+                    {/* Render corresponding portrait inline if asset exists */}
+                    {item.image && (
+                      <div className="max-w-xs mt-1">
+                        <img 
+                          src={item.image} 
+                          alt={item.name} 
+                          className="w-full h-44 object-contain rounded-xl border border-stone-800 bg-stone-950 p-1.5 shadow-md"
+                          onError={(e) => {
+                            console.warn(`Asset failed to resolve path: ${item.image}`);
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -209,3 +223,4 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
+
