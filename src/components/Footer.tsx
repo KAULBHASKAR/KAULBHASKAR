@@ -41,7 +41,7 @@ export default function Footer() {
         </div>
 
         {/* Navigation Links - FIX 2: Fixed dimensions and spacing layout constraints prevent item shift on wrap */}
-        <nav className="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 w-full max-w-sm md:max-w-none md:w-auto" aria-label="Footer Navigation">
+        <nav className="flex flex-wrap justify-center items-center gap-x-2 gap-y-4 md:gap-x-6 w-full max-w-sm md:max-w-none md:w-auto" aria-label="Footer Navigation">
           {navLinks.map((link) => (
             <Link 
               key={link.href} 
