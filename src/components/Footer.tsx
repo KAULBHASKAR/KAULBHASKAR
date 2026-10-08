@@ -29,7 +29,7 @@ export default function Footer() {
   return (
     // FIX 1: Removed content centering behavior on mobile; isolated layout calculations entirely using contain-intrinsic-size
     <footer 
-      className="flexCenter bg-yellow-400 pt-2 mt-2 mb-2"
+      className="flexCenter bg-yellow-400 pt-2 mt-12 mb-12"
     >
       <div className="container mx-auto flex flex-col items-center justify-between gap-8 px-6 md:flex-row w-full">
         
@@ -46,7 +46,7 @@ export default function Footer() {
             <Link 
               key={link.href} 
               to={link.href} 
-              className="text-white text-sm font-medium hover:underline transition-all focus:outline-none min-w-[60px] text-center"
+              className="text-black text-sm font-medium hover:underline transition-all focus:outline-none min-w-[60px] text-center"
             >
               {link.label}
             </Link>
