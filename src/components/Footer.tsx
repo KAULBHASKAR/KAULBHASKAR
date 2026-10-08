@@ -29,7 +29,7 @@ export default function Footer() {
   return (
     // FIX 1: Removed content centering behavior on mobile; isolated layout calculations entirely using contain-intrinsic-size
     <footer 
-      className="flexCenter bg-yellow-400 pt-10 mt-10 mb-10"
+      className="flexCenter bg-yellow-400 pt-2 mt-2 mb-2"
     >
       <div className="container mx-auto flex flex-col items-center justify-between gap-8 px-6 md:flex-row w-full">
         
@@ -62,7 +62,7 @@ export default function Footer() {
               aria-label={social.label}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-gray-200 transition-colors w-7 h-7 flex items-center justify-center"
+              className="text-black hover:text-gray-200 transition-colors w-7 h-7 flex items-center justify-center"
             >
               <span className="w-5 h-5 flex items-center justify-center block" aria-hidden="true">
                 {social.icon}
