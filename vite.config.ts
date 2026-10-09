@@ -9,25 +9,12 @@ export default defineConfig({
     react(),
     tailwindcss(),
     {
-      name: 'absolute-waterfall-kill-switch',
+      name: 'defer-css',
       transformIndexHtml(html: string) {
-        // 1. Defer CSS loading entirely
-        let optimizedHtml = html.replace(
+        return html.replace(
           /<link rel="stylesheet" crossorigin href="(.*?)">/g,
           '<link rel="preload" href="$1" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">'
         );
-
-        // 2. 🛑 WIPE ALL MODULEPRELOADS (Standard & Custom format layers)
-        optimizedHtml = optimizedHtml.replace(/<link rel="modulepreload"[\s\S]*?>/gi, '');
-
-        // 3. 🛑 NUCLEAR STRIP: Match every single script tag in the HTML build file, 
-        // but safely ignore the absolute main entry point chunk (index-*.js).
-        optimizedHtml = optimizedHtml.replace(
-          /<script\b[^>]*src="\/assets\/(?!index-)[^>]*"([^>]*>([\s\S]*?)<\/script>|[^>]*\/>)/gi,
-          ''
-        );
-
-        return optimizedHtml;
       }
     } as Plugin,
     viteCompression({
@@ -42,42 +29,30 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: true,
+    cssCodeSplit: false, // 🚀 Combine CSS to prevent individual sub-layout style cascading blocks
     target: 'esnext',
-    chunkSizeWarningLimit: 800,
+    chunkSizeWarningLimit: 1200,
     
-    // Explicit hard override for dependency managers
-    modulePreload: {
-      polyfill: false,
-      resolveDependencies: () => [] 
-    },
+    modulePreload: false, // Turn off preloading hints
     
     rollupOptions: {
       output: {
+        // Consolidate the manual chunks into single, high-efficiency caches
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            // 1. Core Framework Core Layer
             if (
               id.includes('node_modules/react/') || 
               id.includes('node_modules/react-dom/') || 
-              id.includes('node_modules/react-router/')
+              id.includes('node_modules/react-router/') ||
+              id.includes('react-helmet-async')
             ) {
               return 'vendor-core';
             }
             
-            if (id.includes('gsap')) return 'vendor-gsap';
-            if (id.includes('react-big-calendar')) return 'vendor-calendar';
-            if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
-            if (id.includes('esprima')) return 'vendor-esprima';
-            if (id.includes('react-icons')) return 'vendor-icons';
-            if (id.includes('react-helmet-async')) return 'vendor-helmet';
-
-            if (
-              id.includes('clsx') || 
-              id.includes('tailwind-merge') || 
-              id.includes('framer-motion')
-            ) {
-              return 'vendor-shared';
-            }
+            // 2. Combine ALL other third-party scripts (gsap, slick, icons, calendar) into one single async block
+            // This replaces 10+ distinct small network handshakes with a single unified file download
+            return 'vendor-features-bundle';
           }
         },
       },
