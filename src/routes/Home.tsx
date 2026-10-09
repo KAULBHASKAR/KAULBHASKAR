@@ -3,23 +3,29 @@ import React, { lazy, Suspense } from "react";
 import SEO from "../components/SEO"; 
 import { Helmet } from "react-helmet-async";
 import Hero from "../components/Hero";
-import { LazySection } from "../components/LazySection"; // ✅ Import the observer
+import { LazySection } from "../components/LazySection";
 
-// 😴 Lazy load lower component blocks
-const Intro = lazy(() => import("../components/Intro")); 
-const Cohort = lazy(() => import("../components/Cohort")); 
-const StatsComponent = lazy(() => import("../components/StatsComponent"));
-const Feature = lazy(() => import("../components/Feature"));
-const Camp = lazy(() => import("../components/Camp"));
-const CalendarComponent = lazy(() => import("../components/CalendarComponent"));
-const Gallery = lazy(() => import("../components/Gallery"));
-const Mudra = lazy(() => import("../components/Mudra"));
-const FAQ = lazy(() => import("../components/FAQ"));
-const Story = lazy(() => import("../components/Story"));
-const Testimonial = lazy(() => import("../components/Testimonial"));
-const Mentor = lazy(() => import("../components/Team"));
-const Meet = lazy(() => import("../components/Meet"));
-const LatestPost = lazy(() => import("../components/LatestPost"));
+// 🛠️ Bundler Bypass Utility: Forces runtime evaluation 
+// This stops Rolldown from reading static strings and forcing modulepreloads.
+const dynamicImport = (componentName: string) => {
+  return lazy(() => import(`../components/${componentName}`));
+};
+
+// 😴 Lazy evaluated route blocks masked from compiler scanning maps
+const Intro = dynamicImport("Intro"); 
+const Cohort = dynamicImport("Cohort"); 
+const StatsComponent = dynamicImport("StatsComponent");
+const Feature = dynamicImport("Feature");
+const Camp = dynamicImport("Camp");
+const CalendarComponent = dynamicImport("CalendarComponent");
+const Gallery = dynamicImport("Gallery");
+const Mudra = dynamicImport("Mudra");
+const FAQ = dynamicImport("FAQ");
+const Story = dynamicImport("Story");
+const Testimonial = dynamicImport("Testimonial");
+const Mentor = dynamicImport("Team"); // Maps to your Team layout file
+const Meet = dynamicImport("Meet");
+const LatestPost = dynamicImport("LatestPost");
 
 const Home: React.FC = () => {
   const homeSchema = {
@@ -38,13 +44,12 @@ const Home: React.FC = () => {
         "@id": "https://www.kaulbhaskar.com",
         "name": "KAULBHASKAR Metaphysical Advisory",
         "url": "https://www.kaulbhaskar.com",
-        "logo": "https://kaulbhaskar.com/img/logo.webp",
-        "sameAs": ["https://www.tantrasadhana.org"]
+        "logo": "https://kaulbhaskar.com",
+        "sameAs": ["https://tantrasadhana.org"]
       }
     ]
   };
 
-  // Shared reusable skeleton fallback for scrolling items
   const blockSpinner = (
     <div className="flex-center h-[25vh] w-full">
       <div className="three-body"><div className="three-body__dot"></div></div>
@@ -76,17 +81,17 @@ const Home: React.FC = () => {
         <script type="application/ld+json">{JSON.stringify(homeSchema)}</script>
       </Helmet>
 
-      {/* 1. Hero paints instantly */}
+      {/* 1. Above the fold paints immediately */}
       <Hero />
 
-      {/* 2. Layer 1: Immediately loads because it sits directly underneath the fold */}
+      {/* 2. Immediate Section underneath the Hero fold */}
       <Suspense fallback={blockSpinner}>
         <Cohort />
         <Intro />
         <Feature />
       </Suspense>
 
-      {/* 3. Layer 2 & 3: Wrapped in LazySections so they remain completely un-downloaded at startup */}
+      {/* 3. Deep sections stay strictly isolated behind Intersection Observers */}
       <LazySection fallback={blockSpinner}>
         <Suspense fallback={blockSpinner}>
           <Camp />
