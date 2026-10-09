@@ -1,25 +1,23 @@
 // vite.config.ts
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import viteCompression from 'vite-plugin-compression'
-
-
-// Custom plugin to load injected CSS asynchronously
-const deferCssPlugin = (): Plugin => ({
-  name: 'defer-css',
-  transformIndexHtml(html) {
-    return html.replace(
-      /<link rel="stylesheet" crossorigin href="(.*?)">/g,
-      '<link rel="preload" href="$1" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">'
-    );
-  }
-})
 
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    // Custom inline plugin to load injected CSS asynchronously
+    {
+      name: 'defer-css',
+      transformIndexHtml(html: string) {
+        return html.replace(
+          /<link rel="stylesheet" crossorigin href="(.*?)">/g,
+          '<link rel="preload" href="$1" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">'
+        );
+      }
+    } as Plugin,
     viteCompression({
       algorithm: 'gzip',
       threshold: 1024,
