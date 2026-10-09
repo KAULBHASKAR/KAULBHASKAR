@@ -8,14 +8,27 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    // Custom inline plugin to load injected CSS asynchronously
+    // Combined Custom Plugin: Defers CSS and aggressively strips all sub-route script chain leaks
     {
-      name: 'defer-css',
+      name: 'optimize-html-delivery',
       transformIndexHtml(html: string) {
-        return html.replace(
+        // 1. Defer CSS loading to avoid blocking page paint
+        let optimizedHtml = html.replace(
           /<link rel="stylesheet" crossorigin href="(.*?)">/g,
           '<link rel="preload" href="$1" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">'
         );
+
+        // 2. Clear out any hidden browser modulepreloads forcing background async cascades
+        optimizedHtml = optimizedHtml.replace(/<link rel="modulepreload"[\s\S]*?>/gi, '');
+
+        // 3. Forcefully strip secondary async script blocks injected into index.html,
+        // leaving ONLY the index execution entry script file alive.
+        optimizedHtml = optimizedHtml.replace(
+          /<script type="module" crossorigin src="\/assets\/(?!(index-)).*?\.js"><\/script>/gi, 
+          ''
+        );
+
+        return optimizedHtml;
       }
     } as Plugin,
     viteCompression({
@@ -34,8 +47,11 @@ export default defineConfig({
     target: 'esnext',
     chunkSizeWarningLimit: 800,
     
-    // ✅ Completely disables aggressive preloading of unvisited route chunks
-    modulePreload: false, 
+    // Explicit object assignment ensures deep overrides catch any sub-dependencies
+    modulePreload: {
+      polyfill: false,
+      resolveDependencies: () => [] // Forces Vite/Rollup to stop bundling child dependency graphs into entry manifests
+    },
     
     rollupOptions: {
       output: {
