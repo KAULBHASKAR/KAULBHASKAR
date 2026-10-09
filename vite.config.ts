@@ -8,23 +8,22 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    // Combined Custom Plugin: Defers CSS and aggressively strips all sub-route script chain leaks
     {
-      name: 'optimize-html-delivery',
+      name: 'absolute-waterfall-kill-switch',
       transformIndexHtml(html: string) {
-        // 1. Defer CSS loading to avoid blocking page paint
+        // 1. Defer CSS loading entirely
         let optimizedHtml = html.replace(
           /<link rel="stylesheet" crossorigin href="(.*?)">/g,
           '<link rel="preload" href="$1" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">'
         );
 
-        // 2. Clear out any hidden browser modulepreloads forcing background async cascades
+        // 2. 🛑 WIPE ALL MODULEPRELOADS (Standard & Custom format layers)
         optimizedHtml = optimizedHtml.replace(/<link rel="modulepreload"[\s\S]*?>/gi, '');
 
-        // 3. Forcefully strip secondary async script blocks injected into index.html,
-        // leaving ONLY the index execution entry script file alive.
+        // 3. 🛑 NUCLEAR STRIP: Match every single script tag in the HTML build file, 
+        // but safely ignore the absolute main entry point chunk (index-*.js).
         optimizedHtml = optimizedHtml.replace(
-          /<script type="module" crossorigin src="\/assets\/(?!(index-)).*?\.js"><\/script>/gi, 
+          /<script\b[^>]*src="\/assets\/(?!index-)[^>]*"([^>]*>([\s\S]*?)<\/script>|[^>]*\/>)/gi,
           ''
         );
 
@@ -47,10 +46,10 @@ export default defineConfig({
     target: 'esnext',
     chunkSizeWarningLimit: 800,
     
-    // Explicit object assignment ensures deep overrides catch any sub-dependencies
+    // Explicit hard override for dependency managers
     modulePreload: {
       polyfill: false,
-      resolveDependencies: () => [] // Forces Vite/Rollup to stop bundling child dependency graphs into entry manifests
+      resolveDependencies: () => [] 
     },
     
     rollupOptions: {
