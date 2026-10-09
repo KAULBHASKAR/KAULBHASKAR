@@ -1,11 +1,11 @@
+// src/routes/Home.tsx
 import React, { lazy, Suspense } from "react";
 import SEO from "../components/SEO"; 
 import { Helmet } from "react-helmet-async";
-
-// 1. Keep Hero static to prevent a blank white screen during initial page paint
 import Hero from "../components/Hero";
+import { LazySection } from "../components/LazySection"; // ✅ Import the observer
 
-// 2. Lazy load lower, below-the-fold component blocks
+// 😴 Lazy load lower component blocks
 const Intro = lazy(() => import("../components/Intro")); 
 const Cohort = lazy(() => import("../components/Cohort")); 
 const StatsComponent = lazy(() => import("../components/StatsComponent"));
@@ -17,7 +17,7 @@ const Mudra = lazy(() => import("../components/Mudra"));
 const FAQ = lazy(() => import("../components/FAQ"));
 const Story = lazy(() => import("../components/Story"));
 const Testimonial = lazy(() => import("../components/Testimonial"));
-const Mentor = lazy(() => import("../components/Team")); // Imported as Mentor matching your JSX
+const Mentor = lazy(() => import("../components/Team"));
 const Meet = lazy(() => import("../components/Meet"));
 const LatestPost = lazy(() => import("../components/LatestPost"));
 
@@ -31,22 +31,26 @@ const Home: React.FC = () => {
         "url": "https://www.kaulbhaskar.com",
         "name": "KAULBHASKAR",
         "description": "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana.",
-        "publisher": {
-          "@id": "https://www.kaulbhaskar.com" // ✅ Links homepage straight to your official Person entity profile
-        }
+        "publisher": { "@id": "https://www.kaulbhaskar.com" }
       },
       {
         "@type": "Organization",
         "@id": "https://www.kaulbhaskar.com",
         "name": "KAULBHASKAR Metaphysical Advisory",
         "url": "https://www.kaulbhaskar.com",
-        "logo": "https://kaulbhaskar.com/img/logo.webp", // Replace with your exact square logo layout asset path if available
-        "sameAs": [
-          "https://www.tantrasadhana.org"
-        ]
+        "logo": "https://kaulbhaskar.com/img/logo.webp",
+        "sameAs": ["https://www.tantrasadhana.org"]
       }
     ]
   };
+
+  // Shared reusable skeleton fallback for scrolling items
+  const blockSpinner = (
+    <div className="flex-center h-[25vh] w-full">
+      <div className="three-body"><div className="three-body__dot"></div></div>
+    </div>
+  );
+
   return (
     <div>
       <SEO 
@@ -69,65 +73,40 @@ const Home: React.FC = () => {
         ]}
       />
       <Helmet>
-        <script type="application/ld+json">
-        {JSON.stringify(homeSchema)}
-        </script>
+        <script type="application/ld+json">{JSON.stringify(homeSchema)}</script>
       </Helmet>
 
-      {/* Hero renders instantly without waiting for network scripts to finish chunk downloading */}
+      {/* 1. Hero paints instantly */}
       <Hero />
 
-      {/* Layer 1: Elements immediately seen below the hero image */}
-      <Suspense 
-        fallback={
-          <div className="flex-center h-[30vh] w-full">
-            <div className="three-body">
-              <div className="three-body__dot"></div>
-              <div className="three-body__dot"></div>
-              <div className="three-body__dot"></div>
-            </div>
-          </div>
-        }
-      >
+      {/* 2. Layer 1: Immediately loads because it sits directly underneath the fold */}
+      <Suspense fallback={blockSpinner}>
         <Cohort />
         <Intro />
         <Feature />
       </Suspense>
 
-      {/* Layer 2: Middle interactive items including the calendar */}
-      <Suspense 
-        fallback={
-          <div className="flex-center h-[30vh] w-full">
-            <div className="three-body">
-              <div className="three-body__dot"></div>
-            </div>
-          </div>
-        }
-      >
-        <Camp />
-        <CalendarComponent />
-        <Gallery />
-        <Mudra />
-      </Suspense>
+      {/* 3. Layer 2 & 3: Wrapped in LazySections so they remain completely un-downloaded at startup */}
+      <LazySection fallback={blockSpinner}>
+        <Suspense fallback={blockSpinner}>
+          <Camp />
+          <CalendarComponent />
+          <Gallery />
+          <Mudra />
+        </Suspense>
+      </LazySection>
 
-      {/* Layer 3: Heavy items deeper down the page loaded entirely asynchronously */}
-      <Suspense 
-        fallback={
-          <div className="flex-center h-[30vh] w-full">
-            <div className="three-body">
-              <div className="three-body__dot"></div>
-            </div>
-          </div>
-        }
-      >
-        <FAQ />
-        <StatsComponent />
-        <Story />
-        <Testimonial />
-        <Mentor />
-        <LatestPost />
-        <Meet />
-      </Suspense>
+      <LazySection fallback={blockSpinner}>
+        <Suspense fallback={blockSpinner}>
+          <FAQ />
+          <StatsComponent />
+          <Story />
+          <Testimonial />
+          <Mentor />
+          <LatestPost />
+          <Meet />
+        </Suspense>
+      </LazySection>
     </div>
   );
 };
