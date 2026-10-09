@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    // Custom inline plugin to load injected CSS asynchronously
     {
       name: 'defer-css',
       transformIndexHtml(html: string) {
@@ -29,30 +30,39 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: false, // 🚀 Combine CSS to prevent individual sub-layout style cascading blocks
+    cssCodeSplit: true,
     target: 'esnext',
-    chunkSizeWarningLimit: 1200,
+    chunkSizeWarningLimit: 800,
     
-    modulePreload: false, // Turn off preloading hints
+    // ✅ Completely disables aggressive preloading of unvisited route chunks
+    modulePreload: false, 
     
     rollupOptions: {
       output: {
-        // Consolidate the manual chunks into single, high-efficiency caches
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // 1. Core Framework Core Layer
             if (
               id.includes('node_modules/react/') || 
               id.includes('node_modules/react-dom/') || 
-              id.includes('node_modules/react-router/') ||
-              id.includes('react-helmet-async')
+              id.includes('node_modules/react-router/')
             ) {
               return 'vendor-core';
             }
             
-            // 2. Combine ALL other third-party scripts (gsap, slick, icons, calendar) into one single async block
-            // This replaces 10+ distinct small network handshakes with a single unified file download
-            return 'vendor-features-bundle';
+            if (id.includes('gsap')) return 'vendor-gsap';
+            if (id.includes('react-big-calendar')) return 'vendor-calendar';
+            if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
+            if (id.includes('esprima')) return 'vendor-esprima';
+            if (id.includes('react-icons')) return 'vendor-icons';
+            if (id.includes('react-helmet-async')) return 'vendor-helmet';
+
+            if (
+              id.includes('clsx') || 
+              id.includes('tailwind-merge') || 
+              id.includes('framer-motion')
+            ) {
+              return 'vendor-shared';
+            }
           }
         },
       },
