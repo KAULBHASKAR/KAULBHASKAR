@@ -19,10 +19,8 @@ export default function Layout() {
 
       <ScrollRestoration /> 
 
-       <header className="layout-header">
-        <Suspense fallback={<div className="h-20 bg-transparent" />}>
-          <Navbar /> 
-        </Suspense>
+      <header className="layout-header">
+        <Navbar /> 
       </header>
 
       <main className="flex-1">
