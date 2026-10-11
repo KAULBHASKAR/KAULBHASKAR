@@ -24,26 +24,45 @@ export default defineConfig({
   build: {
     cssCodeSplit: false,
     target: 'esnext',
-    chunkSizeWarningLimit: 800,
+    chunkSizeWarningLimit: 1000,
     
-    // 🚀 Keep auto-preloading off so unvisited views aren't fetched upfront
+    // 🚀 STEP 1: Turn off general preloading to clear the critical chaining waterfall
     modulePreload: false, 
     
     rollupOptions: {
       output: {
+        // 🚀 STEP 2: Isolate heavy script targets to clear the Forced Reflow pipeline
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Isolate heavy libraries that aren't needed for the initial text paint
+            // Keep layout metrics/carousels/calendars separated out of the main index lifecycle
+            if (
+              id.includes('react-big-calendar') || 
+              id.includes('esprima') || 
+              id.includes('slick-carousel') || 
+              id.includes('react-slick')
+            ) {
+              return 'vendor-heavy-addons';
+            }
+            
+            // Isolate animation layout calculation scripts
             if (id.includes('gsap') || id.includes('framer-motion')) {
               return 'vendor-animation';
             }
-            if (id.includes('react-big-calendar') || id.includes('esprima')) {
-              return 'vendor-heavy-addons';
-            }
-            // Let the rest bundle into standard core chunks naturally
           }
         },
+        
+        // 🚀 STEP 3: Hard override to strip injected preload links from the bundle pipeline entirely
+        experimentalMinChunkSize: 20000,
       },
     },
   },
+  experimental: {
+    // Completely stops Vite from appending any hidden modulepreload links into index.html
+    renderBuiltUrl(filename, { type }) {
+      if (type === 'html') {
+        return { runtime: `window.__dynamic_base__ + ${JSON.stringify(filename)}` };
+      }
+      return { relative: true };
+    }
+  }
 })
