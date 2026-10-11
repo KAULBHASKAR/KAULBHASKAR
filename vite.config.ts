@@ -24,45 +24,27 @@ export default defineConfig({
   build: {
     cssCodeSplit: false,
     target: 'esnext',
-    chunkSizeWarningLimit: 1200, // Adjusted to match combined vendor targets
+    chunkSizeWarningLimit: 1000,
     
-    // 🚀 FIXED: Tells the browser to download dependencies in parallel instead of waiting in a chain
+    // 🚀 FIXED: Allow standard module preloading so the browser loads only what's required for the active view
     modulePreload: {
       polyfill: true,
     }, 
     
     rollupOptions: {
       output: {
-        // 🚀 FIXED: Group tiny vendor pieces together to prevent 30+ sequential file downloads
+        // 🚀 FIXED: Cleaned up code-splitting to isolate only the largest libraries 
+        // Anything else will be loaded lazily on demand instead of blocking the main thread
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Bundle structural framework elements cleanly
-            if (
-              id.includes('node_modules/react/') || 
-              id.includes('node_modules/react-dom/') || 
-              id.includes('node_modules/react-router/') ||
-              id.includes('react-helmet-async')
-            ) {
-              return 'vendor-framework';
-            }
-            
-            // Group display UI components together
-            if (
-              id.includes('react-big-calendar') || 
-              id.includes('react-slick') || 
-              id.includes('slick-carousel') ||
-              id.includes('react-icons')
-            ) {
-              return 'vendor-ui-addons';
-            }
-            
-            // Animation utilities
+            // Keep heavy animation engines separate so they don't bloat your landing paint
             if (id.includes('gsap') || id.includes('framer-motion')) {
               return 'vendor-animation';
             }
-
-            // Fallback for miscellaneous functional scripts
-            return 'vendor-utility';
+            // Keep specialized heavy layout components out of the initial payload
+            if (id.includes('react-big-calendar') || id.includes('esprima')) {
+              return 'vendor-heavy-addons';
+            }
           }
         },
       },
