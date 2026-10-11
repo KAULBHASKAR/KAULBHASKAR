@@ -24,42 +24,35 @@ export default defineConfig({
   build: {
     cssCodeSplit: false,
     target: 'esnext',
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1200,
     
-    // 🚀 STOPS THE WATERFALL: Disables dynamic module preloads from bloating the initial HTML header
-    modulePreload: false, 
-    
-    // 🚀 FIXED: Moved from output options to root build options where Vite correctly handles chunk sizes
-    experimentalMinChunkSize: 20000,
+    // 🚀 FIXED: Enforces standard safe preloading structure matching Vite 5 types
+    modulePreload: {
+      polyfill: true
+    }, 
 
     rollupOptions: {
       output: {
-        // 🚀 PREVENTS REFLOWS: Isolates heavy runtime evaluation libraries from the main thread lifecycle
+        // 🚀 FIXED: Standardized chunk grouping strategy to prevent the massive request waterfall
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            // Group heavy animation libraries together
+            if (id.includes('gsap') || id.includes('framer-motion')) {
+              return 'vendor-animation';
+            }
+            // Group complex UI component engines together
             if (
               id.includes('react-big-calendar') || 
               id.includes('esprima') || 
               id.includes('slick-carousel') || 
               id.includes('react-slick')
             ) {
-              return 'vendor-heavy-addons';
+              return 'vendor-ui-addons';
             }
-            if (id.includes('gsap') || id.includes('framer-motion')) {
-              return 'vendor-animation';
-            }
+            // Let smaller utility libraries fall back into standard bundle files naturally
           }
         },
       },
     },
   },
-  experimental: {
-    // 🚀 FIXED: Aligned type safety check for type parameters ('public' | 'asset') to pass strict tsc compilation
-    renderBuiltUrl(filename, { type }) {
-      if (type === 'public') {
-        return { runtime: `window.__dynamic_base__ + ${JSON.stringify(filename)}` };
-      }
-      return { relative: true };
-    }
-  }
 })
