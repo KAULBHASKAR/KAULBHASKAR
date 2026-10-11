@@ -3,13 +3,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import viteCompression from 'vite-plugin-compression'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js' // <-- Added
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    cssInjectedByJsPlugin(), // <-- Added
+    cssInjectedByJsPlugin(),
     viteCompression({
       algorithm: 'gzip',
       threshold: 1024,
@@ -22,39 +22,47 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: false, // <-- Changed from true to false to bundle CSS together for injection
+    cssCodeSplit: false,
     target: 'esnext',
-    chunkSizeWarningLimit: 800,
+    chunkSizeWarningLimit: 1200, // Adjusted to match combined vendor targets
     
-    // ✅ Completely disables aggressive preloading of unvisited route chunks
-    modulePreload: false, 
+    // 🚀 FIXED: Tells the browser to download dependencies in parallel instead of waiting in a chain
+    modulePreload: {
+      polyfill: true,
+    }, 
     
     rollupOptions: {
       output: {
+        // 🚀 FIXED: Group tiny vendor pieces together to prevent 30+ sequential file downloads
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            // Bundle structural framework elements cleanly
             if (
               id.includes('node_modules/react/') || 
               id.includes('node_modules/react-dom/') || 
-              id.includes('node_modules/react-router/')
+              id.includes('node_modules/react-router/') ||
+              id.includes('react-helmet-async')
             ) {
-              return 'vendor-core';
+              return 'vendor-framework';
             }
             
-            if (id.includes('gsap')) return 'vendor-gsap';
-            if (id.includes('react-big-calendar')) return 'vendor-calendar';
-            if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
-            if (id.includes('esprima')) return 'vendor-esprima';
-            if (id.includes('react-icons')) return 'vendor-icons';
-            if (id.includes('react-helmet-async')) return 'vendor-helmet';
-
+            // Group display UI components together
             if (
-              id.includes('clsx') || 
-              id.includes('tailwind-merge') || 
-              id.includes('framer-motion')
+              id.includes('react-big-calendar') || 
+              id.includes('react-slick') || 
+              id.includes('slick-carousel') ||
+              id.includes('react-icons')
             ) {
-              return 'vendor-shared';
+              return 'vendor-ui-addons';
             }
+            
+            // Animation utilities
+            if (id.includes('gsap') || id.includes('framer-motion')) {
+              return 'vendor-animation';
+            }
+
+            // Fallback for miscellaneous functional scripts
+            return 'vendor-utility';
           }
         },
       },
