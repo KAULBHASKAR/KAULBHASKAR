@@ -24,27 +24,19 @@ export default defineConfig({
   build: {
     cssCodeSplit: false,
     target: 'esnext',
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1500,
     
-    // 🚀 FIXED: Allow standard module preloading so the browser loads only what's required for the active view
-    modulePreload: {
-      polyfill: true,
-    }, 
+    // 🚀 THE FIX: Stops Vite from injecting massive lists of <link rel="modulepreload"> into the HTML header.
+    // This blocks the browser from downloading layout sections until the user actually requests them!
+    modulePreload: false, 
     
     rollupOptions: {
       output: {
-        // 🚀 FIXED: Cleaned up code-splitting to isolate only the largest libraries 
-        // Anything else will be loaded lazily on demand instead of blocking the main thread
+        // 🚀 THE FIX: Pull everything into a single streamlined bundle structure.
+        // For a landing page under 300 KiB, a unified payload loads faster than 25 separate tiny chunks hitting the server concurrently.
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Keep heavy animation engines separate so they don't bloat your landing paint
-            if (id.includes('gsap') || id.includes('framer-motion')) {
-              return 'vendor-animation';
-            }
-            // Keep specialized heavy layout components out of the initial payload
-            if (id.includes('react-big-calendar') || id.includes('esprima')) {
-              return 'vendor-heavy-addons';
-            }
+            return 'vendor-bundle';
           }
         },
       },
