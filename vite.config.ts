@@ -3,13 +3,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import viteCompression from 'vite-plugin-compression'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js' // <-- Added
 
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    cssInjectedByJsPlugin(), // <-- Added
     viteCompression({
       algorithm: 'gzip',
       threshold: 1024,
@@ -22,7 +20,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: false, // <-- Changed from true to false to bundle CSS together for injection
+    cssCodeSplit: true,
     target: 'esnext',
     chunkSizeWarningLimit: 800,
     
