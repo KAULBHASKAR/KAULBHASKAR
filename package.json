@@ -33,7 +33,6 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "vite-plugin-css-injected-by-js": "^3.4.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^26.6.3",
     "@types/react": "^19.3.0",
