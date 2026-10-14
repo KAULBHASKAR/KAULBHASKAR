@@ -1,37 +1,61 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
+// vite.config.ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import tailwindcss from '@tailwindcss/vite'
+import viteCompression from 'vite-plugin-compression'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    viteCompression({
+      algorithm: 'gzip',
+      threshold: 1024,
+      ext: '.gz',
+    }),
+    viteCompression({
+      algorithm: 'brotliCompress',
+      threshold: 1024,
+      ext: '.br',
+    }),
+  ],
   build: {
+    cssCodeSplit: true,
+    target: 'esnext',
+    chunkSizeWarningLimit: 800,
+    
+    // ✅ Completely disables aggressive preloading of unvisited route chunks
+    modulePreload: false, 
+    
     rollupOptions: {
       output: {
-        // Splits heavy dependencies into their own separate files
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Group heavy animation libraries together
-            if (id.includes('gsap')) {
-              return 'vendor-animation';
-            }
-            // Isolate the giant calendar package
-            if (id.includes('react-big-calendar')) {
-              return 'vendor-calendar';
-            }
-            // Isolate Markdown parsing utilities
-            if (id.includes('react-markdown') || id.includes('remark-gfm') || id.includes('gray-matter')) {
-              return 'vendor-markdown';
-            }
-            // Standard core vendor chunk for React and router core
-            if (id.includes('react') || id.includes('react-router')) {
+            if (
+              id.includes('node_modules/react/') || 
+              id.includes('node_modules/react-dom/') || 
+              id.includes('node_modules/react-router/')
+            ) {
               return 'vendor-core';
             }
-            // Fallback grouping for minor utilities (date-fns, slick, etc.)
-            return 'vendor-utils';
+            
+            if (id.includes('gsap')) return 'vendor-gsap';
+            if (id.includes('react-big-calendar')) return 'vendor-calendar';
+            if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
+            if (id.includes('esprima')) return 'vendor-esprima';
+            if (id.includes('react-icons')) return 'vendor-icons';
+            if (id.includes('react-helmet-async')) return 'vendor-helmet';
+
+            if (
+              id.includes('clsx') || 
+              id.includes('tailwind-merge') || 
+              id.includes('framer-motion')
+            ) {
+              return 'vendor-shared';
+            }
           }
         },
       },
     },
-    // Warns you if an individual chunk exceeds safe loading sizes
-    chunkSizeWarningLimit: 600,
   },
-});
+})
