@@ -21,75 +21,48 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
   brandColor = "#00008B",
   autoOpenDelay = 4000,
 }) => {
-  // CRITICAL FIX: Prevent execution of sub-hooks until user interaction happens
-  const [hasInteracted, setHasInteracted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(true);
   const [showDot, setShowDot] = useState(true);
   const [inputText, setInputText] = useState('');
 
+  // FIXED: Focus Management Refs
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const sendButtonRef = useRef<HTMLButtonElement>(null);
   const launcherButtonRef = useRef<HTMLButtonElement>(null);
 
-  // 1. Listen for user interaction to bootstrap the component asynchronously
   useEffect(() => {
-    if (hasInteracted) return;
-
-    const activateWidget = () => {
-      setHasInteracted(true);
-      cleanUpListeners();
-    };
-
-    const cleanUpListeners = () => {
-      window.removeEventListener('scroll', activateWidget);
-      window.removeEventListener('mousemove', activateWidget);
-      window.removeEventListener('touchstart', activateWidget);
-    };
-
-    window.addEventListener('scroll', activateWidget, { passive: true });
-    window.addEventListener('mousemove', activateWidget, { passive: true });
-    window.addEventListener('touchstart', activateWidget, { passive: true });
-
-    return cleanUpListeners;
-  }, [hasInteracted]);
-
-  // 2. Typing and auto-open timer logic (Runs only after hydration)
-  useEffect(() => {
-    if (!hasInteracted) return;
-
     const typingTimeout = setTimeout(() => setIsTyping(false), 2000);
-    
-    let autoTimeout: NodeJS.Timeout;
     if (autoOpenDelay > 0) {
-      autoTimeout = setTimeout(() => {
+      const autoTimeout = setTimeout(() => {
         setIsOpen(true);
         setShowDot(false);
       }, autoOpenDelay);
+      return () => {
+        clearTimeout(typingTimeout);
+        clearTimeout(autoTimeout);
+      };
     }
+    return () => clearTimeout(typingTimeout);
+  }, [autoOpenDelay]);
 
-    return () => {
-      clearTimeout(typingTimeout);
-      if (autoTimeout) clearTimeout(autoTimeout);
-    };
-  }, [hasInteracted, autoOpenDelay]);
-
-  // 3. Accessibility Focus Placement Transitions
+  // FIXED: Handle accessibility focus targets when open/close state transitions
   useEffect(() => {
-    if (!hasInteracted) return;
-
     if (isOpen) {
+      // Focus the close button inside the widget when it opens
       setTimeout(() => closeButtonRef.current?.focus(), 50);
     } else {
+      // Return focus to the trigger button when the widget closes
       launcherButtonRef.current?.focus();
     }
-  }, [isOpen, hasInteracted]);
+  }, [isOpen]);
 
-  // 4. Accessible Keyboard Focus Trap Logic
+  // FIXED: Focus Trap Implementation (Locks keyboard tab key loops inside the active card)
   useEffect(() => {
-    if (!isOpen || !hasInteracted) return;
-
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+
+      // Close modal on Escape key
       if (e.key === 'Escape') {
         setIsOpen(false);
         return;
@@ -100,11 +73,13 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
         const lastElement = sendButtonRef.current;
 
         if (e.shiftKey) {
+          // Shift + Tab (Navigating Backwards)
           if (document.activeElement === firstElement) {
             lastElement?.focus();
             e.preventDefault();
           }
         } else {
+          // Tab (Navigating Forwards)
           if (document.activeElement === lastElement) {
             firstElement?.focus();
             e.preventDefault();
@@ -115,21 +90,17 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, hasInteracted]);
+  }, [isOpen]);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
+    
     const targetPhone = phoneNumber.trim();
     if (!targetPhone) return;
 
     const finalMsg = inputText.trim() || message;
     window.open(`https://wa.me{targetPhone}?text=${encodeURIComponent(finalMsg)}`, '_blank', 'noopener,noreferrer');
   };
-
-  if (!hasInteracted) {
-    // Return completely blank during initial critical paint paths
-    return null;
-  }
 
   const keyframes = `
     @keyframes waFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
@@ -141,6 +112,8 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
       color: #656565 !important;
       opacity: 1 !important;
     }
+    
+    /* VISUAL ACCESSIBILITY: Visible focus outline styles for keyboard navigators */
     .wa-widget-focus-target:focus-visible {
       outline: 3px solid #ffbf47 !important;
       outline-offset: 2px !important;
@@ -170,6 +143,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
               <h3 style={{ margin: 0, fontSize: '15px' }}>{companyName}</h3>
               <div style={{ fontSize: '12px', opacity: 0.9, marginTop: '2px' }}>● {companyStatus}</div>
             </div>
+            {/* FIXED: Bound closeButtonRef and focus-visible utilities */}
             <button 
               ref={closeButtonRef}
               aria-label="Close chat" 
@@ -204,6 +178,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
               className="wa-widget-input wa-widget-focus-target"
               style={{ flex: 1, padding: '8px 12px', borderRadius: '20px', border: '1px solid #ddd', fontSize: '13px', color: '#333' }} 
             />
+            {/* FIXED: Bound sendButtonRef and focus-visible utilities */}
             <button 
               ref={sendButtonRef}
               aria-label="Send message" 
@@ -216,6 +191,7 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
           </form>
         </div>
 
+        {/* FIXED: Bound launcherButtonRef and focus-visible utilities */}
         <button 
           ref={launcherButtonRef}
           type="button" 
@@ -225,22 +201,18 @@ export const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
           className="wa-widget-focus-target"
           style={{ backgroundColor: brandColor, borderRadius: '50%', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.2)', border: 'none', cursor: 'pointer', animation: 'waFloat 4s ease-in-out infinite', position: 'relative', margin: '0 auto' }}
         >
-          {/* Restored cutoff launcher rendering logic */}
-          <span style={{ fontSize: '24px', color: '#fff' }}>💬</span>
-          {showDot && (
-            <span style={{
-              position: 'absolute',
-              top: '2px',
-              right: '2px',
-              width: '12px',
-              height: '12px',
-              backgroundColor: '#25D366',
-              borderRadius: '50%',
-              border: '2px solid #fff',
-              animation: 'pulseDot 1.5s infinite'
-            }} />
+          {isOpen ? (
+            <span style={{ color: '#fff', fontSize: '20px' }}>✕</span>
+          ) : (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M12.004 2C6.51 2 2.014 6.5 2.014 12c0 2.14.675 4.14 1.833 5.79L2.03 22l4.376-1.125a9.927 9.927 0 0 0 5.598 1.125c5.494 0 9.99-4.5 9.99-10S17.498 2 12.004 2z"/></svg>
+          )}
+          {showDot && !isOpen && (
+            <span style={{ position: 'absolute', top: '2px', right: '2px', width: '12px', height: '12px', backgroundColor: '#ff3b30', borderRadius: '50%', border: '2px solid #fff' }}>
+              <span style={{ position: 'absolute', top: '-2px', left: '-2px', width: '12px', height: '12px', backgroundColor: '#ff3b30', borderRadius: '50%', animation: 'pulseDot 1.8s infinite ease-out', zIndex: -1 }} />
+            </span>
           )}
         </button>
+
       </div>
     </>
   );
