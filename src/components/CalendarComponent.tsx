@@ -1,16 +1,17 @@
-import { useState } from "react";
+// src/components/CalendarComponent.tsx
+import { useState, useEffect } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import type { Event, View } from "react-big-calendar";
+import type { Event, View, DateLocalizer } from "react-big-calendar";
 import type { FC } from "react";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { enUS } from "date-fns/locale/en-US";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const locales = {
   "en-US": enUS,
 };
 
-const localizer = dateFnsLocalizer({
+// Configured localizer isolated inside this chunk module context
+const localizer: DateLocalizer = dateFnsLocalizer({
   format,
   parse,
   startOfWeek,
@@ -30,6 +31,12 @@ const CalendarComponent: FC = () => {
   const [currentDate, setCurrentDate] = useState(events[0].start);
   const [currentView, setCurrentView] = useState<View>("month");
 
+  useEffect(() => {
+    // ✅ FIX: Dynamically injects the global external css styles ONLY when this 
+    // component actually mounts, cleanly removing it from your initial page load headers.
+    import("react-big-calendar/lib/css/react-big-calendar.css");
+  }, []);
+
   return (
     <div
       style={{
@@ -39,10 +46,6 @@ const CalendarComponent: FC = () => {
         contain: "layout style",
       }}
     >
-      {/* 
-        Encapsulating custom classes safely inside the lazy chunk. 
-        These styles will never touch or slow down the initial landing page bundle.
-      */}
       <style>{`
         .rbc-calendar { min-width: 100%; overflow-x: auto; }
         .rbc-off-range-bg { background-color: #e5e7eb !important; }
