@@ -20,17 +20,25 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: false,
+    // 1. 🚨 FIX: Enable CSS Code Splitting so your lazy chunks only load their own styles
+    cssCodeSplit: true,
+    
     target: 'esnext',
     chunkSizeWarningLimit: 800,
     
-    // ✅ Completely disables aggressive preloading of unvisited route chunks
+    // Disables aggressive preloading of unvisited route chunks
     modulePreload: false, 
     
     rollupOptions: {
       output: {
+        // 2. Adjust naming patterns to ensure optimal hashing and caching
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            // Group Core framework runtimes into a unified caching bucket
             if (
               id.includes('node_modules/react/') || 
               id.includes('node_modules/react-dom/') || 
@@ -39,19 +47,21 @@ export default defineConfig({
               return 'vendor-core';
             }
             
+            // Heavy isolated structural plugins
             if (id.includes('gsap')) return 'vendor-gsap';
-            if (id.includes('react-big-calendar')) return 'vendor-calendar';
+            if (id.includes('react-big-calendar') || id.includes('calendar')) return 'vendor-calendar';
             if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
-            if (id.includes('esprima')) return 'vendor-esprima';
             if (id.includes('react-icons')) return 'vendor-icons';
-            if (id.includes('react-helmet-async')) return 'vendor-helmet';
-
+            
+            // 3. Prevent micro-vendor chunks by merging remaining minor utilities
             if (
               id.includes('clsx') || 
               id.includes('tailwind-merge') || 
-              id.includes('framer-motion')
+              id.includes('framer-motion') ||
+              id.includes('react-helmet-async') ||
+              id.includes('esprima')
             ) {
-              return 'vendor-shared';
+              return 'vendor-utilities';
             }
           }
         },
