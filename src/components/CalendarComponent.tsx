@@ -1,12 +1,12 @@
 // src/components/CalendarComponent.tsx
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import type { Event, View, DateLocalizer } from "react-big-calendar";
 import type { FC } from "react";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { enUS } from "date-fns/locale/en-US";
 
-// ✅ FIX: Load the exact local stylesheet from your node_modules directory 
+// Load the exact local stylesheet from your node_modules directory 
 // as a raw text string, completely hiding it from Vite's render-blocking CSS compiler.
 import rawCalendarStyles from "react-big-calendar/lib/css/react-big-calendar.css?raw";
 
@@ -43,7 +43,7 @@ const CalendarComponent: FC = () => {
         contain: "layout style",
       }}
     >
-      {/* ✅ FIX: Inlining the raw library stylesheet directly into the component.
+      {/* Inlining the raw library stylesheet directly into the component.
           Your exact local styles load on demand without creating a blocking .css file. */}
       <style>{rawCalendarStyles}</style>
 
