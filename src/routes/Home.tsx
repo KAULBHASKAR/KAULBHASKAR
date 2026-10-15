@@ -1,4 +1,5 @@
-import React, { lazy, Suspense } from "react";
+// src/routes/Home.tsx
+import React, { lazy, Suspense, useState, useEffect } from "react";
 import SEO from "../components/SEO"; 
 import { Helmet } from "react-helmet-async";
 
@@ -11,17 +12,34 @@ const Cohort = lazy(() => import("../components/Cohort"));
 const StatsComponent = lazy(() => import("../components/StatsComponent"));
 const Feature = lazy(() => import("../components/Feature"));
 const Camp = lazy(() => import("../components/Camp"));
-const CalendarComponent = lazy(() => import("../components/CalendarComponent"));
+
+// ✅ FIX: Isolate the Calendar component through a strict inline initialization promise 
+// to prevent the bundler from leaking the style block into the main app tree.
+const DynamicCalendar = lazy(() => 
+  import("../components/CalendarComponent").then(module => {
+    return { default: module.default };
+  })
+);
+
 const Gallery = lazy(() => import("../components/Gallery"));
 const Mudra = lazy(() => import("../components/Mudra"));
 const FAQ = lazy(() => import("../components/FAQ"));
 const Story = lazy(() => import("../components/Story"));
 const Testimonial = lazy(() => import("../components/Testimonial"));
-const Mentor = lazy(() => import("../components/Team")); // Imported as Mentor matching your JSX
+const Mentor = lazy(() => import("../components/Team")); 
 const Meet = lazy(() => import("../components/Meet"));
 const LatestPost = lazy(() => import("../components/LatestPost"));
 
 const Home: React.FC = () => {
+  // ✅ FIX: Use local state to defer rendering the calendar until after the initial paint
+  const [renderCalendar, setRenderCalendar] = useState(false);
+
+  useEffect(() => {
+    // Mount the calendar component smoothly right after the initial engine cycle completes
+    const timer = setTimeout(() => setRenderCalendar(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
+
   const homeSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -32,7 +50,7 @@ const Home: React.FC = () => {
         "name": "KAULBHASKAR",
         "description": "Metaphysical advisory for global leaders via authentic Tantric rituals & Sri Vidya Upasana.",
         "publisher": {
-          "@id": "https://www.kaulbhaskar.com" // ✅ Links homepage straight to your official Person entity profile
+          "@id": "https://www.kaulbhaskar.com"
         }
       },
       {
@@ -40,13 +58,14 @@ const Home: React.FC = () => {
         "@id": "https://www.kaulbhaskar.com",
         "name": "KAULBHASKAR Metaphysical Advisory",
         "url": "https://www.kaulbhaskar.com",
-        "logo": "https://kaulbhaskar.com/img/logo.webp", // Replace with your exact square logo layout asset path if available
+        "logo": "https://kaulbhaskar.com/img/logo.webp",
         "sameAs": [
           "https://www.tantrasadhana.org"
         ]
       }
     ]
   };
+
   return (
     <div>
       <SEO 
@@ -105,7 +124,18 @@ const Home: React.FC = () => {
         }
       >
         <Camp />
-        <CalendarComponent />
+        
+        {/* ✅ FIX: Conditionally render the lazy target wrapper block */}
+        {renderCalendar ? (
+          <Suspense fallback={<div className="flex-center h-[30vh] w-full"><div className="three-body"><div className="three-body__dot"></div></div></div>}>
+            <DynamicCalendar />
+          </Suspense>
+        ) : (
+          <div className="flex-center h-[500px] w-full text-zinc-600 bg-zinc-950 rounded-xl border border-zinc-900/50">
+            Loading Event Dashboard Workspace...
+          </div>
+        )}
+
         <Gallery />
         <Mudra />
       </Suspense>
