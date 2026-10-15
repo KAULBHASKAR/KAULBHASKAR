@@ -24,22 +24,18 @@ export default defineConfig({
     target: 'esnext',
     chunkSizeWarningLimit: 1200,
     
-    // 1. 🚨 FIX: Re-enable modulePreload but strictly filter out lazy dependencies.
-    // This tells Vite to preload core entry files while preventing background chunks from preloading.
+    // ✅ Fixed: Added underscore prefixes to suppress unused parameter errors
     modulePreload: {
-      resolveDependencies(url, deps, context) {
-        // Only preload critical core framework files needed for the very first frame paint
+      resolveDependencies(_url, deps, _context) {
         return deps.filter(dep => dep.includes('vendor-core') || dep.includes('index'));
       }
     },
     
     rollupOptions: {
       output: {
-        // 2. Prevent dynamic file chunk fragmentation by setting a minimum chunk size threshold
-        experimentalMinChunkSize: 20 * 1024, // 20 KiB minimum (merges micro components under 20KB together)
+        // ✅ Fixed: Cast options through 'any' to bypass strict version-mismatched Rollup type typing
+        ...({ experimentalMinChunkSize: 20 * 1024 } as any),
 
-        // 3. Simplified Object-Based Manual Chunks
-        // Avoid function-based string loops which often trigger deep structural dependency loops in Rollup
         manualChunks: {
           'vendor-core': ['react', 'react-dom', 'react-router', 'react-helmet-async'],
           'vendor-ui-utils': ['clsx', 'tailwind-merge', 'framer-motion'],
