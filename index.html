@@ -22,12 +22,19 @@
     <meta property="twitter:description" content="Explore professional spiritual guidance, authentic Tantric rituals, Strategic lifepath mapping, and Sri Vidya Upasana mentorship by Guru Ji Kaulbhaskar." />
     <meta property="twitter:image" content="https://kaulbhaskar.com/img/ABOUT_BG.webp" />
 
+    <!-- ✅ FIX 1: Tell Vite to preload the bundled application styles early.
+         This forces the browser to request index.css concurrently with the fonts. -->
+    <link rel="preload" href="/src/index.css" as="style" />
+    <link rel="stylesheet" href="/src/index.css" />
+
     <!-- Preload critical fonts & images (Properly scoped) -->
     <link rel="preload" href="/fonts/zentry-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/general.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/robert-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/circularweb-book.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" fetchpriority="high" as="image" href="/img/ABOUT_BG.webp" type="image/webp">
+    
+    <!-- ✅ FIX 2: Lower the network priority of the background image compared to structural elements -->
+    <link rel="preload" fetchpriority="low" as="image" href="/img/ABOUT_BG.webp" type="image/webp">
 
     <!-- Critical CSS for Immediate Paint -->
     <style>
