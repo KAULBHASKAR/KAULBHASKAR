@@ -6,11 +6,14 @@ import type { FC } from "react";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { enUS } from "date-fns/locale/en-US";
 
+// ✅ FIX: Load the exact local stylesheet from your node_modules directory 
+// as a raw text string, completely hiding it from Vite's render-blocking CSS compiler.
+import rawCalendarStyles from "react-big-calendar/lib/css/react-big-calendar.css?raw";
+
 const locales = {
   "en-US": enUS,
 };
 
-// Configured localizer isolated inside this chunk module context
 const localizer: DateLocalizer = dateFnsLocalizer({
   format,
   parse,
@@ -31,22 +34,6 @@ const CalendarComponent: FC = () => {
   const [currentDate, setCurrentDate] = useState(events[0].start);
   const [currentView, setCurrentView] = useState<View>("month");
 
-  useEffect(() => {
-    // ✅ FIX: Programmatically create a DOM link node at runtime.
-    // This tricks Vite's parser completely and prevents it from building the render-blocking asset.
-    const stylesheetId = "rbc-dynamic-css";
-    
-    if (!document.getElementById(stylesheetId)) {
-      const linkEl = document.createElement("link");
-      linkEl.id = stylesheetId;
-      linkEl.rel = "stylesheet";
-      // Loads version 1.13.0 matching your library's core bundle structural requirements
-      linkEl.href = "https://jsdelivr.net";
-      
-      document.head.appendChild(linkEl);
-    }
-  }, []);
-
   return (
     <div
       style={{
@@ -56,6 +43,11 @@ const CalendarComponent: FC = () => {
         contain: "layout style",
       }}
     >
+      {/* ✅ FIX: Inlining the raw library stylesheet directly into the component.
+          Your exact local styles load on demand without creating a blocking .css file. */}
+      <style>{rawCalendarStyles}</style>
+
+      {/* Your custom override classes remain positioned underneath */}
       <style>{`
         .rbc-calendar { min-width: 100%; overflow-x: auto; }
         .rbc-off-range-bg { background-color: #e5e7eb !important; }
