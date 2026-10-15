@@ -32,9 +32,19 @@ const CalendarComponent: FC = () => {
   const [currentView, setCurrentView] = useState<View>("month");
 
   useEffect(() => {
-    // ✅ FIX: Dynamically injects the global external css styles ONLY when this 
-    // component actually mounts, cleanly removing it from your initial page load headers.
-    import("react-big-calendar/lib/css/react-big-calendar.css");
+    // ✅ FIX: Programmatically create a DOM link node at runtime.
+    // This tricks Vite's parser completely and prevents it from building the render-blocking asset.
+    const stylesheetId = "rbc-dynamic-css";
+    
+    if (!document.getElementById(stylesheetId)) {
+      const linkEl = document.createElement("link");
+      linkEl.id = stylesheetId;
+      linkEl.rel = "stylesheet";
+      // Loads version 1.13.0 matching your library's core bundle structural requirements
+      linkEl.href = "https://jsdelivr.net";
+      
+      document.head.appendChild(linkEl);
+    }
   }, []);
 
   return (
