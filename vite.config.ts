@@ -20,51 +20,30 @@ export default defineConfig({
     }),
   ],
   build: {
-    // 1. 🚨 FIX: Enable CSS Code Splitting so your lazy chunks only load their own styles
     cssCodeSplit: true,
-    
     target: 'esnext',
-    chunkSizeWarningLimit: 800,
+    chunkSizeWarningLimit: 1200,
     
-    // Disables aggressive preloading of unvisited route chunks
-    modulePreload: false, 
+    // 1. 🚨 FIX: Re-enable modulePreload but strictly filter out lazy dependencies.
+    // This tells Vite to preload core entry files while preventing background chunks from preloading.
+    modulePreload: {
+      resolveDependencies(url, deps, context) {
+        // Only preload critical core framework files needed for the very first frame paint
+        return deps.filter(dep => dep.includes('vendor-core') || dep.includes('index'));
+      }
+    },
     
     rollupOptions: {
       output: {
-        // 2. Adjust naming patterns to ensure optimal hashing and caching
-        chunkFileNames: 'assets/[name]-[hash].js',
-        entryFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]',
+        // 2. Prevent dynamic file chunk fragmentation by setting a minimum chunk size threshold
+        experimentalMinChunkSize: 20 * 1024, // 20 KiB minimum (merges micro components under 20KB together)
 
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            // Group Core framework runtimes into a unified caching bucket
-            if (
-              id.includes('node_modules/react/') || 
-              id.includes('node_modules/react-dom/') || 
-              id.includes('node_modules/react-router/')
-            ) {
-              return 'vendor-core';
-            }
-            
-            // Heavy isolated structural plugins
-            if (id.includes('gsap')) return 'vendor-gsap';
-            if (id.includes('react-big-calendar') || id.includes('calendar')) return 'vendor-calendar';
-            if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
-            if (id.includes('react-icons')) return 'vendor-icons';
-            
-            // 3. Prevent micro-vendor chunks by merging remaining minor utilities
-            if (
-              id.includes('clsx') || 
-              id.includes('tailwind-merge') || 
-              id.includes('framer-motion') ||
-              id.includes('react-helmet-async') ||
-              id.includes('esprima')
-            ) {
-              return 'vendor-utilities';
-            }
-          }
-        },
+        // 3. Simplified Object-Based Manual Chunks
+        // Avoid function-based string loops which often trigger deep structural dependency loops in Rollup
+        manualChunks: {
+          'vendor-core': ['react', 'react-dom', 'react-router', 'react-helmet-async'],
+          'vendor-ui-utils': ['clsx', 'tailwind-merge', 'framer-motion'],
+        }
       },
     },
   },
