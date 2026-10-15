@@ -20,25 +20,52 @@ export default defineConfig({
     }),
   ],
   build: {
+    // Keeps components styling loaded chunks instead of a single giant global render-blocker
     cssCodeSplit: true,
     target: 'esnext',
     chunkSizeWarningLimit: 1200,
     
-    // ✅ Fixed: Added underscore prefixes to suppress unused parameter errors
+    // Configures preloading logic safely for Vite 6+ engines
     modulePreload: {
       resolveDependencies(_url, deps, _context) {
+        // Preload index and core structures exclusively to stop secondary background route preloads
         return deps.filter(dep => dep.includes('vendor-core') || dep.includes('index'));
       }
     },
     
     rollupOptions: {
       output: {
-        // ✅ Fixed: Cast options through 'any' to bypass strict version-mismatched Rollup type typing
-        ...({ experimentalMinChunkSize: 20 * 1024 } as any),
+        // ✅ Rolldown-compatible function chunk strategy
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // Main framework runtime engine
+            if (
+              id.includes('node_modules/react/') || 
+              id.includes('node_modules/react-dom/') || 
+              id.includes('node_modules/react-router/')
+            ) {
+              return 'vendor-core';
+            }
 
-        manualChunks: {
-          'vendor-core': ['react', 'react-dom', 'react-router', 'react-helmet-async'],
-          'vendor-ui-utils': ['clsx', 'tailwind-merge', 'framer-motion'],
+            // Group heavy animation and text engines away from critical paint views
+            if (id.includes('gsap')) {
+              return 'vendor-gsap';
+            }
+            if (id.includes('react-big-calendar') || id.includes('calendar')) {
+              return 'vendor-calendar';
+            }
+
+            // Pack shared lightweight utility dependencies cleanly to avoid micro-file spam
+            if (
+              id.includes('clsx') || 
+              id.includes('tailwind-merge') || 
+              id.includes('framer-motion') || 
+              id.includes('react-helmet-async') ||
+              id.includes('react-icons')
+            ) {
+              return 'vendor-ui-shared';
+            }
+          }
         }
       },
     },
