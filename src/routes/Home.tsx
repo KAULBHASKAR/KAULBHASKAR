@@ -58,7 +58,7 @@ const Home: React.FC = () => {
         "@id": "https://www.kaulbhaskar.com",
         "name": "KAULBHASKAR Metaphysical Advisory",
         "url": "https://www.kaulbhaskar.com",
-        "logo": "https://kaulbhaskar.com/img/logo.webp",
+        "logo": "https://kaulbhaskar.com/img/LOGO.webp",
         "sameAs": [
           "https://www.tantrasadhana.org"
         ]
