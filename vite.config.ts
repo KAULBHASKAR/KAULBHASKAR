@@ -20,6 +20,7 @@ export default defineConfig({
     }),
   ],
   build: {
+    // Keeps components styling loaded chunks instead of a single giant global render-blocker
     cssCodeSplit: true,
     target: 'esnext',
     chunkSizeWarningLimit: 1200,
@@ -50,13 +51,7 @@ export default defineConfig({
             if (id.includes('gsap')) {
               return 'vendor-gsap';
             }
-            
-            // ✅ FIX: Capture both react-big-calendar and its mandatory date-fns engine
-            if (
-              id.includes('react-big-calendar') || 
-              id.includes('calendar') || 
-              id.includes('date-fns')
-            ) {
+            if (id.includes('react-big-calendar') || id.includes('calendar')) {
               return 'vendor-calendar';
             }
 
