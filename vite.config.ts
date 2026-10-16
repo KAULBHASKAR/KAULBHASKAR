@@ -20,25 +20,17 @@ export default defineConfig({
     }),
   ],
   build: {
-    // Keeps components styling loaded chunks instead of a single giant global render-blocker
     cssCodeSplit: true,
     target: 'esnext',
-    chunkSizeWarningLimit: 1200,
+    chunkSizeWarningLimit: 800,
     
-    // Configures preloading logic safely for Vite 6+ engines
-    modulePreload: {
-      resolveDependencies(_url, deps, _context) {
-        // Preload index and core structures exclusively to stop secondary background route preloads
-        return deps.filter(dep => dep.includes('vendor-core') || dep.includes('index'));
-      }
-    },
+    // ✅ Completely disables aggressive preloading of unvisited route chunks
+    modulePreload: false, 
     
     rollupOptions: {
       output: {
-        // ✅ Rolldown-compatible function chunk strategy
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Main framework runtime engine
             if (
               id.includes('node_modules/react/') || 
               id.includes('node_modules/react-dom/') || 
@@ -46,27 +38,23 @@ export default defineConfig({
             ) {
               return 'vendor-core';
             }
+            
+            if (id.includes('gsap')) return 'vendor-gsap';
+            if (id.includes('react-big-calendar')) return 'vendor-calendar';
+            if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
+            if (id.includes('esprima')) return 'vendor-esprima';
+            if (id.includes('react-icons')) return 'vendor-icons';
+            if (id.includes('react-helmet-async')) return 'vendor-helmet';
 
-            // Group heavy animation and text engines away from critical paint views
-            if (id.includes('gsap')) {
-              return 'vendor-gsap';
-            }
-            if (id.includes('react-big-calendar') || id.includes('calendar')) {
-              return 'vendor-calendar';
-            }
-
-            // Pack shared lightweight utility dependencies cleanly to avoid micro-file spam
             if (
               id.includes('clsx') || 
               id.includes('tailwind-merge') || 
-              id.includes('framer-motion') || 
-              id.includes('react-helmet-async') ||
-              id.includes('react-icons')
+              id.includes('framer-motion')
             ) {
-              return 'vendor-ui-shared';
+              return 'vendor-shared';
             }
           }
-        }
+        },
       },
     },
   },
