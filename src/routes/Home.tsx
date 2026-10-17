@@ -2,24 +2,25 @@
 import React, { lazy, Suspense, useState, useEffect } from "react";
 import SEO from "../components/SEO"; 
 import { Helmet } from "react-helmet-async";
+
+// 1. Keep Hero static to prevent a blank white screen during initial page paint
 import Hero from "../components/Hero";
 
-// 1. Keep above-the-fold elements static to render instantly
-// (If Cohort and Intro are right beneath Hero, keep them unchained)
-
-// 2. Core content lazy chunks
+// 2. Lazy load lower, below-the-fold component blocks
 const Intro = lazy(() => import("../components/Intro")); 
 const Cohort = lazy(() => import("../components/Cohort")); 
 const StatsComponent = lazy(() => import("../components/StatsComponent"));
 const Feature = lazy(() => import("../components/Feature"));
 const Camp = lazy(() => import("../components/Camp"));
 
-// Isolated Calendar block 
+// ✅ FIX: Isolate the Calendar component through a strict inline initialization promise 
+// to prevent the bundler from leaking the style block into the main app tree.
 const DynamicCalendar = lazy(() => 
-  import("../components/CalendarComponent").then(module => ({ default: module.default }))
+  import("../components/CalendarComponent").then(module => {
+    return { default: module.default };
+  })
 );
 
-// Deep-page sections
 const Gallery = lazy(() => import("../components/Gallery"));
 const Mudra = lazy(() => import("../components/Mudra"));
 const FAQ = lazy(() => import("../components/FAQ"));
@@ -30,22 +31,13 @@ const Meet = lazy(() => import("../components/Meet"));
 const LatestPost = lazy(() => import("../components/LatestPost"));
 
 const Home: React.FC = () => {
-  // State switches to stop Vite from fetching lower-level chunks on mount
+  // ✅ FIX: Use local state to defer rendering the calendar until after the initial paint
   const [renderCalendar, setRenderCalendar] = useState(false);
-  const [renderDeepPage, setRenderDeepPage] = useState(false);
 
   useEffect(() => {
-    // 1. Defer the heavy Calendar engine initialization safely
-    const calendarTimer = setTimeout(() => setRenderCalendar(true), 200);
-
-    // 2. Completely defer deep-page rendering until initial mount finishes 
-    // OR swap this with an IntersectionObserver for seamless scroll loading
-    const deepPageTimer = setTimeout(() => setRenderDeepPage(true), 600);
-
-    return () => {
-      clearTimeout(calendarTimer);
-      clearTimeout(deepPageTimer);
-    };
+    // Mount the calendar component smoothly right after the initial engine cycle completes
+    const timer = setTimeout(() => setRenderCalendar(true), 50);
+    return () => clearTimeout(timer);
   }, []);
 
   const homeSchema = {
@@ -74,15 +66,6 @@ const Home: React.FC = () => {
     ]
   };
 
-  // Shared generic structural skeleton loader
-  const FallbackLoader = () => (
-    <div className="flex-center h-[25vh] w-full">
-      <div className="three-body">
-        <div className="three-body__dot"></div>
-      </div>
-    </div>
-  );
-
   return (
     <div>
       <SEO 
@@ -106,30 +89,49 @@ const Home: React.FC = () => {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(homeSchema)}
+        {JSON.stringify(homeSchema)}
         </script>
       </Helmet>
 
-      {/* Renders instantly on page paint */}
+      {/* Hero renders instantly without waiting for network scripts to finish chunk downloading */}
       <Hero />
 
-      {/* Layer 1: Immediately seen beneath the hero image */}
-      <Suspense fallback={<FallbackLoader />}>
+      {/* Layer 1: Elements immediately seen below the hero image */}
+      <Suspense 
+        fallback={
+          <div className="flex-center h-[30vh] w-full">
+            <div className="three-body">
+              <div className="three-body__dot"></div>
+              <div className="three-body__dot"></div>
+              <div className="three-body__dot"></div>
+            </div>
+          </div>
+        }
+      >
         <Cohort />
         <Intro />
         <Feature />
       </Suspense>
 
-      {/* Layer 2: Middle interactive items containing the calendar */}
-      <Suspense fallback={<FallbackLoader />}>
+      {/* Layer 2: Middle interactive items including the calendar */}
+      <Suspense 
+        fallback={
+          <div className="flex-center h-[30vh] w-full">
+            <div className="three-body">
+              <div className="three-body__dot"></div>
+            </div>
+          </div>
+        }
+      >
         <Camp />
         
+        {/* ✅ FIX: Conditionally render the lazy target wrapper block */}
         {renderCalendar ? (
-          <Suspense fallback={<FallbackLoader />}>
+          <Suspense fallback={<div className="flex-center h-[30vh] w-full"><div className="three-body"><div className="three-body__dot"></div></div></div>}>
             <DynamicCalendar />
           </Suspense>
         ) : (
-          <div className="flex-center h-[400px] w-full text-zinc-600 bg-zinc-950 rounded-xl border border-zinc-900/50">
+          <div className="flex-center h-[500px] w-full text-zinc-600 bg-zinc-950 rounded-xl border border-zinc-900/50">
             Loading Event Dashboard Workspace...
           </div>
         )}
@@ -138,20 +140,24 @@ const Home: React.FC = () => {
         <Mudra />
       </Suspense>
 
-      {/* Layer 3: Heavy items deeper down the page are completely un-mounted initially */}
-      {renderDeepPage ? (
-        <Suspense fallback={<FallbackLoader />}>
-          <FAQ />
-          <StatsComponent />
-          <Story />
-          <Testimonial />
-          <Mentor />
-          <LatestPost />
-          <Meet />
-        </Suspense>
-      ) : (
-        <div className="h-[40vh] w-full bg-transparent" /> 
-      )}
+      {/* Layer 3: Heavy items deeper down the page loaded entirely asynchronously */}
+      <Suspense 
+        fallback={
+          <div className="flex-center h-[30vh] w-full">
+            <div className="three-body">
+              <div className="three-body__dot"></div>
+            </div>
+          </div>
+        }
+      >
+        <FAQ />
+        <StatsComponent />
+        <Story />
+        <Testimonial />
+        <Mentor />
+        <LatestPost />
+        <Meet />
+      </Suspense>
     </div>
   );
 };
