@@ -133,7 +133,7 @@ export default function Blog() {
           {JSON.stringify(blogListSchema)}
         </script>
       </Helmet>
-      <h1 className="special-font hero-heading text-center my-24 bg-linear-to-b from-white to-slate-300 bg-clip-text text-transparent drop-shadow-sm pointer-events-none">
+      <h1 className="special-font hero-heading text-center my-24 bg-linear-to-b from-white via-green-500 to-yellow-300 bg-clip-text text-transparent drop-shadow-sm pointer-events-none">
         BLOG
       </h1>
 
