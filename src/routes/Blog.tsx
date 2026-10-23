@@ -133,8 +133,10 @@ export default function Blog() {
           {JSON.stringify(blogListSchema)}
         </script>
       </Helmet>
+      <h1 className="special-font hero-heading text-center my-24 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
+       BLOG
+      </h1>
 
-      <h1 className="special-font hero-heading text-center my-24 bg-linear-to-r from-green-400 via-indigo-500 to-yellow-500 bg-clip-text text-transparent pointer-events-none">BLOG</h1>
       
       <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {currentPosts.map((post) => (
