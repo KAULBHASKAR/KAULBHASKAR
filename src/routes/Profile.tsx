@@ -134,7 +134,7 @@ const Profile: React.FC = () => {
             <img 
               src="/img/satyendra.webp" 
               alt="Kaulbhaskar Profile Portrait" 
-              className="mt-6 w-full h-full object-cover rounded shadow-sm border border-stone-100 bg-stone-50" 
+              className=" w-full h-full object-cover rounded shadow-sm border border-stone-100 bg-stone-50" 
             />
           </div>
 
@@ -148,7 +148,7 @@ const Profile: React.FC = () => {
             <img 
               src="/img/GURUJI.webp" 
               alt="Lineage Guru Portrait Illustration" 
-              className="mt-6 w-full h-48 object-contain rounded shadow-sm border border-stone-100 bg-stone-50" 
+              className=" w-full h-full object-cover rounded shadow-sm border border-stone-100 bg-stone-50" 
             />
           </div>
         </div>
@@ -203,7 +203,7 @@ const Profile: React.FC = () => {
                         <img 
                           src={item.image} 
                           alt={item.name} 
-                          className="w-full h-44 object-contain rounded-xl border border-stone-800 bg-stone-950 p-1.5 shadow-md"
+                          className="w-full h-full object-cover rounded-xl border border-stone-800 bg-stone-950 p-1.5 shadow-md"
                           onError={() => {
                             console.warn(`Asset failed to resolve path: ${item.image}`);
                           }}
