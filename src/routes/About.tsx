@@ -122,7 +122,7 @@ const About: React.FC = () => {
           className="w-screen h-screen object-cover object-center 2xl:rounded-s-xl"
         />
 
-        <h1 className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-4xl text-white font-bold pageHeader">
+        <h1 className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-3xl md:text-4xl lg:text-6xl text-white font-extrabold pageHeader">
           About Us
         </h1>
 
