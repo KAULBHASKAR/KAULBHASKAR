@@ -134,7 +134,7 @@ const Profile: React.FC = () => {
             <img 
               src="/img/satyendra.webp" 
               alt="Kaulbhaskar Profile Portrait" 
-              className="mt-6 w-full h-48 object-contain rounded shadow-sm border border-stone-100 bg-stone-50" 
+              className="mt-6 w-full h-full object-cover rounded shadow-sm border border-stone-100 bg-stone-50" 
             />
           </div>
 
