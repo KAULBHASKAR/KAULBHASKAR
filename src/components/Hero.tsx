@@ -66,7 +66,6 @@ const Hero: React.FC = () => {
   useGSAP(
     () => {
       if (hasClicked && bgVideoRef.current) {
-        // Safe context transform initialization
         gsap.set("#video-frame", { visibility: "visible" });
         gsap.fromTo(
           bgVideoRef.current,
@@ -111,13 +110,14 @@ const Hero: React.FC = () => {
   }, []);
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
-  // ✅ OPTIMIZATION: Resolves a lightweight frame image format path instead of loading extra videos
-  const getVideoThumb = (index: number) => `videos/hero-thumb-${index}.webp`;
+  
+  // ✅ FIXED: Resolves thumbnail images directly from the active public asset image directory
+  const getVideoThumb = (index: number) => `img/hero-thumb-${index}.webp`;
 
   return (
     <div className="relative h-screen w-screen overflow-x-hidden bg-black select-none z-0">
       {isLoading && (
-        <div className="flex items-center justify-center absolute z-50 h-screen w-screen bg-violet-50">
+        <div className="flex items-center justify-center absolute z-100 h-screen w-screen bg-violet-50">
           <div className="three-body">
             <div className="three-body__dot" />
             <div className="three-body__dot" />
@@ -126,55 +126,53 @@ const Hero: React.FC = () => {
         </div>
       )}
 
-      {/* LAYER 1: Background Video Framework Only */}
+      {/* LAYER 1: Background Video & Thumbnail Architecture */}
       <div
         id="video-frame"
         className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
       >
-      <div className="mask-clip-path absolute-center absolute z-20 size-64 cursor-pointer overflow-hidden rounded-lg">
-        <div
-          onClick={handleMiniVideoClick}
-          className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
-        >
-      {/* 🚀 FIXED: Changed src from upcomingVideoIndex to currentIndex inside the tracking preview map loop */}
-      {/* This ensures that when the cursor moves to the center, the thumb tracking system pulls the correct matching preview image asset instantly */}
-      <img
-        src={getVideoThumb(upcomingVideoIndex)} 
-        alt={`Preview Frame of Video #${upcomingVideoIndex}`}
-        key={upcomingVideoIndex} // Added key property to force React to swap out the preview frames cleanly on click
-        width="256"
-        height="256"
-        id="current-video"
-        className="size-64 origin-center scale-150 object-cover object-center subpixel-antialiased transform-gpu"
-        loading="eager" // Eager load specifically for the floating center hover card so it responds instantly to cursor movements
-      />
-    </div>
-  </div>
+        <div className="mask-clip-path absolute-center absolute z-20 size-64 cursor-pointer overflow-hidden rounded-lg">
+          <div
+            onClick={handleMiniVideoClick}
+            className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
+          >
+            {/* ✅ FIXED: High-performance optimized picture element context for instant interactive hover updates */}
+            <img
+              src={getVideoThumb(upcomingVideoIndex)} 
+              alt={`Preview Frame of Video #${upcomingVideoIndex}`}
+              key={upcomingVideoIndex} 
+              width="256"
+              height="256"
+              id="current-video"
+              className="size-64 origin-center scale-150 object-cover object-center subpixel-antialiased transform-gpu"
+              loading="eager" 
+            />
+          </div>
+        </div>
 
-  {isClient && (
-    <video
-      ref={bgVideoRef}
-      src={getVideoSrc(currentIndex)}
-      preload="auto"
-      autoPlay
-      loop
-      muted
-      playsInline
-      className="absolute left-0 top-0 size-full object-cover"
-      onLoadedData={handleVideoLoad}
-      onCanPlay={() => {
-        setIsLoading(false);
-        bgVideoRef.current?.play().catch(() => {});
-      }}
-    />
-  )}
+        {isClient && (
+          <video
+            ref={bgVideoRef}
+            src={getVideoSrc(currentIndex)}
+            preload="auto"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute left-0 top-0 size-full object-cover"
+            onLoadedData={handleVideoLoad}
+            onCanPlay={() => {
+              setIsLoading(false);
+              bgVideoRef.current?.play().catch(() => {});
+            }}
+          />
+        )}
 
-      {/* Foreground Tracking Headline inside the clip mask */}
+        {/* Foreground Tracking Headline inside the clip mask */}
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
           BH<b>as</b>k<b>a</b>r
         </h1>
       </div>
-
 
       {/* LAYER 2: Master Floating Interactive Typography Overlay Context */}
       <div className="absolute left-0 top-0 z-30 size-full overflow-y-auto md:overflow-hidden bg-transparent pointer-events-none flex flex-col justify-start">
