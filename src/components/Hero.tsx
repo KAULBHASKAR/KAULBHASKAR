@@ -151,7 +151,7 @@ const Hero: React.FC = () => {
             <video
               ref={currentVideoRef}
               src={getVideoSrc(upcomingVideoIndex)}
-              preload="none"
+              preload="metadata"
               loop
               muted
               playsInline
