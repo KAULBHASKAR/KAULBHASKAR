@@ -46,7 +46,6 @@ export default function Footer() {
             <Link 
               key={link.href} 
               to={link.href} 
-              prefetch="none"
               className="text-black text-sm font-medium hover:underline transition-all focus:outline-none min-w-[60px] text-center"
             >
               {link.label}
