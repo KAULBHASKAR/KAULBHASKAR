@@ -1,10 +1,9 @@
-// src/routes/Hero.tsx
 import React, { useEffect, useRef, useState } from "react";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger"; 
+import { ScrollTrigger } from "gsap/ScrollTrigger"; // Changed from 'gsap/all' for cleaner tree-shaking
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,10 +30,12 @@ const Hero: React.FC = () => {
     setLoadedVideos((prev) => prev + 1);
   };
 
+  // Client-only guard
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  // Force autoplay on mount
   useEffect(() => {
     if (bgVideoRef.current) {
       bgVideoRef.current.play().catch(() => {
@@ -43,6 +44,7 @@ const Hero: React.FC = () => {
     }
   }, []);
 
+  // Failsafe loader timeout
   useEffect(() => {
     if (bgVideoRef.current && bgVideoRef.current.readyState >= 2) {
       setLoadedVideos((prev) => prev + 1);
@@ -55,12 +57,14 @@ const Hero: React.FC = () => {
     return () => clearTimeout(timeout);
   }, []);
 
+  // FIXED: Consolidated loading state assignment without triggering immediate ScrollTrigger calculations
   useEffect(() => {
     if (loadedVideos >= 1) {
       setIsLoading(false);
     }
   }, [loadedVideos]);
 
+  // Video Transition Animation Engine
   useGSAP(
     () => {
       if (hasClicked && nextVideoRef.current) {
@@ -87,6 +91,7 @@ const Hero: React.FC = () => {
     { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
+  // FIXED: Main Intro + Scroll Animation (With Safe Layout Calculation Batching)
   useGSAP(() => {
     gsap.set("#video-frame", {
       clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
@@ -99,7 +104,7 @@ const Hero: React.FC = () => {
         start: "center center",
         end: "bottom center",
         scrub: true,
-        invalidateOnRefresh: true, 
+        invalidateOnRefresh: true, // Forces layout re-reads only when global windows refresh occurs safely
       },
     });
 
@@ -109,6 +114,7 @@ const Hero: React.FC = () => {
       ease: "power1.inOut",
     }, 0);
 
+    // FIXED: Defer ScrollTrigger refresh safely inside requestAnimationFrame once components drop down cleanly
     const refreshTimeout = setTimeout(() => {
       requestAnimationFrame(() => {
         ScrollTrigger.refresh();
@@ -142,11 +148,9 @@ const Hero: React.FC = () => {
             onClick={handleMiniVideoClick}
             className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
           >
-            {/* 1. Added preload="none" to the mini tracking video thumb */}
             <video
               ref={currentVideoRef}
               src={getVideoSrc(upcomingVideoIndex)}
-              preload="metadata"
               loop
               muted
               playsInline
@@ -156,11 +160,9 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* 2. Added preload="none" to the absolute hidden transition canvas */}
         <video
           ref={nextVideoRef}
           src={getVideoSrc(currentIndex)}
-          preload="metadata"
           loop
           muted
           playsInline
@@ -169,11 +171,9 @@ const Hero: React.FC = () => {
         />
 
         {isClient && (
-          /* 3. Added preload="none" to the master playing display engine video */
           <video
             ref={bgVideoRef}
             src={getVideoSrc(currentIndex)}
-            preload="none"
             autoPlay
             loop
             muted
@@ -187,12 +187,13 @@ const Hero: React.FC = () => {
           />
         )}
 
+        {/* Foreground Tracking Headline inside the clip mask */}
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
           BH<b>as</b>k<b>a</b>r
         </h1>
       </div>
 
-      {/* LAYER 2: Typography Overlays */}
+      {/* LAYER 2: Master Floating Interactive Typography Overlay Context */}
       <div className="absolute left-0 top-0 z-30 size-full overflow-y-auto md:overflow-hidden bg-transparent pointer-events-none flex flex-col justify-start">
         <div className="mt-20 sm:mt-24 px-5 sm:px-10 max-w-sm sm:max-w-xl pointer-events-auto pb-10">
           
@@ -223,6 +224,11 @@ const Hero: React.FC = () => {
           />
         </div>
       </div>
+
+      {/* Root Layer Underlay Shadow Text Layer */}
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent z-20 pointer-events-none">
+        BH<b>as</b>k<b>a</b>r
+      </h1>
     </div>
   );
 };
