@@ -1,9 +1,10 @@
+// src/components/Hero.tsx
 import React, { useEffect, useRef, useState } from "react";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger"; // Changed from 'gsap/all' for cleaner tree-shaking
+import { ScrollTrigger } from "gsap/ScrollTrigger"; 
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,8 +15,6 @@ const Hero: React.FC = () => {
   const [loadedVideos, setLoadedVideos] = useState<number>(0);
   const [isClient, setIsClient] = useState(false);
 
-  const currentVideoRef = useRef<HTMLVideoElement | null>(null);
-  const nextVideoRef = useRef<HTMLVideoElement | null>(null);
   const bgVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const totalVideo = 4;
@@ -57,7 +56,6 @@ const Hero: React.FC = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  // FIXED: Consolidated loading state assignment without triggering immediate ScrollTrigger calculations
   useEffect(() => {
     if (loadedVideos >= 1) {
       setIsLoading(false);
@@ -67,31 +65,20 @@ const Hero: React.FC = () => {
   // Video Transition Animation Engine
   useGSAP(
     () => {
-      if (hasClicked && nextVideoRef.current) {
-        gsap.set("#next-video", { visibility: "visible" });
-
-        gsap.to("#next-video", {
-          transformOrigin: "center center",
-          scale: 1,
-          duration: 1,
-          ease: "power1.inOut",
-          onStart: () => {
-            nextVideoRef.current?.play().catch(() => {});
-          },
-        });
-
-        gsap.from("#current-video", {
-          transformOrigin: "center center",
-          scale: 0,
-          duration: 1.5,
-          ease: "power1.inOut",
-        });
+      if (hasClicked && bgVideoRef.current) {
+        // Safe context transform initialization
+        gsap.set("#video-frame", { visibility: "visible" });
+        gsap.fromTo(
+          bgVideoRef.current,
+          { scale: 1.2, opacity: 0.8 },
+          { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" }
+        );
       }
     },
     { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
-  // FIXED: Main Intro + Scroll Animation (With Safe Layout Calculation Batching)
+  // Main Intro + Scroll Animation (With Safe Layout Calculation Batching)
   useGSAP(() => {
     gsap.set("#video-frame", {
       clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
@@ -104,7 +91,7 @@ const Hero: React.FC = () => {
         start: "center center",
         end: "bottom center",
         scrub: true,
-        invalidateOnRefresh: true, // Forces layout re-reads only when global windows refresh occurs safely
+        invalidateOnRefresh: true, 
       },
     });
 
@@ -114,7 +101,6 @@ const Hero: React.FC = () => {
       ease: "power1.inOut",
     }, 0);
 
-    // FIXED: Defer ScrollTrigger refresh safely inside requestAnimationFrame once components drop down cleanly
     const refreshTimeout = setTimeout(() => {
       requestAnimationFrame(() => {
         ScrollTrigger.refresh();
@@ -125,11 +111,13 @@ const Hero: React.FC = () => {
   }, []);
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
+  // ✅ OPTIMIZATION: Resolves a lightweight frame image format path instead of loading extra videos
+  const getVideoThumb = (index: number) => `videos/hero-thumb-${index}.webp`;
 
   return (
     <div className="relative h-screen w-screen overflow-x-hidden bg-black select-none z-0">
       {isLoading && (
-        <div className="flex items-center justify-center absolute z-100 h-screen w-screen bg-violet-50">
+        <div className="flex items-center justify-center absolute z-50 h-screen w-screen bg-violet-50">
           <div className="three-body">
             <div className="three-body__dot" />
             <div className="three-body__dot" />
@@ -148,35 +136,25 @@ const Hero: React.FC = () => {
             onClick={handleMiniVideoClick}
             className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
           >
-            <video
-              ref={currentVideoRef}
-              src={getVideoSrc(upcomingVideoIndex)}
-              preload="metadata"
-              loop
-              muted
-              playsInline
+            {/* ✅ FIX 1: Replaced the hidden pre-buffered video component with a lightweight WebP image card */}
+            <img
+              src={getVideoThumb(upcomingVideoIndex)}
+              alt="Next Video Preview"
+              width="256"
+              height="256"
               id="current-video"
               className="size-64 origin-center scale-150 object-cover object-center"
+              loading="lazy"
             />
           </div>
         </div>
 
-        <video
-          ref={nextVideoRef}
-          src={getVideoSrc(currentIndex)}
-          preload="metadata"
-          loop
-          muted
-          playsInline
-          id="next-video"
-          className="absolute-center invisible absolute z-15 size-64 object-cover"
-        />
-
         {isClient && (
+          /* ✅ FIX 2: Only ONE master video tag remains to capture stream rendering pipelines without duplicate payloads */
           <video
             ref={bgVideoRef}
             src={getVideoSrc(currentIndex)}
-            preload="none"
+            preload="auto"
             autoPlay
             loop
             muted
@@ -227,11 +205,6 @@ const Hero: React.FC = () => {
           />
         </div>
       </div>
-
-      {/* Root Layer Underlay Shadow Text Layer */}
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent z-20 pointer-events-none">
-        BH<b>as</b>k<b>a</b>r
-      </h1>
     </div>
   );
 };
