@@ -96,7 +96,7 @@ export default function Navbar() {
     >
       <nav className="flex items-center justify-between w-full px-4" aria-label="Main Navigation">
         <div className="flex items-center gap-6">
-          <NavLink to="/" aria-label="Go to Home">
+          <NavLink to="/" prefetch="none" aria-label="Go to Home">
             <img src="/img/Logo.webp" alt="Company Logo" width="40" height="40" className="w-12 h-12" loading="eager" />
           </NavLink>
           <button 
@@ -116,6 +116,7 @@ export default function Navbar() {
             <NavLink
               key={item.path}
               to={item.path}
+              prefetch="none"
               className={({ isActive }) => 
                 `text-lg font-medium transition-colors hover:text-blue-600 ${isActive ? "text-blue-600" : "text-white"}`
               }
@@ -184,6 +185,7 @@ export default function Navbar() {
             <NavLink 
                 key={item.path} 
                 to={item.path} 
+                prefetch="none"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="text-white text-lg font-semibold"
             >
