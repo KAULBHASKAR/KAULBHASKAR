@@ -151,6 +151,7 @@ const Hero: React.FC = () => {
             <video
               ref={currentVideoRef}
               src={getVideoSrc(upcomingVideoIndex)}
+              preload="none"
               loop
               muted
               playsInline
@@ -163,6 +164,7 @@ const Hero: React.FC = () => {
         <video
           ref={nextVideoRef}
           src={getVideoSrc(currentIndex)}
+          preload="none"
           loop
           muted
           playsInline
@@ -174,6 +176,7 @@ const Hero: React.FC = () => {
           <video
             ref={bgVideoRef}
             src={getVideoSrc(currentIndex)}
+            preload="none"
             autoPlay
             loop
             muted
