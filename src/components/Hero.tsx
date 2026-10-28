@@ -1,4 +1,4 @@
-// src/components/Hero.tsx
+// src/routes/Hero.tsx
 import React, { useEffect, useRef, useState } from "react";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
@@ -15,6 +15,8 @@ const Hero: React.FC = () => {
   const [loadedVideos, setLoadedVideos] = useState<number>(0);
   const [isClient, setIsClient] = useState(false);
 
+  const currentVideoRef = useRef<HTMLVideoElement | null>(null);
+  const nextVideoRef = useRef<HTMLVideoElement | null>(null);
   const bgVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const totalVideo = 4;
@@ -29,12 +31,10 @@ const Hero: React.FC = () => {
     setLoadedVideos((prev) => prev + 1);
   };
 
-  // Client-only guard
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Force autoplay on mount
   useEffect(() => {
     if (bgVideoRef.current) {
       bgVideoRef.current.play().catch(() => {
@@ -43,7 +43,6 @@ const Hero: React.FC = () => {
     }
   }, []);
 
-  // Failsafe loader timeout
   useEffect(() => {
     if (bgVideoRef.current && bgVideoRef.current.readyState >= 2) {
       setLoadedVideos((prev) => prev + 1);
@@ -62,22 +61,32 @@ const Hero: React.FC = () => {
     }
   }, [loadedVideos]);
 
-  // Video Transition Animation Engine
   useGSAP(
     () => {
-      if (hasClicked && bgVideoRef.current) {
-        gsap.set("#video-frame", { visibility: "visible" });
-        gsap.fromTo(
-          bgVideoRef.current,
-          { scale: 1.2, opacity: 0.8 },
-          { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" }
-        );
+      if (hasClicked && nextVideoRef.current) {
+        gsap.set("#next-video", { visibility: "visible" });
+
+        gsap.to("#next-video", {
+          transformOrigin: "center center",
+          scale: 1,
+          duration: 1,
+          ease: "power1.inOut",
+          onStart: () => {
+            nextVideoRef.current?.play().catch(() => {});
+          },
+        });
+
+        gsap.from("#current-video", {
+          transformOrigin: "center center",
+          scale: 0,
+          duration: 1.5,
+          ease: "power1.inOut",
+        });
       }
     },
     { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
-  // Main Intro + Scroll Animation (With Safe Layout Calculation Batching)
   useGSAP(() => {
     gsap.set("#video-frame", {
       clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
@@ -110,9 +119,6 @@ const Hero: React.FC = () => {
   }, []);
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
-  
-  // ✅ FIXED: Resolves thumbnail images directly from the active public asset image directory
-  const getVideoThumb = (index: number) => `img/hero-thumb-${index}.webp`;
 
   return (
     <div className="relative h-screen w-screen overflow-x-hidden bg-black select-none z-0">
@@ -126,7 +132,7 @@ const Hero: React.FC = () => {
         </div>
       )}
 
-      {/* LAYER 1: Background Video & Thumbnail Architecture */}
+      {/* LAYER 1: Background Video Framework Only */}
       <div
         id="video-frame"
         className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
@@ -136,25 +142,38 @@ const Hero: React.FC = () => {
             onClick={handleMiniVideoClick}
             className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
           >
-            {/* ✅ FIXED: High-performance optimized picture element context for instant interactive hover updates */}
-            <img
-              src={getVideoThumb(upcomingVideoIndex)} 
-              alt={`Preview Frame of Video #${upcomingVideoIndex}`}
-              key={upcomingVideoIndex} 
-              width="256"
-              height="256"
+            {/* 1. Added preload="none" to the mini tracking video thumb */}
+            <video
+              ref={currentVideoRef}
+              src={getVideoSrc(upcomingVideoIndex)}
+              preload="metadata"
+              loop
+              muted
+              playsInline
               id="current-video"
-              className="size-64 origin-center scale-150 object-cover object-center subpixel-antialiased transform-gpu"
-              loading="eager" 
+              className="size-64 origin-center scale-150 object-cover object-center"
             />
           </div>
         </div>
 
+        {/* 2. Added preload="none" to the absolute hidden transition canvas */}
+        <video
+          ref={nextVideoRef}
+          src={getVideoSrc(currentIndex)}
+          preload="metadata"
+          loop
+          muted
+          playsInline
+          id="next-video"
+          className="absolute-center invisible absolute z-15 size-64 object-cover"
+        />
+
         {isClient && (
+          /* 3. Added preload="none" to the master playing display engine video */
           <video
             ref={bgVideoRef}
             src={getVideoSrc(currentIndex)}
-            preload="auto"
+            preload="none"
             autoPlay
             loop
             muted
@@ -168,13 +187,12 @@ const Hero: React.FC = () => {
           />
         )}
 
-        {/* Foreground Tracking Headline inside the clip mask */}
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
           BH<b>as</b>k<b>a</b>r
         </h1>
       </div>
 
-      {/* LAYER 2: Master Floating Interactive Typography Overlay Context */}
+      {/* LAYER 2: Typography Overlays */}
       <div className="absolute left-0 top-0 z-30 size-full overflow-y-auto md:overflow-hidden bg-transparent pointer-events-none flex flex-col justify-start">
         <div className="mt-20 sm:mt-24 px-5 sm:px-10 max-w-sm sm:max-w-xl pointer-events-auto pb-10">
           
