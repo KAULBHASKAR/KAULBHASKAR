@@ -1,14 +1,50 @@
-// src/components/Mudra.tsx
-import React, { useState } from "react";
+import React from "react";
+import SliderComponent from "react-slick";
+import type { Settings } from "react-slick";
+
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
+// ✅ CLEAN FIX: Statically resolves the Slider component context safely for Vite
+const Slider = typeof SliderComponent === 'function' 
+  ? SliderComponent 
+  : (SliderComponent as any).default;
 
 interface MudraImage {
   src: string;
   title: string;
   description: string;
 }
-
 const Mudra: React.FC = () => {
-  // 1. Completely kept your existing mudra items dataset pool intact
+  // ✅ FIX 1: Native responsive properties eliminate the dynamic window resize event loop
+  const settings: Settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3, // Default for Desktop
+    slidesToScroll: 1,
+    autoplay: true,
+    arrows: false,
+    
+    // ✅ FIX 2: Renders only visible image DOM elements, dropping your maximum child nodes count
+    lazyLoad: "ondemand" as const, 
+    
+    responsive: [
+      {
+        breakpoint: 1024, // Tablet
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 640, // Mobile
+        settings: {
+          slidesToShow: 1,
+        }
+      }
+    ]
+  };
+
   const images: MudraImage[] = [
     { src: "/mudra/abagunthan.png", title: "Abagunthan Mudra", description: "Symbol of concealment and protection." },
     { src: "/mudra/abhay.png", title: "Abhay Mudra", description: "Gesture of fearlessness and reassurance." },
@@ -30,56 +66,39 @@ const Mudra: React.FC = () => {
     { src: "/mudra/yoni.png", title: "Yoni Mudra", description: "Gesture of feminine energy and creation." }
   ];
 
-  // 2. Local progressive slicing pagination state to keep initial viewport element count light
-  const [visibleCount, setVisibleCount] = useState<number>(6);
-
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => Math.min(prev + 6, images.length));
-  };
-
-  return (
-    <div className="text-center my-10">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h2 className="special-font hero-heading bg-linear-to-r from-yellow-500 via-red-600 to-indigo-500 bg-clip-text text-transparent text-lg">
-          m<b>ud</b>r<b>a</b>s
-        </h2>
-        
-        {/* 3. Replaced the wrapper trail with a native grid layout to eliminate slick track overhead */}
-        <div className="px-4 py-10 bg-black mt-6 w-full max-w-full overflow-hidden">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-6">
-            {images.slice(0, visibleCount).map((item, i) => (
-              <div key={i} className="text-white outline-none w-full px-2 flex flex-col items-center">
-                <div className="flex flex-col items-center">
-                  <img 
-                    src={item.src} 
-                    alt={item.title} 
-                    width="100"
-                    height="100"
-                    className="h-72 w-auto object-contain" 
-                    loading="lazy" // Native performance rendering deferment
-                  />
-                  <h3 className="mt-4 text-lg font-bold">{item.title}</h3>
-                  <p className="text-sm px-2 text-gray-400">{item.description}</p>
-                </div>
+ return (
+  <div className="text-center my-10">
+    <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+      <h2 className="special-font hero-heading bg-linear-to-r from-yellow-500 via-red-600 to-indigo-500 bg-clip-text text-transparent text-lg">
+        m<b>ud</b>r<b>a</b>s
+      </h2>
+      
+      <div className="px-4 py-10 bg-black mt-6 w-full max-w-full overflow-hidden min-w-0">
+        <Slider {...settings}> 
+          {images.map((item, i) => (
+            <div key={i} className="text-white outline-none w-full px-2">
+              <div className="flex flex-col items-center">
+                
+                {/* 👇 THIS SINGLE TAG HANDLES ALL IMAGES DYNAMICALLY WITH YOUR TARGET VALUES */}
+                <img 
+                  src={item.src} 
+                  alt={item.title} 
+                  width="100"
+                  height="100"
+                  className="h-72 w-auto object-contain" 
+                />
+                
+                <h3 className="mt-4 text-lg font-bold">{item.title}</h3>
+                <p className="text-sm px-2 text-gray-400">{item.description}</p>
               </div>
-            ))}
-          </div>
-
-          {/* 4. Smooth user pagination trigger interface */}
-          {visibleCount < images.length && (
-            <div className="mt-12 flex justify-center">
-              <button
-                onClick={handleLoadMore}
-                className="bg-zinc-900 border border-zinc-800 text-white hover:bg-zinc-800 px-6 py-3 rounded-full text-sm font-semibold transition-transform active:scale-95 cursor-pointer"
-              >
-                View More Mudras
-              </button>
             </div>
-          )}
-        </div>
+          ))}
+        </Slider>
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Mudra;
