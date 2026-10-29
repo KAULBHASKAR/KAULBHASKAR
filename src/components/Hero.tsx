@@ -3,7 +3,7 @@ import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger"; // Changed from 'gsap/all' for cleaner tree-shaking
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,12 +30,10 @@ const Hero: React.FC = () => {
     setLoadedVideos((prev) => prev + 1);
   };
 
-  // Client-only guard
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Force autoplay on mount
   useEffect(() => {
     if (bgVideoRef.current) {
       bgVideoRef.current.play().catch(() => {
@@ -44,7 +42,6 @@ const Hero: React.FC = () => {
     }
   }, []);
 
-  // Failsafe loader timeout
   useEffect(() => {
     if (bgVideoRef.current && bgVideoRef.current.readyState >= 2) {
       setLoadedVideos((prev) => prev + 1);
@@ -57,14 +54,13 @@ const Hero: React.FC = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  // FIXED: Consolidated loading state assignment without triggering immediate ScrollTrigger calculations
   useEffect(() => {
     if (loadedVideos >= 1) {
       setIsLoading(false);
     }
   }, [loadedVideos]);
 
-  // Video Transition Animation Engine
+  // Video Transition Animation Engine (Composited transformations)
   useGSAP(
     () => {
       if (hasClicked && nextVideoRef.current) {
@@ -91,11 +87,10 @@ const Hero: React.FC = () => {
     { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
-  // FIXED: Main Intro + Scroll Animation (With Safe Layout Calculation Batching)
+  // FIXED: Removed borderRadius animations to eliminate layout thrashing entirely
   useGSAP(() => {
     gsap.set("#video-frame", {
       clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
-      borderRadius: "0 0 40% 10%",
     });
 
     const tl = gsap.timeline({
@@ -104,24 +99,15 @@ const Hero: React.FC = () => {
         start: "center center",
         end: "bottom center",
         scrub: true,
-        invalidateOnRefresh: true, // Forces layout re-reads only when global windows refresh occurs safely
+        invalidateOnRefresh: true, 
       },
     });
 
     tl.from("#video-frame", {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      borderRadius: "0 0 0 0",
       ease: "power1.inOut",
     }, 0);
 
-    // FIXED: Defer ScrollTrigger refresh safely inside requestAnimationFrame once components drop down cleanly
-    const refreshTimeout = setTimeout(() => {
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
-      });
-    }, 200);
-
-    return () => clearTimeout(refreshTimeout);
   }, []);
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
@@ -129,7 +115,7 @@ const Hero: React.FC = () => {
   return (
     <div className="relative h-screen w-screen overflow-x-hidden bg-black select-none z-0">
       {isLoading && (
-        <div className="flex items-center justify-center absolute z-100 h-screen w-screen bg-violet-50">
+        <div className="flex items-center justify-center absolute z-50 h-screen w-screen bg-violet-50">
           <div className="three-body">
             <div className="three-body__dot" />
             <div className="three-body__dot" />
@@ -141,7 +127,7 @@ const Hero: React.FC = () => {
       {/* LAYER 1: Background Video Framework Only */}
       <div
         id="video-frame"
-        className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
+        className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-blue-75 will-change-transform"
       >
         <div className="mask-clip-path absolute-center absolute z-20 size-64 cursor-pointer overflow-hidden rounded-lg">
           <div
@@ -187,7 +173,6 @@ const Hero: React.FC = () => {
           />
         )}
 
-        {/* Foreground Tracking Headline inside the clip mask */}
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
           BH<b>as</b>k<b>a</b>r
         </h1>
@@ -224,11 +209,6 @@ const Hero: React.FC = () => {
           />
         </div>
       </div>
-
-      {/* Root Layer Underlay Shadow Text Layer */}
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent z-20 pointer-events-none">
-        BH<b>as</b>k<b>a</b>r
-      </h1>
     </div>
   );
 };
