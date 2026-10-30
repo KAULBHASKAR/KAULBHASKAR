@@ -20,7 +20,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: true,
+    cssCodeSplit: false,
     target: 'esnext',
     chunkSizeWarningLimit: 600, // Bumped slightly to account for healthy grouping
     
