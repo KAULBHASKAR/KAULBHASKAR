@@ -20,6 +20,7 @@ export default defineConfig({
     }),
   ],
   build: {
+    assetsInlineLimit: 15360,
     cssCodeSplit: true,
     target: 'esnext',
     chunkSizeWarningLimit: 500, // Dropped to 500 to catch massive files early
