@@ -20,16 +20,20 @@ export default defineConfig({
     }),
   ],
   build: {
-    cssCodeSplit: false,
+    cssCodeSplit: true,
     target: 'esnext',
-    chunkSizeWarningLimit: 600, // Bumped slightly to account for healthy grouping
+    chunkSizeWarningLimit: 500, // Dropped to 500 to catch massive files early
     
-    // FIXED: Removed resolveDependencies: () => [] restriction. 
-    // Allowing native preloading breaks the waterfall chain by downloading assets concurrently.
-    modulePreload: true, 
+    // ⚠️ CRUCIAL: Changed from 'false' to optimized object settings.
+    // Completely disabling modulePreload can cause sudden layout shifts and delayed page hydration 
+    // on slow mobile devices. Instead, we allow preloading but turn off the aggressive dynamic injection link tags.
+    modulePreload: {
+      resolveDependencies: () => [] 
+    },
     
     rollupOptions: {
       output: {
+        // Keeps names clean and safe for browsers to parse out
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
@@ -46,7 +50,7 @@ export default defineConfig({
               return 'vendor-core';
             }
             
-            // 2. Heavy animation engines
+            // 2. Separate heavy animation engines entirely
             if (id.includes('gsap')) return 'vendor-gsap';
             if (id.includes('framer-motion')) return 'vendor-motion';
             
@@ -56,30 +60,27 @@ export default defineConfig({
             if (id.includes('esprima')) return 'vendor-esprima';
             if (id.includes('react-helmet-async')) return 'vendor-helmet';
             
-            // 4. UI Framework Elements & Icons
+            // 4. Icons (Massive source of mobile parsing delays)
             if (id.includes('react-icons') || id.includes('@radix-ui') || id.includes('lucide-react')) {
               return 'vendor-ui-icons';
             }
 
-            // 5. Standard Utilities & Shared Libraries
-            if (
-              id.includes('clsx') || 
-              id.includes('tailwind-merge') || 
-              id.includes('axios') ||
-              id.includes('date-fns')
-            ) {
+            // 5. General Small Utilities
+            if (id.includes('clsx') || id.includes('tailwind-merge') || id.includes('axios')) {
               return 'vendor-shared';
             }
 
-            // FIXED: Removed the aggressive loop that created thousands of tiny separate scripts.
-            // Catch-all bundle for minor packages ensures they load in a single round-trip.
-            return 'vendor-utils';
-          }
-
-          // 6. COLLAPSE INTERNAL MICRO-COMPONENTS
-          // Consolidating your internal parts stops sequential script chaining on the homepage.
-          if (id.includes('src/components/')) {
-            return 'main-layout-components';
+            // 🔥 6. AGGRESSIVE BREAKUP STRATEGY FOR EVERYTHING ELSE
+            // If a node_module hasn't been grouped above, break it out into its own scoped file
+            // instead of letting Vite dump it into a monolithic fallback vendor bundle.
+            const parts = id.toString().split('node_modules/');
+            if (parts.length > 1) {
+              const moduleName = parts[1].split('/')[0];
+              // Avoid making chunks for internal subfolders or scopes
+              if (moduleName && !moduleName.startsWith('.')) {
+                return `vendor-pkg-${moduleName.replace('@', '')}`;
+              }
+            }
           }
         },
       },
