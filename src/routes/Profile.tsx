@@ -12,7 +12,11 @@ const profileData = {
     { label: "Sri Guru", 
       name: "Sri KULBHUSHANANAND NATH Ji",
       image: "/img/GURUJI.webp"},
-    { label: "Grand Guru (Param Guru)", name: "Sri GUPTAVATAR BABA SRI" },
+    { 
+      label: "Grand Guru (Param Guru)", 
+      name: "Sri GUPTAVATAR BABA SRI",
+      image: "/img/PARAMGURU.webp" // 👈 Add your Grand Guru image path here
+    },
     { label: "Great Grand Guru (Paratpara Guru)", name: "Sri MATSYENDRA NATH" },
     { label: "Great-Great Grand Guru (Par-Paratpara Guru)", name: "Lord ISHANA" },
     { label: "Great-Great-Great Grand Guru (Parmeshthi Guru)", name: "PARAMA SHIVA" },
