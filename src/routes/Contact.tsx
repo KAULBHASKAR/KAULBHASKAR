@@ -141,7 +141,9 @@ export default function Contact(): React.JSX.Element {
       {/* Hero, Location, and Map sections */}
       <div className="relative w-full h-dvh flex items-center justify-center">
         <img src={phoneImage} alt="telephone" className="absolute inset-0 w-full h-full object-cover" />
-        <h1 className="absolute top-24 text-4xl text-black font-bold z-10 pageHeader">Contact Us</h1>
+        <h1 className="special-font hero-heading text-center my-24 bg-linear-to-b from-white via-green-500 to-yellow-300 bg-clip-text text-transparent drop-shadow-sm pointer-events-none">
+         CONTACT US
+        </h1>
         <div className="absolute bottom-10 z-10 flex flex-col lg:flex-row gap-10 lg:gap-20 text-center bg-gray-300 p-6 backdrop-blur-md rounded-xl">
           <div>
             <h2 className="text-xl font-bold text-black">Open Hours</h2>
