@@ -18,6 +18,17 @@ export default defineConfig({
       threshold: 1024,
       ext: '.br',
     }),
+    // ⚡ FIX: Defer CSS loading out of the critical rendering path
+    {
+      name: 'async-css-loader',
+      transformIndexHtml(html) {
+        // Rewrites the standard blocking stylesheet link to an async preload setup
+        return html.replace(
+          /<link rel="stylesheet" (.*?)href="(.*?)"(.*?)>/g,
+          '<link rel="preload" href="$2" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"><noscript><link rel="stylesheet" href="$2"></noscript>'
+        );
+      }
+    }
   ],
   build: {
     assetsInlineLimit: 15360,
@@ -57,7 +68,8 @@ export default defineConfig({
             
             // 3. Isolated heavy components (Only needed on deep routes)
             if (id.includes('react-big-calendar')) return 'vendor-calendar';
-            if (id.includes('react-slick') || id.includes('slick-carousel')) return 'vendor-carousel';
+            if (id.includes('react-slick')) return 'vendor-carousel';
+            if (id.includes('slick-carousel')) return 'vendor-carousel';
             if (id.includes('esprima')) return 'vendor-esprima';
             if (id.includes('react-helmet-async')) return 'vendor-helmet';
             
