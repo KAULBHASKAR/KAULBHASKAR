@@ -3,11 +3,10 @@ import { lazy, Suspense } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router'; 
 import { Helmet } from 'react-helmet-async';
 
-// ⚡ FIX 1: Statically import Navbar and Footer so they load in the primary bundle shell
+
 import Navbar from './Navbar';
 import Footer from './Footer';
-
-// ✅ KEEP LAZY: Keep the heavy WhatsApp widget deferred out of the critical path
+// Split the WhatsApp Widget into its own separate chunk
 const WhatsAppWidget = lazy(() => import('./WhatsAppWidget').then(module => ({ default: module.WhatsAppWidget })));
 
 export default function Layout() {
@@ -20,7 +19,6 @@ export default function Layout() {
 
       <ScrollRestoration /> 
 
-      {/* Modern structural headers render instantly without JS network request waiting gates */}
       <header className="layout-header">
         <Navbar /> 
       </header>
@@ -29,9 +27,11 @@ export default function Layout() {
         <Outlet />
       </main>
       
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
 
-      {/* Background elements remain decoupled from initial paint benchmarks */}
+      {/* Wrap with Suspense so it loads in the background */}
       <Suspense fallback={null}>
         <WhatsAppWidget 
           phoneNumber="919934418459" 
