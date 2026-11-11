@@ -1,7 +1,6 @@
 // src/App.tsx
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import Layout from './components/Layout';
-import ScrollToTop from './components/ScrollToTop'; 
+import Layout from './components/Layout'; 
 
 // Static LCP text fallback component to prevent duplication
 const HomeStaticFallback = () => (
@@ -58,7 +57,7 @@ export default function App() {
   return (
     <>
       <RouterProvider router={router} />
-      <ScrollToTop />
+      
     </>
   );
 }
