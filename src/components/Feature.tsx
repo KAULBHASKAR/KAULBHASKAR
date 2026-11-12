@@ -127,7 +127,7 @@ const Feature: FC = () => {
               altText="Metaphysical resonance overview"
               title={
                 <>
-                  <b>metaphysical</b> <b>resonance</b> <b>{" & "}</b> energy alignment<b></b>
+                  <b>metaphysical</b> <b>resonance</b> <b>{" & "}</b> energy alignment
                 </>
               }
               description="Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
@@ -153,7 +153,7 @@ const Feature: FC = () => {
               altText="Metaphysical rituals setup"
               title={
                 <>
-                  <b>metaphysical rituals</b> <b>{" & "}</b>deployments <b></b>
+                  <b>metaphysical rituals</b> <b>{" & "}</b>deployments 
                 </>
               }
               description="We engineer and execute specialized metaphysical remedial protocols, managing high-complexity deployments such as Pratyangira Homa, Mahavidya Homa, Baglamukhi systems, and advanced planetary alignment Homas. Our technical team oversees the complete operational schedule, delivering meticulously audited, ritual-compliant solutions tailored to client-specific environmental constraints."
