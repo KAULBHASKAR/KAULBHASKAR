@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(1);
+  const [bgIndex, setBgIndex] = useState<number>(1);
   const [hasClicked, setHasClicked] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [loadedVideos, setLoadedVideos] = useState<number>(0);
@@ -60,7 +61,7 @@ const Hero: React.FC = () => {
     }
   }, [loadedVideos]);
 
-  // Video Transition Animation Engine (Composited transformations)
+  // Video Transition Animation Engine
   useGSAP(
     () => {
       if (hasClicked && nextVideoRef.current) {
@@ -69,10 +70,20 @@ const Hero: React.FC = () => {
         gsap.to("#next-video", {
           transformOrigin: "center center",
           scale: 1,
+          width: "100%",
+          height: "100%",
           duration: 1,
           ease: "power1.inOut",
           onStart: () => {
             nextVideoRef.current?.play().catch(() => {});
+          },
+          onComplete: () => {
+            setBgIndex(currentIndex);
+            gsap.set("#next-video", {
+              visibility: "hidden",
+              width: "16rem",
+              height: "16rem",
+            });
           },
         });
 
@@ -87,7 +98,7 @@ const Hero: React.FC = () => {
     { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
-  // FIXED: Removed borderRadius animations to eliminate layout thrashing entirely
+  // Scroll-triggered clip-path animation
   useGSAP(() => {
     gsap.set("#video-frame", {
       clipPath: "polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
@@ -99,15 +110,18 @@ const Hero: React.FC = () => {
         start: "center center",
         end: "bottom center",
         scrub: true,
-        invalidateOnRefresh: true, 
+        invalidateOnRefresh: true,
       },
     });
 
-    tl.from("#video-frame", {
-      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      ease: "power1.inOut",
-    }, 0);
-
+    tl.from(
+      "#video-frame",
+      {
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        ease: "power1.inOut",
+      },
+      0
+    );
   }, []);
 
   const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
@@ -159,7 +173,7 @@ const Hero: React.FC = () => {
         {isClient && (
           <video
             ref={bgVideoRef}
-            src={getVideoSrc(currentIndex)}
+            src={getVideoSrc(bgIndex)}
             autoPlay
             loop
             muted
@@ -181,25 +195,34 @@ const Hero: React.FC = () => {
       {/* LAYER 2: Master Floating Interactive Typography Overlay Context */}
       <div className="absolute left-0 top-0 z-30 size-full overflow-y-auto md:overflow-hidden bg-transparent pointer-events-none flex flex-col justify-start">
         <div className="mt-20 sm:mt-24 px-5 sm:px-10 max-w-sm sm:max-w-xl pointer-events-auto pb-10">
-          
           <h2 className="special-font hero-heading text-5xl sm:text-8xl bg-linear-to-r from-red-500 via-green-500 to-pink-400 bg-clip-text text-transparent relative">
             Kaul
-            <span className="absolute inset-0 select-none pointer-events-none" aria-hidden="true">
+            <span
+              className="absolute inset-0 select-none pointer-events-none"
+              aria-hidden="true"
+            >
               K<b>a</b>u<b>l</b>
             </span>
           </h2>
 
           <p className="mt-2 mb-6 font-robert-regular text-md sm:text-lg text-white leading-relaxed select-text">
-            त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।<br />
-            न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥<br />
-            न च कौलात् परो योगी न विद्या त्रैपुरी समा।<br />
-            न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥<br />
+            त्रिपुरास्या महादेवी भुक्ति-मुक्ति-फल-प्रदा।
+            <br />
+            न गुरोः सदृशं वस्तु न देवः शङ्करोपमः॥
+            <br />
+            न च कौलात् परो योगी न विद्या त्रैपुरी समा।
+            <br />
+            न च शान्तेः परं ज्ञानं न च क्षान्तेः परं सुखम्॥
+            <br />
             <br />
             <span className="block text-white antialiased font-large opacity-95">
-              I can help ultra-high-net-worth individuals, executives, and global leaders dismantle subconscious limitations, master absolute mental focus and build sustainable material empires through timeless metaphysical laws.
+              I can help ultra-high-net-worth individuals, executives, and
+              global leaders dismantle subconscious limitations, master absolute
+              mental focus and build sustainable material empires through
+              timeless metaphysical laws.
             </span>
           </p>
-          
+
           <Button
             id="kaulbhaskar-guruji"
             title="Explore our research archive at Tantrasadhana.org"
@@ -209,7 +232,8 @@ const Hero: React.FC = () => {
           />
         </div>
       </div>
-       <h1 className="special-font hero-heading absolute bottom-5 right-5 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent z-20 pointer-events-none">
+
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent z-20 pointer-events-none">
         BH<b>as</b>k<b>a</b>r
       </h1>
     </div>
