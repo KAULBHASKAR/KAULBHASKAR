@@ -153,7 +153,7 @@ const Feature: FC = () => {
               altText="Metaphysical rituals setup"
               title={
                 <>
-                  <b>metaphysical rituals{" & "}</b> <b>deployments</b>
+                  <b>metaphysical rituals</b> <b>{" & "}</b>deployments <b></b>
                 </>
               }
               description="We engineer and execute specialized metaphysical remedial protocols, managing high-complexity deployments such as Pratyangira Homa, Mahavidya Homa, Baglamukhi systems, and advanced planetary alignment Homas. Our technical team oversees the complete operational schedule, delivering meticulously audited, ritual-compliant solutions tailored to client-specific environmental constraints."
