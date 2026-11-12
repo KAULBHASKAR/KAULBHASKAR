@@ -127,7 +127,7 @@ const Feature: FC = () => {
               altText="Metaphysical resonance overview"
               title={
                 <>
-                  <b>metaphysical</b> <b>resonance{" & "}</b> <b>energy alignment</b>
+                  <b>metaphysical</b> <b>resonance</b> <b>{" & "}</b> energy alignment<b></b>
                 </>
               }
               description="Advanced environmental and karmic clearing protocols for high-net-worth ecosystem."
