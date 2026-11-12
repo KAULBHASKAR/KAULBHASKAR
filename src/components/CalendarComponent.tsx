@@ -25,8 +25,8 @@ const localizer: DateLocalizer = dateFnsLocalizer({
 const events: Event[] = [
   {
     title: "Guru Purnima and Diksha Mahotsava",
-    start: new Date(2026, 6, 29, 6, 0),
-    end: new Date(2026, 6, 29, 17, 30),
+    start: new Date(2027, 6, 18, 5, 0),
+    end: new Date(2027, 6, 18, 18, 0),
   },
 ];
 
