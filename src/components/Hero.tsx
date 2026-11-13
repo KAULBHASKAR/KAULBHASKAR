@@ -187,7 +187,7 @@ const Hero: React.FC = () => {
           />
         )}
 
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
+        <h1 className="special-font hero-heading absolute bottom-5 right-8 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
           BH<b>as</b>k<b>a</b>r
         </h1>
       </div>
@@ -233,7 +233,7 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent z-20 pointer-events-none">
+      <h1 className="special-font hero-heading absolute bottom-5 right-8 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent z-20 pointer-events-none">
         BH<b>as</b>k<b>a</b>r
       </h1>
     </div>
