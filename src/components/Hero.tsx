@@ -106,24 +106,29 @@ const Hero: React.FC = () => {
         id="video-frame"
         className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-blue-75 will-change-transform"
       >
-        {/* Mini Preview Trigger: Loads video only on hover/click */}
+        {/* Mini Preview Trigger: Raised to z-40 so Layer 2 text never blocks hover */}
         <div
-          onMouseEnter={() => setShouldPreloadNext(true)}
-          className="mask-clip-path absolute-center absolute z-20 size-64 cursor-pointer overflow-hidden rounded-lg"
+          onMouseEnter={() => {
+            setShouldPreloadNext(true);
+            currentVideoRef.current?.play().catch(() => {});
+          }}
+          className="mask-clip-path absolute-center absolute z-40 size-64 cursor-pointer overflow-hidden rounded-lg group"
         >
           <div
             onClick={handleMiniVideoClick}
-            className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
+            className="size-full origin-center scale-50 opacity-0 transition-all duration-500 ease-in group-hover:scale-100 group-hover:opacity-100"
           >
             <video
+              key={upcomingVideoIndex}
               ref={currentVideoRef}
               poster={getPosterSrc(upcomingVideoIndex)}
-              preload={shouldPreloadNext ? "metadata" : "none"}
+              preload={shouldPreloadNext ? "auto" : "none"}
+              autoPlay={shouldPreloadNext}
               loop
               muted
               playsInline
               id="current-video"
-              className="size-64 origin-center scale-150 object-cover object-center"
+              className="size-64 origin-center scale-150 object-cover object-center bg-black"
             >
               {shouldPreloadNext && (
                 <>
@@ -143,6 +148,7 @@ const Hero: React.FC = () => {
 
         {/* Transition Video: Loads only after user triggers a switch */}
         <video
+          key={`next-${currentIndex}`}
           ref={nextVideoRef}
           poster={getPosterSrc(currentIndex)}
           preload={hasClicked ? "auto" : "none"}
@@ -168,7 +174,7 @@ const Hero: React.FC = () => {
 
         {/* Active Background Video */}
         <video
-          key={bgIndex}
+          key={`bg-${bgIndex}`}
           ref={bgVideoRef}
           poster={getPosterSrc(bgIndex)}
           preload="metadata"
