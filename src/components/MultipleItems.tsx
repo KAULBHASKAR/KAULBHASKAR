@@ -142,7 +142,7 @@ const MultipleItems: FC = () => {
     }
   };
 
-  return (
+   return (
     <div className="w-full overflow-hidden">
       {/* Hero Section */}
       <div className="relative flex w-full h-screen bg-black">
@@ -195,37 +195,48 @@ const MultipleItems: FC = () => {
                     width={400}
                     height={250}
                     loading="lazy"
-decoding="async"
-className="w-full h-56 object-cover"
-/>
+                    decoding="async"
+                    className="w-full h-56 object-cover"
+                  />
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-slate-900">{item.heading}</h3>
+                    <p className="text-sm font-semibold text-indigo-600 mt-1">{item.heading2}</p>
+                    <p className="text-sm text-gray-600 mt-3 leading-relaxed">{item.name}</p>
+                  </div>
+                </div>
 
-{item.heading}
-{item.heading2}
-{item.name}
+                <footer className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+                  <span className="text-lg font-bold text-slate-900">
+                    ₹{item.price.toLocaleString("en-IN")}
+                  </span>
+                  <span className="flex items-center gap-1 text-sm font-semibold text-amber-500">
+                    <span>★★★★★</span>
+                    <span className="text-gray-700 ml-1">{item.rating.toFixed(1)}</span>
+                  </span>
+                </footer>
+              </article>
+            </div>
+          ))}
+        </div>
 
-₹{item.price.toLocaleString("en-IN")}
-
-
-★★★★★
-{item.rating.toFixed(1)}
-
-
-
-
-))}
-{/* Pagination Dots */}
-
-{POST_DATA.map((item, i) => (
-<button
-key={dot-${item.heading}}
-type="button"
-aria-label={View ${item.heading}}
-onClick={() => scrollToSlide(i)}
-className={h-2.5 rounded-full transition-all duration-300 cursor-pointer ${ activeIndex === i ? "w-6 bg-indigo-600" : "w-2.5 bg-gray-300 hover:bg-gray-400" }}
-/>
-))}
-
-
-);
+        {/* Pagination Dots */}
+        <div className="mt-6 flex justify-center gap-2 flex-wrap">
+          {POST_DATA.map((item, i) => (
+            <button
+              key={`dot-${item.heading}`}
+              type="button"
+              aria-label={`View ${item.heading}`}
+              onClick={() => scrollToSlide(i)}
+              className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                activeIndex === i ? "w-6 bg-indigo-600" : "w-2.5 bg-gray-300 hover:bg-gray-400"
+              }`}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
 };
+
 export default MultipleItems;
+
