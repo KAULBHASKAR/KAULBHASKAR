@@ -11,9 +11,7 @@ const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [bgIndex, setBgIndex] = useState<number>(1);
   const [hasClicked, setHasClicked] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [loadedVideos, setLoadedVideos] = useState<number>(0);
-  const [isClient, setIsClient] = useState(false);
+  const [shouldPreloadNext, setShouldPreloadNext] = useState<boolean>(false);
 
   const currentVideoRef = useRef<HTMLVideoElement | null>(null);
   const nextVideoRef = useRef<HTMLVideoElement | null>(null);
@@ -24,42 +22,17 @@ const Hero: React.FC = () => {
 
   const handleMiniVideoClick = () => {
     setHasClicked(true);
+    setShouldPreloadNext(true);
     setCurrentIndex(upcomingVideoIndex);
   };
-
-  const handleVideoLoad = () => {
-    setLoadedVideos((prev) => prev + 1);
-  };
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   useEffect(() => {
     if (bgVideoRef.current) {
       bgVideoRef.current.play().catch(() => {
-        console.log("Autoplay blocked, waiting for user interaction");
+        // Autoplay blocked by browser policy; poster remains visible
       });
     }
-  }, []);
-
-  useEffect(() => {
-    if (bgVideoRef.current && bgVideoRef.current.readyState >= 2) {
-      setLoadedVideos((prev) => prev + 1);
-    }
-
-    const timeout = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {
-    if (loadedVideos >= 1) {
-      setIsLoading(false);
-    }
-  }, [loadedVideos]);
+  }, [bgIndex]);
 
   // Video Transition Animation Engine
   useGSAP(
@@ -124,68 +97,93 @@ const Hero: React.FC = () => {
     );
   }, []);
 
-  const getVideoSrc = (index: number) => `videos/hero-bg-${index}.mp4`;
+  const getPosterSrc = (index: number) => `/videos/hero-poster-${index}.webp`;
 
   return (
     <div className="relative h-screen w-screen overflow-x-hidden bg-black select-none z-0">
-      {isLoading && (
-        <div className="flex items-center justify-center absolute z-50 h-screen w-screen bg-violet-50">
-          <div className="three-body">
-            <div className="three-body__dot" />
-            <div className="three-body__dot" />
-            <div className="three-body__dot" />
-          </div>
-        </div>
-      )}
-
       {/* LAYER 1: Background Video Framework Only */}
       <div
         id="video-frame"
         className="absolute top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-blue-75 will-change-transform"
       >
-        <div className="mask-clip-path absolute-center absolute z-20 size-64 cursor-pointer overflow-hidden rounded-lg">
+        {/* Mini Preview Trigger: Loads video only on hover/click */}
+        <div
+          onMouseEnter={() => setShouldPreloadNext(true)}
+          className="mask-clip-path absolute-center absolute z-20 size-64 cursor-pointer overflow-hidden rounded-lg"
+        >
           <div
             onClick={handleMiniVideoClick}
             className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
           >
             <video
               ref={currentVideoRef}
-              src={getVideoSrc(upcomingVideoIndex)}
+              poster={getPosterSrc(upcomingVideoIndex)}
+              preload={shouldPreloadNext ? "metadata" : "none"}
               loop
               muted
               playsInline
               id="current-video"
               className="size-64 origin-center scale-150 object-cover object-center"
-            />
+            >
+              {shouldPreloadNext && (
+                <>
+                  <source
+                    src={`/videos/hero-bg-${upcomingVideoIndex}.webm`}
+                    type="video/webm"
+                  />
+                  <source
+                    src={`/videos/hero-bg-${upcomingVideoIndex}.mp4`}
+                    type="video/mp4"
+                  />
+                </>
+              )}
+            </video>
           </div>
         </div>
 
+        {/* Transition Video: Loads only after user triggers a switch */}
         <video
           ref={nextVideoRef}
-          src={getVideoSrc(currentIndex)}
+          poster={getPosterSrc(currentIndex)}
+          preload={hasClicked ? "auto" : "none"}
           loop
           muted
           playsInline
           id="next-video"
           className="absolute-center invisible absolute z-15 size-64 object-cover"
-        />
+        >
+          {hasClicked && (
+            <>
+              <source
+                src={`/videos/hero-bg-${currentIndex}.webm`}
+                type="video/webm"
+              />
+              <source
+                src={`/videos/hero-bg-${currentIndex}.mp4`}
+                type="video/mp4"
+              />
+            </>
+          )}
+        </video>
 
-        {isClient && (
-          <video
-            ref={bgVideoRef}
-            src={getVideoSrc(bgIndex)}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute left-0 top-0 size-full object-cover"
-            onLoadedData={handleVideoLoad}
-            onCanPlay={() => {
-              setIsLoading(false);
-              bgVideoRef.current?.play().catch(() => {});
-            }}
-          />
-        )}
+        {/* Active Background Video */}
+        <video
+          key={bgIndex}
+          ref={bgVideoRef}
+          poster={getPosterSrc(bgIndex)}
+          preload="metadata"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute left-0 top-0 size-full object-cover"
+          onCanPlay={() => {
+            bgVideoRef.current?.play().catch(() => {});
+          }}
+        >
+          <source src={`/videos/hero-bg-${bgIndex}.webm`} type="video/webm" />
+          <source src={`/videos/hero-bg-${bgIndex}.mp4`} type="video/mp4" />
+        </video>
 
         <h1 className="special-font hero-heading absolute bottom-5 right-10 z-40 bg-linear-to-r from-green-400 via-red-500 to-indigo-500 bg-clip-text text-transparent pointer-events-none">
           BH<b>as</b>k<b>a</b>r
