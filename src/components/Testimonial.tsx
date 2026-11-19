@@ -20,7 +20,6 @@ const TESTIMONIAL_DATA: TestimonialData[] = [
   { name: "------", profession: "आध्यात्मिक साधिका", comment: `"ललिता सहस्रनामावली अनुष्ठान से मिली अलौकिक मानसिक शांति और ऊर्जा""गुरु जी श्री कौलभास्कर जी के मार्गदर्शन में 'ललिता सहस्रनामावली अर्चनम्' कराना मेरे जीवन का सबसे दिव्य अनुभव रहा है। श्री विद्या उपासना और कौल मार्ग की उनकी गहरी, प्रामाणिक समझ अद्वितीय है। इस अनुष्ठान के बाद मुझे अपने भीतर एक असाधारण मानसिक स्पष्टता और आध्यात्मिक ऊर्जा का अहसास हुआ। गुरु जी बिना किसी व्यावसायिक भावना के, शास्त्रों के शुद्ध नियमों के अनुसार साधना संपन्न कराते हैं। सच्चे साधकों के लिए उनका सानिध्य एक वरदान है।"` },
 ];
 
-
 const TestimonialCard: FC<TestimonialData> = ({ name, profession, comment }) => (
   <article className="bg-white p-6 min-h-[350px] flex flex-col justify-between rounded-lg shadow-lg transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl h-full">
     <p className="text-base font-normal text-black my-2 leading-relaxed italic">
@@ -115,17 +114,26 @@ const Testimonial: FC = () => {
               </div>
             ))}
           </div>
-          <div className="mt-8 flex justify-center gap-2 flex-wrap">
+
+          {/* Accessible Pagination Dots (24x24px touch targets) */}
+          <div className="mt-8 flex justify-center items-center flex-wrap">
             {TESTIMONIAL_DATA.map((item, i) => (
               <button
-                key={`dot-${item.name}-${i}`}
+                key={`${item.name}-${i}`}
                 type="button"
                 aria-label={`View testimonial from ${item.name}`}
+                aria-current={activeIndex === i ? "true" : undefined}
                 onClick={() => scrollToSlide(i)}
-                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  activeIndex === i ? "w-6 bg-white" : "w-2.5 bg-white/50 hover:bg-white/80"
-                }`}
-              />
+                className="h-6 min-w-6 px-1 flex items-center justify-center cursor-pointer group"
+              >
+                <span
+                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                    activeIndex === i
+                      ? "w-6 bg-white"
+                      : "w-2.5 bg-white/50 group-hover:bg-white/80"
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>
