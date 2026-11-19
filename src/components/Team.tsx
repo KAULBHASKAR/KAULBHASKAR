@@ -109,8 +109,8 @@ const Mentor: React.FC = () => {
             ))}
           </div>
 
-          {/* Lightweight Pagination Dots */}
-          <div className="mt-6 flex justify-center gap-2 flex-wrap">
+          {/* Accessible Pagination Dots (24x24px touch targets) */}
+          <div className="mt-6 flex justify-center items-center flex-wrap">
             {MENTOR_IMAGES.map((item, i) => (
               <button
                 key={item.title}
@@ -118,10 +118,16 @@ const Mentor: React.FC = () => {
                 aria-label={`View ${item.title}`}
                 aria-current={activeIndex === i ? "true" : undefined}
                 onClick={() => scrollToSlide(i)}
-                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  activeIndex === i ? "w-6 bg-yellow-400" : "w-2 bg-gray-600 hover:bg-gray-400"
-                }`}
-              />
+                className="h-6 min-w-6 px-1 flex items-center justify-center cursor-pointer group"
+              >
+                <span
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeIndex === i
+                      ? "w-6 bg-yellow-400"
+                      : "w-2 bg-gray-600 group-hover:bg-gray-400"
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>
