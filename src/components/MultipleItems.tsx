@@ -196,7 +196,7 @@ const MultipleItems: FC = () => {
                     height={250}
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-56 object-cover"
+                    className="w-full h-56 sm:h-72 lg:h-80 object-cover"
                   />
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-slate-900">{item.heading}</h3>
